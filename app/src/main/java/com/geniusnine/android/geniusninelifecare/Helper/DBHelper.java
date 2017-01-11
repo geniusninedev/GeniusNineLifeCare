@@ -17,15 +17,15 @@ import java.util.List;
 public class DBHelper extends SQLiteOpenHelper {
     public static final int VERSION = 1;
     public static final String DB_NAME = "geniusninelifecare";
-    public static final String TABLE_ACCOUNTS = "user_information";
-    public static final String COLUMN_ACCOUNT_ID = "user_id";
-    public static final String COLUMN_ACCOUNT_NAME = "account_name";
-    public static final String COLUMN_ACCOUNT_DESCRIPTION = "account_description";
-    public static final String COLUMN_ACCOUNT_TYPE = "account_type";
-    public static final String COLUMN_OPENING_BALANCE = "opening_balance";
-    public static final String COLUMN_AVAILABLE_BALANCE = "available_balance";
-    public static final String COLUMN_DATE = "date";
+    public static final String TABLE_USER_INFORMATION = "user_information";
     public static final String COLUMN_USER_ID = "user_id";
+    public static final String COLUMN_USER_NAME = "user_name";
+    public static final String COLUMN_USER_EMAIL = "user_email";
+    public static final String COLUMN_USER_GENDER = "user_gender";
+    public static final String COLUMN_USER_MOBILE = "user_mobile";
+    public static final String COLUMN_USER_AGE = "user_age";
+    public static final String COLUMN_USER_REGISRTION_DATE = "date";
+
 
     public static final String TABLE_CATEGORIES = "categories";
     public static final String COLUMN_CATEGORIE_ID  = "categorie_id";
@@ -52,15 +52,14 @@ public class DBHelper extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase db) {
-        String sql = "CREATE TABLE IF NOT EXISTS " + TABLE_ACCOUNTS
-                + "(" +COLUMN_ACCOUNT_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
-                + COLUMN_ACCOUNT_NAME + " VARCHAR, "
-                +COLUMN_ACCOUNT_DESCRIPTION + " VARCHAR,"
-                + COLUMN_ACCOUNT_TYPE + " VARCHAR,"
-                + COLUMN_OPENING_BALANCE + " VARCHAR,"
-                + COLUMN_AVAILABLE_BALANCE + " VARCHAR,"
-                + COLUMN_DATE + " DATE,"
-                + COLUMN_USER_ID  + " VARCHAR" + ")";
+        String sql = "CREATE TABLE IF NOT EXISTS " + TABLE_USER_INFORMATION
+                + "(" +COLUMN_USER_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
+                + COLUMN_USER_NAME + " VARCHAR, "
+                +COLUMN_USER_EMAIL + " VARCHAR,"
+                + COLUMN_USER_GENDER + " VARCHAR,"
+                + COLUMN_USER_MOBILE + " INTEGER,"
+                + COLUMN_USER_AGE + " INTEGER,"
+                + COLUMN_USER_REGISRTION_DATE + " DATE" + ")";
         db.execSQL(sql);
        /* String sql2 = "CREATE TABLE IF NOT EXISTS " + TABLE_CATEGORIES
                 + "(" + COLUMN_CATEGORIE_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
@@ -82,9 +81,21 @@ public class DBHelper extends SQLiteOpenHelper {
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-        String sql = "DROP TABLE IF EXISTS expensetraccker";
+        String sql = "DROP TABLE IF EXISTS user_information";
         db.execSQL(sql);
         //  onCreate(db);
+    }
+    public boolean addUser(String username,String useremail,String usergender,String usermobilenumber,String userage) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues contentValues = new ContentValues();
+        contentValues.put(COLUMN_USER_NAME, username);
+        contentValues.put(COLUMN_USER_EMAIL, useremail);
+        contentValues.put(COLUMN_USER_GENDER, usergender);
+        contentValues.put(COLUMN_USER_MOBILE, usermobilenumber);
+        contentValues.put(COLUMN_USER_AGE,  userage);
+        db.insert(TABLE_USER_INFORMATION, null, contentValues);
+        db.close();
+        return true;
     }
     public boolean addCategories(String categorie_name) {
         SQLiteDatabase db = this.getWritableDatabase();
@@ -114,7 +125,7 @@ public class DBHelper extends SQLiteOpenHelper {
         Cursor c = db.rawQuery(sql, null);
         return c;
     }
-    public boolean addExpenses(String categorie_name,String account_name,String Description,String howmuch,String date) {
+   /* public boolean addExpenses(String categorie_name,String account_name,String Description,String howmuch,String date) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
         contentValues.put(COLUMN_CATEGORIE_NAME, categorie_name);
@@ -125,8 +136,8 @@ public class DBHelper extends SQLiteOpenHelper {
         db.insert(TABLE_EXPENSES, null, contentValues);
         db.close();
         return true;
-    }
-    public List<String> getAllLabels(){
+    }*/
+ /*   public List<String> getAllLabels(){
         List<String> list = new ArrayList<String>();
 
         // Select All Query
@@ -203,7 +214,7 @@ public class DBHelper extends SQLiteOpenHelper {
         db.update(TABLE_ACCOUNTS,contentValues,COLUMN_ACCOUNT_NAME+"="+"'"+account_name+"'",null);
         db.close();
         return true;
-    }
+    }*/
     public Cursor getTotalTransationAmountToday(String accountname,String date) {
         SQLiteDatabase db = this.getWritableDatabase();
         String sql =  "SELECT SUM(expense_how_much) FROM expenses WHERE account_name ='" + accountname + "' and date ='" + date + "' ";

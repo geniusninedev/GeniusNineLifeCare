@@ -53,7 +53,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:inputType="textPersonName"
-                    android:id="@+id/edittextdescription"
+                    android:id="@+id/edittextuseremail"
                     android:hint="Enter User Email:" />
 
             </android.support.design.widget.TextInputLayout>
@@ -75,7 +75,7 @@
             <Spinner
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:id="@+id/spinneraccounttype"
+                android:id="@+id/spinnergender"
                 android:layout_weight="1" />
         </LinearLayout>
 
@@ -91,10 +91,10 @@
                 <EditText
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:id="@+id/edittextopeingbalence"
+                    android:id="@+id/edittextusermobilenumber"
                     android:hint="User Mobile:"
                     android:inputType="number"
-                    android:maxLength="8" />
+                    android:maxLength="10" />
 
             </android.support.design.widget.TextInputLayout>
         </LinearLayout>
@@ -110,10 +110,10 @@
                 <EditText
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:id="@+id/edittextage"
+                    android:id="@+id/edittextuserage"
                     android:hint="User Age:"
                     android:inputType="number"
-                    android:maxLength="8" />
+                    android:maxLength="3" />
 
             </android.support.design.widget.TextInputLayout>
         </LinearLayout>
@@ -127,7 +127,7 @@
                 android:text="Register"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:id="@+id/button"
+                android:id="@+id/buttonregisteruser"
                 android:layout_weight="1" />
         </LinearLayout>
 
