@@ -6,5 +6,6 @@
     <color name="black">#000000</color>
     <color name="orange">#00d9ff</color>
     <color name="white">#ffffff</color>
-    <color name="pink">#a0cff9</color>
+    <color name="pink">#7ec0fa</color>
+    <color name="appcolor">#4998de</color>
 </resources>

@@ -10,7 +10,7 @@
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="#1b28df"
+        android:background="#4998de"
         app:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
         app:title="@string/app_name" /> <!-- android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
 -->
@@ -47,7 +47,7 @@
             app:headerLayout="@layout/nav_header_main"
             app:itemTextColor="#ffffff"
             app:menu="@menu/drawermenu"
-            android:background="#2753d7" />
+            android:background="@color/pink" />
 
 
     </android.support.v4.widget.DrawerLayout>

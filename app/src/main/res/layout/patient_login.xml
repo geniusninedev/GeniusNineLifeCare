@@ -2,9 +2,10 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/img1"
+    android:background="@drawable/loginbackground"
     android:orientation="vertical"
     >
+
     <LinearLayout
         android:orientation="vertical"
         android:layout_width="match_parent"
@@ -23,7 +24,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:inputType="textPersonName"
-            android:text="Name"
+            android:hint="Mobile Number"
             android:ems="10"
             android:background="@android:drawable/editbox_background"
             android:id="@+id/editTextUserName"
@@ -42,7 +43,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:inputType="textPersonName"
-            android:text="Password"
+            android:hint="Password"
             android:ems="10"
             android:background="@android:drawable/editbox_background"
             android:id="@+id/editTextPassword"
@@ -61,8 +62,7 @@
             android:layout_height="wrap_content"
             android:id="@+id/buttonSignIn"
             android:layout_weight="1"
-            />
-
+            style="@style/Widget.AppCompat.Button.Colored" />
 
 
         <Button
@@ -71,20 +71,20 @@
             android:layout_height="wrap_content"
             android:id="@+id/buttonSignUp"
             android:layout_weight="1"
-          />
+            style="@style/Widget.AppCompat.Button.Colored" />
     </LinearLayout>
 
     <LinearLayout
         android:orientation="horizontal"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:gravity="right">
 
         <TextView
             android:text="Forget password   "
-            android:layout_width="308dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/textView7"
-            android:gravity="right"
             android:textStyle="bold|italic" />
 
         <TextView
@@ -92,11 +92,10 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/textViewforgetpasswordclick"
-            android:gravity="right"
             android:textStyle="bold|italic"
-
-            android:textColor="@android:color/holo_red_dark" />
+            android:textSize="15dp"
+            android:textColor="@android:color/holo_red_light" />
     </LinearLayout>
 
 </LinearLayout>
-    </LinearLayout>
+</LinearLayout>

@@ -2,7 +2,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     tools:context=".MainActivityDrawer">
-    <item
+   <!-- <item
         android:id="@+id/action_transfer"
         android:orderInCategory="100"
         android:title="@string/action_transfer"
@@ -16,13 +16,18 @@
         android:id="@+id/action_import"
         android:orderInCategory="100"
         android:title="@string/action_import"
+        app:showAsAction="never" />-->
+    <item
+        android:id="@+id/action_logout"
+        android:orderInCategory="100"
+        android:title="@string/action_logout"
         app:showAsAction="never" />
     <item
         android:id="@+id/action_settings"
         android:orderInCategory="100"
         android:title="@string/action_settings"
         app:showAsAction="never" />
-    <item
+   <!-- <item
         android:id="@+id/action_list"
         android:icon="@drawable/ft_enquiry_icon"
         android:title="List"
@@ -33,7 +38,7 @@
         android:icon="@drawable/ic_piachart"
         android:title="Chart"
         android:orderInCategory="5"
-        app:showAsAction="ifRoom|collapseActionView" />
+        app:showAsAction="ifRoom|collapseActionView" />-->
 </menu>
 
 

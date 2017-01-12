@@ -14,6 +14,7 @@ import android.widget.Toast;
 import com.geniusnine.android.geniusninelifecare.Fragments.Accounts;
 import com.geniusnine.android.geniusninelifecare.Fragments.Categories;
 import com.geniusnine.android.geniusninelifecare.Fragments.CustHome;
+import com.geniusnine.android.geniusninelifecare.Fragments.Patient_Home;
 
 
 public class MainActivityDrawer extends AppCompatActivity {
@@ -42,7 +43,7 @@ public class MainActivityDrawer extends AppCompatActivity {
         mFragmentManager = getSupportFragmentManager();
         mFragmentTransaction = mFragmentManager.beginTransaction();
         mNavigationView.setItemIconTintList(null);
-        mFragmentTransaction.replace(R.id.containerView, new CustHome()).commit();
+        mFragmentTransaction.replace(R.id.containerView, new Patient_Home()).commit();
         /**
          * Setup click events on the Navigation View Items.
          */
@@ -53,16 +54,16 @@ public class MainActivityDrawer extends AppCompatActivity {
                 mDrawerLayout.closeDrawers();
                 if (menuItem.getItemId() == R.id.Home) {
                     FragmentTransaction fragmentTransaction = mFragmentManager.beginTransaction();
-                    fragmentTransaction.replace(R.id.containerView, new CustHome() ).commit();
+                    fragmentTransaction.replace(R.id.containerView, new Patient_Home()).commit();
 
                 }
 
-                if (menuItem.getItemId() == R.id.NewCust) {
+                if (menuItem.getItemId() == R.id.Profile) {
                     FragmentTransaction fragmentTransaction = mFragmentManager.beginTransaction();
                     fragmentTransaction.replace(R.id.containerView, new Accounts()).commit();
 
                 }
-                if (menuItem.getItemId() == R.id.FollowupDetails) {
+                if (menuItem.getItemId() == R.id.Inbox) {
                     FragmentTransaction fragmentTransaction = mFragmentManager.beginTransaction();
                     fragmentTransaction.replace(R.id.containerView, new Categories()).commit();
 
@@ -135,7 +136,7 @@ public class MainActivityDrawer extends AppCompatActivity {
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
-        //noinspection SimplifiableIfStatement
+      /*  //noinspection SimplifiableIfStatement
         if (id == R.id.action_list) {
             Toast.makeText(getApplication(),"List clicked",Toast.LENGTH_LONG).show();
             return true;
@@ -144,8 +145,8 @@ public class MainActivityDrawer extends AppCompatActivity {
         if (id == R.id.action_chart) {
             Toast.makeText(getApplication(),"Pia Chart Clicked clicked",Toast.LENGTH_LONG).show();
             return true;
-        }
-        //noinspection SimplifiableIfStatement
+        }*/
+     /*   //noinspection SimplifiableIfStatement
         if (id == R.id.action_transfer) {
             return true;
         }
@@ -155,6 +156,10 @@ public class MainActivityDrawer extends AppCompatActivity {
         }
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_import) {
+            return true;
+        }*/
+        //noinspection SimplifiableIfStatement
+        if (id == R.id.action_logout) {
             return true;
         }
         //noinspection SimplifiableIfStatement

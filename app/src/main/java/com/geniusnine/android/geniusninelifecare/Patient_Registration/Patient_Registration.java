@@ -2,6 +2,7 @@ package com.geniusnine.android.geniusninelifecare.Patient_Registration;
 
 import android.app.Activity;
 import android.app.DatePickerDialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ArrayAdapter;
@@ -12,6 +13,7 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 import com.geniusnine.android.geniusninelifecare.Helper.DBHelper;
+import com.geniusnine.android.geniusninelifecare.Login_Patient.Patient_Login;
 import com.geniusnine.android.geniusninelifecare.R;
 
 import java.text.SimpleDateFormat;
@@ -132,6 +134,8 @@ public class Patient_Registration extends Activity {
                 else{
                     dbHelper.addUser(patientname,patientpassword,patientmobilenumber,patientemail,patientgender,patientage,patientheight,patientweight,patientbloodgroup,patientaddress,patientpincode,patientregistrationdate);
                     Toast.makeText(Patient_Registration.this,"Patient Registred Successfully",Toast.LENGTH_LONG).show();
+                    Intent i=new Intent(Patient_Registration.this, Patient_Login.class);
+                    startActivity(i);
                 }
 
 

@@ -8,46 +8,18 @@
     </group>
     <group android:id="@+id/grp2" android:checkableBehavior="single" >
     <item
-        android:id="@+id/NewCust"
-        android:icon="@drawable/enq"
-        android:title="Accounts" />
+        android:id="@+id/Profile"
+        android:icon="@drawable/profile"
+        android:title="Profile" />
 </group>
-    <group android:id="@+id/grp8" android:checkableBehavior="single" >
-        <item
-            android:id="@+id/FollowupDetails"
-            android:icon="@drawable/enq"
-            android:title="Categories" />
-    </group>
+
     <group android:id="@+id/grp3" android:checkableBehavior="single" >
     <item
-        android:id="@+id/Sports"
-        android:icon="@drawable/ic_photos"
-        android:title="Help" />
+        android:id="@+id/Inbox"
+        android:icon="@drawable/inbox"
+        android:title="Inbox" />
 </group>
-    <group android:id="@+id/grp9" android:checkableBehavior="single" >
-        <item
-            android:id="@+id/Gallery"
-            android:icon="@drawable/ic_photos"
-            android:title="About" />
-    </group>
-    <group android:id="@+id/grp10" android:checkableBehavior="single" >
-        <item
-            android:id="@+id/MoiveReview"
-            android:icon="@drawable/ic_photos"
-            android:title="Business" />
-    </group>
-    <group android:id="@+id/grp11" android:checkableBehavior="single" >
-        <item
-            android:id="@+id/TopStories"
-            android:icon="@drawable/ic_photos"
-            android:title="Life Style" />
-    </group>
-    <group android:id="@+id/grp13" android:checkableBehavior="single" >
-    <item
-        android:id="@+id/Facility"
-        android:icon="@android:drawable/ic_dialog_dialer"
-        android:title="Some Happy" />
-    </group>
+
     <group android:id="@+id/grp4" android:checkableBehavior="single" >
     <item
         android:id="@+id/Commitment"
@@ -67,17 +39,47 @@
         android:title="User Review" />
     </group>
 
-    <group android:id="@+id/grp12" android:checkableBehavior="single" >
-        <item
-            android:id="@+id/Aboutus"
-            android:icon="@drawable/ic_pages"
-            android:title="About US" />
-    </group>
+
     <group android:id="@+id/grp7" android:checkableBehavior="single" >
     <item
         android:id="@+id/Contact_us"
         android:icon="@drawable/ic_people"
         android:title="Contact us" />
 </group>
-
+    <group android:id="@+id/grp8" android:checkableBehavior="single" >
+        <item
+            android:id="@+id/FollowupDetails"
+            android:icon="@drawable/enq"
+            android:title="Categories" />
+    </group>
+    <group android:id="@+id/grp9" android:checkableBehavior="single" >
+        <item
+            android:id="@+id/Gallery"
+            android:icon="@drawable/ic_photos"
+            android:title="About" />
+    </group>
+    <group android:id="@+id/grp10" android:checkableBehavior="single" >
+        <item
+            android:id="@+id/MoiveReview"
+            android:icon="@drawable/ic_photos"
+            android:title="Business" />
+    </group>
+    <group android:id="@+id/grp11" android:checkableBehavior="single" >
+        <item
+            android:id="@+id/TopStories"
+            android:icon="@drawable/ic_photos"
+            android:title="Life Style" />
+    </group>
+    <group android:id="@+id/grp12" android:checkableBehavior="single" >
+        <item
+            android:id="@+id/Aboutus"
+            android:icon="@drawable/ic_pages"
+            android:title="About US" />
+    </group>
+    <group android:id="@+id/grp13" android:checkableBehavior="single" >
+        <item
+            android:id="@+id/Facility"
+            android:icon="@android:drawable/ic_dialog_dialer"
+            android:title="Some Happy" />
+    </group>
 </menu>
