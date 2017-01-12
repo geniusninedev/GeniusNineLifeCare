@@ -21,16 +21,18 @@ import java.util.List;
 
 public class Patient_Registration extends Activity {
     DBHelper dbHelper;
+    EditText edittextPatientname,edittextPatientemail,edittextPatientmobilenumber,edittextPatientage;
+    Spinner spinnerPatientgender;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.patient_registrationform);
         dbHelper = new DBHelper(Patient_Registration.this);
-        final EditText edittextPatientname = (EditText) findViewById(R.id.edittextpatientname);
-        final EditText edittextPatientemail = (EditText) findViewById(R.id.edittextpatientemail);
-        final Spinner spinnerPatientgender=(Spinner)findViewById(R.id.spinnerpatientgender);
-        final EditText edittextPatientmobilenumber = (EditText)findViewById(R.id.edittextpatientmobilenumber);
-        final EditText edittextPatientage = (EditText)findViewById(R.id. edittextpatientage);
+         edittextPatientname = (EditText) findViewById(R.id.edittextpatientname);
+         edittextPatientemail = (EditText) findViewById(R.id.edittextpatientemail);
+         spinnerPatientgender=(Spinner)findViewById(R.id.spinnerpatientgender);
+         edittextPatientmobilenumber = (EditText)findViewById(R.id.edittextpatientmobilenumber);
+         edittextPatientage = (EditText)findViewById(R.id. edittextpatientage);
         Button buttonregisteruser=(Button) findViewById(R.id.buttonregisterpatient);
         // Spinner Drop down elements
         List<String> categories = new ArrayList<String>();
