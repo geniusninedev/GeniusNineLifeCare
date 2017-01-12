@@ -1,11 +1,13 @@
 package com.geniusnine.android.geniusninelifecare.Splash_Screen;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.provider.SyncStateContract;
 
 import com.daimajia.androidanimations.library.Techniques;
 import com.geniusnine.android.geniusninelifecare.Helper.DBHelper;
+import com.geniusnine.android.geniusninelifecare.Login_Patient.Patient_Login;
 import com.geniusnine.android.geniusninelifecare.R;
 import com.viksaa.sssplash.lib.activity.AwesomeSplash;
 import com.viksaa.sssplash.lib.cnst.Flags;
@@ -64,7 +66,8 @@ public class Splash_Screen extends AwesomeSplash {
 
     @Override
     public void animationsFinished() {
-
+        Intent intent=new Intent(Splash_Screen.this, Patient_Login.class);
+        startActivity(intent);
         //transit to another activity here
         //or do whatever you want
     }
