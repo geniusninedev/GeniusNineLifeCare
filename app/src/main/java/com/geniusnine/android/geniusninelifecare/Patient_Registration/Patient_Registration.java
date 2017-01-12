@@ -1,4 +1,4 @@
-package com.geniusnine.android.geniusninelifecare;
+package com.geniusnine.android.geniusninelifecare.Patient_Registration;
 
 import android.app.Activity;
 import android.os.Bundle;
@@ -8,17 +8,24 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Toast;
+
 import com.geniusnine.android.geniusninelifecare.Helper.DBHelper;
+import com.geniusnine.android.geniusninelifecare.R;
+
 import java.util.ArrayList;
 import java.util.List;
 
-public class MainActivity extends Activity {
+/**
+ * Created by Dev on 12-01-2017.
+ */
+
+public class Patient_Registration extends Activity {
     DBHelper dbHelper;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-        dbHelper = new DBHelper(MainActivity.this);
+        setContentView(R.layout.patient_registrationform);
+        dbHelper = new DBHelper(Patient_Registration.this);
         final EditText edittextPatientname = (EditText) findViewById(R.id.edittextpatientname);
         final EditText edittextPatientemail = (EditText) findViewById(R.id.edittextpatientemail);
         final Spinner spinnerPatientgender=(Spinner)findViewById(R.id.spinnerpatientgender);
@@ -31,7 +38,7 @@ public class MainActivity extends Activity {
         categories.add("Female");
 
         // Creating adapter for spinner
-        ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(MainActivity.this, android.R.layout.simple_spinner_item, categories);
+        ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(Patient_Registration.this, android.R.layout.simple_spinner_item, categories);
 
         // Drop down layout style - list view with radio button
         dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
@@ -48,7 +55,7 @@ public class MainActivity extends Activity {
                 patientmobilenumber=edittextPatientmobilenumber.getText().toString().trim();
                 patientage=edittextPatientage.getText().toString().trim();
                 dbHelper.addUser(patientname,patientemail,patientgender,patientmobilenumber,patientage);
-                Toast.makeText(MainActivity.this,"Patient Registred SuccessFully",Toast.LENGTH_LONG).show();
+                Toast.makeText(Patient_Registration.this,"Patient Registred SuccessFully",Toast.LENGTH_LONG).show();
 
             }
         });
