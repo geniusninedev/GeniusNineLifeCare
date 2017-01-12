@@ -8,9 +8,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Toast;
-
 import com.geniusnine.android.geniusninelifecare.Helper.DBHelper;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -21,12 +19,12 @@ public class MainActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         dbHelper = new DBHelper(MainActivity.this);
-        final EditText edittextusername = (EditText) findViewById(R.id.edittextusername);
-        final EditText edittextuseremail = (EditText) findViewById(R.id.edittextuseremail);
-        final Spinner spinnergender=(Spinner)findViewById(R.id.spinnergender);
-        final EditText edittextusermobilenumber = (EditText)findViewById(R.id.edittextusermobilenumber);
-        final EditText edittextuserage = (EditText)findViewById(R.id. edittextuserage);
-        Button buttonregisteruser=(Button) findViewById(R.id.buttonregisteruser);
+        final EditText edittextPatientname = (EditText) findViewById(R.id.edittextpatientname);
+        final EditText edittextPatientemail = (EditText) findViewById(R.id.edittextpatientemail);
+        final Spinner spinnerPatientgender=(Spinner)findViewById(R.id.spinnerpatientgender);
+        final EditText edittextPatientmobilenumber = (EditText)findViewById(R.id.edittextpatientmobilenumber);
+        final EditText edittextPatientage = (EditText)findViewById(R.id. edittextpatientage);
+        Button buttonregisteruser=(Button) findViewById(R.id.buttonregisterpatient);
         // Spinner Drop down elements
         List<String> categories = new ArrayList<String>();
         categories.add("Male");
@@ -39,18 +37,18 @@ public class MainActivity extends Activity {
         dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 
         // attaching data adapter to spinner
-        spinnergender.setAdapter(dataAdapter);
+        spinnerPatientgender.setAdapter(dataAdapter);
         buttonregisteruser.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String username,useremail,usergender,usermobilenumber,userage;
-                username=edittextusername.getText().toString().trim();
-                useremail=edittextuseremail.getText().toString().trim();
-                usergender=spinnergender.getSelectedItem().toString().trim();
-                usermobilenumber=edittextusermobilenumber.getText().toString().trim();
-                userage=edittextuserage.getText().toString().trim();
-                dbHelper.addUser(username,useremail,usergender,usermobilenumber,userage);
-                Toast.makeText(MainActivity.this,"User Registred SuccessFully",Toast.LENGTH_LONG).show();
+                String patientname,patientemail,patientgender,patientmobilenumber,patientage;
+                patientname=edittextPatientname.getText().toString().trim();
+                patientemail=edittextPatientemail.getText().toString().trim();
+                patientgender=spinnerPatientgender.getSelectedItem().toString().trim();
+                patientmobilenumber=edittextPatientmobilenumber.getText().toString().trim();
+                patientage=edittextPatientage.getText().toString().trim();
+                dbHelper.addUser(patientname,patientemail,patientgender,patientmobilenumber,patientage);
+                Toast.makeText(MainActivity.this,"Patient Registred SuccessFully",Toast.LENGTH_LONG).show();
 
             }
         });

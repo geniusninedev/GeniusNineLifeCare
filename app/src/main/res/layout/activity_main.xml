@@ -17,7 +17,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:id="@+id/textView"
-                android:text="User Registration"
+                android:text="Patient Registration"
                 android:textAlignment="center"
                 android:textStyle="normal|bold" />
         </LinearLayout>
@@ -35,7 +35,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:inputType="textPersonName"
-                    android:id="@+id/edittextusername"
+                    android:id="@+id/edittextpatientname"
                     android:hint="Enter  Name:" />
             </android.support.design.widget.TextInputLayout>
         </LinearLayout>
@@ -53,8 +53,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:inputType="textPersonName"
-                    android:id="@+id/edittextuseremail"
-                    android:hint="Enter User Email:" />
+                    android:id="@+id/edittextpatientemail"
+                    android:hint="Enter Email:" />
 
             </android.support.design.widget.TextInputLayout>
         </LinearLayout>
@@ -75,7 +75,7 @@
             <Spinner
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:id="@+id/spinnergender"
+                android:id="@+id/spinnerpatientgender"
                 android:layout_weight="1" />
         </LinearLayout>
 
@@ -91,8 +91,8 @@
                 <EditText
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:id="@+id/edittextusermobilenumber"
-                    android:hint="User Mobile:"
+                    android:id="@+id/edittextpatientmobilenumber"
+                    android:hint="Mobile:"
                     android:inputType="number"
                     android:maxLength="10" />
 
@@ -110,8 +110,8 @@
                 <EditText
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:id="@+id/edittextuserage"
-                    android:hint="User Age:"
+                    android:id="@+id/edittextpatientage"
+                    android:hint="Age:"
                     android:inputType="number"
                     android:maxLength="3" />
 
@@ -127,7 +127,7 @@
                 android:text="Register"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:id="@+id/buttonregisteruser"
+                android:id="@+id/buttonregisterpatient"
                 android:layout_weight="1" />
         </LinearLayout>
 

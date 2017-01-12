@@ -17,14 +17,14 @@ import java.util.List;
 public class DBHelper extends SQLiteOpenHelper {
     public static final int VERSION = 1;
     public static final String DB_NAME = "geniusninelifecare";
-    public static final String TABLE_USER_INFORMATION = "user_information";
-    public static final String COLUMN_USER_ID = "user_id";
-    public static final String COLUMN_USER_NAME = "user_name";
-    public static final String COLUMN_USER_EMAIL = "user_email";
-    public static final String COLUMN_USER_GENDER = "user_gender";
-    public static final String COLUMN_USER_MOBILE = "user_mobile";
-    public static final String COLUMN_USER_AGE = "user_age";
-    public static final String COLUMN_USER_REGISRTION_DATE = "date";
+    public static final String TABLE_PATIENT_INFORMATION = "patient_information";
+    public static final String COLUMN_PATIENT_ID = "patient_id";
+    public static final String COLUMN_PATIENT_NAME = "patient_name";
+    public static final String COLUMN_PATIENT_EMAIL = "patient_email";
+    public static final String COLUMN_PATIENT_GENDER = "patient_gender";
+    public static final String COLUMN_PATIENT_MOBILE = "patient_mobile";
+    public static final String COLUMN_PATIENT_AGE = "patient_age";
+    public static final String COLUMN_PATIENT_REGISRTION_DATE = "date";
 
 
     public static final String TABLE_CATEGORIES = "categories";
@@ -52,14 +52,14 @@ public class DBHelper extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase db) {
-        String sql = "CREATE TABLE IF NOT EXISTS " + TABLE_USER_INFORMATION
-                + "(" +COLUMN_USER_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
-                + COLUMN_USER_NAME + " VARCHAR, "
-                +COLUMN_USER_EMAIL + " VARCHAR,"
-                + COLUMN_USER_GENDER + " VARCHAR,"
-                + COLUMN_USER_MOBILE + " INTEGER,"
-                + COLUMN_USER_AGE + " INTEGER,"
-                + COLUMN_USER_REGISRTION_DATE + " DATE" + ")";
+        String sql = "CREATE TABLE IF NOT EXISTS " + TABLE_PATIENT_INFORMATION
+                + "(" +COLUMN_PATIENT_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
+                + COLUMN_PATIENT_NAME + " VARCHAR, "
+                + COLUMN_PATIENT_EMAIL + " VARCHAR,"
+                + COLUMN_PATIENT_GENDER + " VARCHAR,"
+                + COLUMN_PATIENT_MOBILE + " INTEGER,"
+                + COLUMN_PATIENT_AGE + " INTEGER,"
+                + COLUMN_PATIENT_REGISRTION_DATE + " DATE" + ")";
         db.execSQL(sql);
        /* String sql2 = "CREATE TABLE IF NOT EXISTS " + TABLE_CATEGORIES
                 + "(" + COLUMN_CATEGORIE_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
@@ -81,19 +81,19 @@ public class DBHelper extends SQLiteOpenHelper {
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-        String sql = "DROP TABLE IF EXISTS user_information";
+        String sql = "DROP TABLE IF EXISTS patient_information";
         db.execSQL(sql);
         //  onCreate(db);
     }
     public boolean addUser(String username,String useremail,String usergender,String usermobilenumber,String userage) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
-        contentValues.put(COLUMN_USER_NAME, username);
-        contentValues.put(COLUMN_USER_EMAIL, useremail);
-        contentValues.put(COLUMN_USER_GENDER, usergender);
-        contentValues.put(COLUMN_USER_MOBILE, usermobilenumber);
-        contentValues.put(COLUMN_USER_AGE,  userage);
-        db.insert(TABLE_USER_INFORMATION, null, contentValues);
+        contentValues.put(COLUMN_PATIENT_NAME, username);
+        contentValues.put(COLUMN_PATIENT_EMAIL, useremail);
+        contentValues.put(COLUMN_PATIENT_GENDER, usergender);
+        contentValues.put(COLUMN_PATIENT_MOBILE, usermobilenumber);
+        contentValues.put(COLUMN_PATIENT_AGE,  userage);
+        db.insert(TABLE_PATIENT_INFORMATION, null, contentValues);
         db.close();
         return true;
     }
