@@ -11,17 +11,28 @@
         android:layout_height="wrap_content">
 
         <LinearLayout
-            android:orientation="vertical"
+            android:orientation="horizontal"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="wrap_content"
+            android:gravity="center">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/textView"
+                android:text="Patient Registration"
+                android:textStyle="normal|bold"
+                android:textAlignment="center"
+                android:textColor="@color/colorPrimaryDark" />
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:id="@+id/textView"
-                android:text="Patient Registration"
-                android:textAlignment="center"
-                android:textStyle="normal|bold" />
+                android:id="@+id/textViewcurrentDate"
+                android:layout_weight="1"
+                android:textAlignment="viewEnd"
+                android:textColor="@color/black"
+                android:textStyle="normal|bold|italic" />
         </LinearLayout>
 
         <LinearLayout
@@ -36,9 +47,10 @@
                 <EditText
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:inputType="textPersonName"
                     android:id="@+id/edittextpatientname"
-                    android:hint="Enter  Name:" />
+                    android:digits="abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ "
+                    android:hint="Enter  Name:"
+                    android:inputType="text" />
             </android.support.design.widget.TextInputLayout>
         </LinearLayout>
         <LinearLayout
@@ -72,9 +84,11 @@
                 <EditText
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:id="@+id/edittextpatientemail"
-                    android:hint="Email:"
-                    android:inputType="textEmailAddress" />
+                    android:id="@+id/edittextpatientpassword"
+                    android:hint="Enter Password For Login:"
+                    android:digits="abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789@#*~`!$^+-*/=."
+                    android:inputType="textPassword"
+                    android:maxLength="10" />
 
             </android.support.design.widget.TextInputLayout>
         </LinearLayout>
@@ -90,12 +104,14 @@
                 <EditText
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:id="@+id/edittextpatientpassword"
-                    android:hint="Enter Password For Login:"
-                    android:inputType="textPassword" />
+                    android:id="@+id/edittextpatientemail"
+                    android:digits="abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789@."
+                    android:hint="Email:"
+                    android:inputType="textEmailAddress" />
 
             </android.support.design.widget.TextInputLayout>
         </LinearLayout>
+
 
         <LinearLayout
             android:orientation="vertical"
@@ -127,6 +143,7 @@
                 android:id="@+id/text_input_layout5"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
+
                 <EditText
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -150,9 +167,9 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:id="@+id/edittextpatientheight"
-                    android:hint="Height:"
-                    android:inputType="number"
-                    android:maxLength="3" />
+                    android:hint="Enter Height In Feets And Inches:e.g. 5.5"
+                    android:maxLength="3"
+                    android:inputType="numberDecimal" />
 
             </android.support.design.widget.TextInputLayout>
         </LinearLayout>
@@ -169,9 +186,9 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:id="@+id/edittextpatientweight"
-                    android:hint="Weight:"
-                    android:inputType="number"
-                    android:maxLength="3" />
+                    android:hint="Enter Weight In Kg:e.g. 55.42"
+                    android:maxLength="6"
+                    android:inputType="numberDecimal" />
 
             </android.support.design.widget.TextInputLayout>
         </LinearLayout>
@@ -189,6 +206,7 @@
                     android:layout_height="wrap_content"
                     android:id="@+id/edittextpatientbloodgroup"
                     android:hint="Blood Group:"
+                    android:digits="abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ+-"
                     android:maxLength="3"
                     android:inputType="text" />
 
@@ -206,7 +224,7 @@
                 <EditText
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:id="@+id/edittextpatientstreetaddress"
+                    android:id="@+id/edittextpatientaddress"
                     android:hint="Address:"
                     android:inputType="textMultiLine|textPostalAddress" />
 
@@ -241,7 +259,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:id="@+id/buttonregisterpatient"
-                android:layout_weight="1" />
+                android:layout_weight="1"
+                style="@style/Widget.AppCompat.Button.Colored" />
         </LinearLayout>
 
     </LinearLayout>

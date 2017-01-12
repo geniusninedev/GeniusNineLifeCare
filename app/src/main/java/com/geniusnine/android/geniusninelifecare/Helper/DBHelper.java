@@ -21,11 +21,16 @@ public class DBHelper extends SQLiteOpenHelper {
     public static final String COLUMN_PATIENT_ID = "patient_id";
     public static final String COLUMN_PATIENT_NAME = "patient_name";
     public static final String COLUMN_PATIENT_MOBILE = "patient_mobile";
+    public static final String COLUMN_PATIENT_PASSWORD = "patient_password";
     public static final String COLUMN_PATIENT_EMAIL = "patient_email";
     public static final String COLUMN_PATIENT_GENDER = "patient_gender";
     public static final String COLUMN_PATIENT_AGE = "patient_age";
+    public static final String COLUMN_PATIENT_HEIGHT = "patient_height";
+    public static final String COLUMN_PATIENT_WEIGHT = "patient_weight";
+    public static final String COLUMN_PATIENT_BLOOD_GROUP = "patient_blood_group";
+    public static final String COLUMN_PATIENT_ADDRESS = "patient_address";
+    public static final String COLUMN_PATIENT_PINCODE = "patient_pincode";
     public static final String COLUMN_PATIENT_REGISRTION_DATE = "date";
-
 
     public static final String TABLE_CATEGORIES = "categories";
     public static final String COLUMN_CATEGORIE_ID  = "categorie_id";
@@ -56,9 +61,15 @@ public class DBHelper extends SQLiteOpenHelper {
                 + "(" +COLUMN_PATIENT_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
                 + COLUMN_PATIENT_NAME + " VARCHAR, "
                 + COLUMN_PATIENT_MOBILE + " INTEGER,"
+                + COLUMN_PATIENT_PASSWORD + " VARCHAR,"
                 + COLUMN_PATIENT_EMAIL + " VARCHAR,"
                 + COLUMN_PATIENT_GENDER + " VARCHAR,"
                 + COLUMN_PATIENT_AGE + " INTEGER,"
+                + COLUMN_PATIENT_HEIGHT + " DOUBLE,"
+                + COLUMN_PATIENT_WEIGHT + " DOUBLE,"
+                + COLUMN_PATIENT_BLOOD_GROUP  + " VARCHAR,"
+                + COLUMN_PATIENT_ADDRESS + " VARCHAR,"
+                + COLUMN_PATIENT_PINCODE + " INTEGER,"
                 + COLUMN_PATIENT_REGISRTION_DATE + " DATE" + ")";
         db.execSQL(sql);
        /* String sql2 = "CREATE TABLE IF NOT EXISTS " + TABLE_CATEGORIES
@@ -85,14 +96,21 @@ public class DBHelper extends SQLiteOpenHelper {
         db.execSQL(sql);
         //  onCreate(db);
     }
-    public boolean addUser(String patientname,String patientmobilenumber,String patientemail,String patientgender,String patientage) {
+    public boolean addUser(String patientname,String patientmobilenumber,String patientpassword,String patientemail,String patientgender,String patientage,String patientheight,String patientweight,String patientbloodgroup,String patientaddress,String patientpincode,String patientregistrationdate) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
         contentValues.put(COLUMN_PATIENT_NAME, patientname);
         contentValues.put(COLUMN_PATIENT_MOBILE, patientmobilenumber);
+        contentValues.put(COLUMN_PATIENT_PASSWORD, patientpassword);
         contentValues.put(COLUMN_PATIENT_EMAIL, patientemail);
         contentValues.put(COLUMN_PATIENT_GENDER, patientgender);
         contentValues.put(COLUMN_PATIENT_AGE, patientage);
+        contentValues.put(COLUMN_PATIENT_HEIGHT, patientheight);
+        contentValues.put(COLUMN_PATIENT_WEIGHT, patientweight);
+        contentValues.put(COLUMN_PATIENT_BLOOD_GROUP, patientbloodgroup);
+        contentValues.put(COLUMN_PATIENT_ADDRESS, patientaddress);
+        contentValues.put(COLUMN_PATIENT_PINCODE, patientpincode);
+        contentValues.put(COLUMN_PATIENT_REGISRTION_DATE, patientregistrationdate);
         db.insert(TABLE_PATIENT_INFORMATION, null, contentValues);
         db.close();
         return true;
