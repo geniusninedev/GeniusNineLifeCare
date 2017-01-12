@@ -47,7 +47,7 @@
             android:layout_height="match_parent">
 
             <android.support.design.widget.TextInputLayout
-                android:id="@+id/text_input_layout4"
+                android:id="@+id/text_input_layout2"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
                 <EditText
@@ -66,15 +66,15 @@
             android:layout_height="match_parent">
 
             <android.support.design.widget.TextInputLayout
-                android:id="@+id/text_input_layout2"
+                android:id="@+id/text_input_layout3"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
                 <EditText
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:inputType="textPersonName"
                     android:id="@+id/edittextpatientemail"
-                    android:hint="Email:" />
+                    android:hint="Email:"
+                    android:inputType="textEmailAddress" />
 
             </android.support.design.widget.TextInputLayout>
         </LinearLayout>
@@ -84,15 +84,15 @@
             android:layout_height="match_parent">
 
             <android.support.design.widget.TextInputLayout
-                android:id="@+id/text_input_layout6"
+                android:id="@+id/text_input_layout4"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
                 <EditText
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:inputType="textPersonName"
                     android:id="@+id/edittextpatientpassword"
-                    android:hint="Enter Password For Login:" />
+                    android:hint="Enter Password For Login:"
+                    android:inputType="textPassword" />
 
             </android.support.design.widget.TextInputLayout>
         </LinearLayout>
@@ -106,7 +106,7 @@
                 android:text="Gender:"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:id="@+id/textView6"
+                android:id="@+id/textView1"
                 android:layout_weight="1"
                 android:textSize="18sp" />
 
@@ -143,14 +143,33 @@
             android:layout_height="match_parent">
 
             <android.support.design.widget.TextInputLayout
+                android:id="@+id/text_input_layout6"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+                <EditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/edittextpatientheight"
+                    android:hint="Height:"
+                    android:inputType="number"
+                    android:maxLength="3" />
+
+            </android.support.design.widget.TextInputLayout>
+        </LinearLayout>
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <android.support.design.widget.TextInputLayout
                 android:id="@+id/text_input_layout7"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
                 <EditText
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:id="@+id/edittextpatientaheight"
-                    android:hint="Height:"
+                    android:id="@+id/edittextpatientweight"
+                    android:hint="Weight:"
                     android:inputType="number"
                     android:maxLength="3" />
 
@@ -168,10 +187,10 @@
                 <EditText
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:id="@+id/edittextpatientaweight"
-                    android:hint="Weight:"
-                    android:inputType="number"
-                    android:maxLength="3" />
+                    android:id="@+id/edittextpatientbloodgroup"
+                    android:hint="Blood Group:"
+                    android:maxLength="3"
+                    android:inputType="text" />
 
             </android.support.design.widget.TextInputLayout>
         </LinearLayout>
@@ -187,10 +206,9 @@
                 <EditText
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:id="@+id/edittextpatientabloodgroup"
-                    android:hint="Blood Group:"
-                    android:inputType="number"
-                    android:maxLength="3" />
+                    android:id="@+id/edittextpatientstreetaddress"
+                    android:hint="Address:"
+                    android:inputType="textMultiLine|textPostalAddress" />
 
             </android.support.design.widget.TextInputLayout>
         </LinearLayout>
@@ -206,29 +224,10 @@
                 <EditText
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:id="@+id/edittextpatientstreetaddress"
-                    android:hint="Address:"
-                    android:inputType="number"
-                    android:maxLength="3" />
-
-            </android.support.design.widget.TextInputLayout>
-        </LinearLayout>
-        <LinearLayout
-            android:orientation="vertical"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
-
-            <android.support.design.widget.TextInputLayout
-                android:id="@+id/text_input_layout11"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent">
-                <EditText
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
                     android:id="@+id/edittextpatientpincode"
                     android:hint="Area Pincode:"
                     android:inputType="number"
-                    android:maxLength="3" />
+                    android:maxLength="6" />
 
             </android.support.design.widget.TextInputLayout>
         </LinearLayout>

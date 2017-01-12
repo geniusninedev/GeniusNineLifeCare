@@ -8,10 +8,8 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Toast;
-
 import com.geniusnine.android.geniusninelifecare.Helper.DBHelper;
 import com.geniusnine.android.geniusninelifecare.R;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -21,7 +19,7 @@ import java.util.List;
 
 public class Patient_Registration extends Activity {
     DBHelper dbHelper;
-    EditText edittextPatientname,edittextPatientemail,edittextPatientmobilenumber,edittextPatientage;
+    EditText edittextPatientname,edittextPatientmobilenumber,edittextPatientemail,edittextPatientage;
     Spinner spinnerPatientgender;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,9 +27,9 @@ public class Patient_Registration extends Activity {
         setContentView(R.layout.patient_registrationform);
         dbHelper = new DBHelper(Patient_Registration.this);
          edittextPatientname = (EditText) findViewById(R.id.edittextpatientname);
+         edittextPatientmobilenumber = (EditText)findViewById(R.id.edittextpatientmobilenumber);
          edittextPatientemail = (EditText) findViewById(R.id.edittextpatientemail);
          spinnerPatientgender=(Spinner)findViewById(R.id.spinnerpatientgender);
-         edittextPatientmobilenumber = (EditText)findViewById(R.id.edittextpatientmobilenumber);
          edittextPatientage = (EditText)findViewById(R.id. edittextpatientage);
         Button buttonregisteruser=(Button) findViewById(R.id.buttonregisterpatient);
         // Spinner Drop down elements
@@ -50,13 +48,13 @@ public class Patient_Registration extends Activity {
         buttonregisteruser.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String patientname,patientemail,patientgender,patientmobilenumber,patientage;
+                String patientname,patientmobilenumber,patientemail,patientgender,patientage;
                 patientname=edittextPatientname.getText().toString().trim();
+                patientmobilenumber=edittextPatientmobilenumber.getText().toString().trim();
                 patientemail=edittextPatientemail.getText().toString().trim();
                 patientgender=spinnerPatientgender.getSelectedItem().toString().trim();
-                patientmobilenumber=edittextPatientmobilenumber.getText().toString().trim();
                 patientage=edittextPatientage.getText().toString().trim();
-                dbHelper.addUser(patientname,patientemail,patientgender,patientmobilenumber,patientage);
+                dbHelper.addUser(patientname,patientmobilenumber,patientemail,patientgender,patientage);
                 Toast.makeText(Patient_Registration.this,"Patient Registred SuccessFully",Toast.LENGTH_LONG).show();
 
             }

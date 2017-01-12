@@ -20,9 +20,9 @@ public class DBHelper extends SQLiteOpenHelper {
     public static final String TABLE_PATIENT_INFORMATION = "patient_information";
     public static final String COLUMN_PATIENT_ID = "patient_id";
     public static final String COLUMN_PATIENT_NAME = "patient_name";
+    public static final String COLUMN_PATIENT_MOBILE = "patient_mobile";
     public static final String COLUMN_PATIENT_EMAIL = "patient_email";
     public static final String COLUMN_PATIENT_GENDER = "patient_gender";
-    public static final String COLUMN_PATIENT_MOBILE = "patient_mobile";
     public static final String COLUMN_PATIENT_AGE = "patient_age";
     public static final String COLUMN_PATIENT_REGISRTION_DATE = "date";
 
@@ -55,9 +55,9 @@ public class DBHelper extends SQLiteOpenHelper {
         String sql = "CREATE TABLE IF NOT EXISTS " + TABLE_PATIENT_INFORMATION
                 + "(" +COLUMN_PATIENT_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
                 + COLUMN_PATIENT_NAME + " VARCHAR, "
+                + COLUMN_PATIENT_MOBILE + " INTEGER,"
                 + COLUMN_PATIENT_EMAIL + " VARCHAR,"
                 + COLUMN_PATIENT_GENDER + " VARCHAR,"
-                + COLUMN_PATIENT_MOBILE + " INTEGER,"
                 + COLUMN_PATIENT_AGE + " INTEGER,"
                 + COLUMN_PATIENT_REGISRTION_DATE + " DATE" + ")";
         db.execSQL(sql);
@@ -85,14 +85,14 @@ public class DBHelper extends SQLiteOpenHelper {
         db.execSQL(sql);
         //  onCreate(db);
     }
-    public boolean addUser(String username,String useremail,String usergender,String usermobilenumber,String userage) {
+    public boolean addUser(String patientname,String patientmobilenumber,String patientemail,String patientgender,String patientage) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
-        contentValues.put(COLUMN_PATIENT_NAME, username);
-        contentValues.put(COLUMN_PATIENT_EMAIL, useremail);
-        contentValues.put(COLUMN_PATIENT_GENDER, usergender);
-        contentValues.put(COLUMN_PATIENT_MOBILE, usermobilenumber);
-        contentValues.put(COLUMN_PATIENT_AGE,  userage);
+        contentValues.put(COLUMN_PATIENT_NAME, patientname);
+        contentValues.put(COLUMN_PATIENT_MOBILE, patientmobilenumber);
+        contentValues.put(COLUMN_PATIENT_EMAIL, patientemail);
+        contentValues.put(COLUMN_PATIENT_GENDER, patientgender);
+        contentValues.put(COLUMN_PATIENT_AGE, patientage);
         db.insert(TABLE_PATIENT_INFORMATION, null, contentValues);
         db.close();
         return true;
