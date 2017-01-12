@@ -19,6 +19,7 @@ public class DBHelper extends SQLiteOpenHelper {
     public static final String DB_NAME = "geniusninelifecare";
     public static final String TABLE_PATIENT_INFORMATION = "patient_information";
     public static final String COLUMN_PATIENT_ID = "patient_id";
+    public static final String COLUMN_PATIENT_PROFILE_PICTURE = "patient_profile_picture";
     public static final String COLUMN_PATIENT_NAME = "patient_name";
     public static final String COLUMN_PATIENT_MOBILE = "patient_mobile";
     public static final String COLUMN_PATIENT_PASSWORD = "patient_password";
@@ -59,6 +60,7 @@ public class DBHelper extends SQLiteOpenHelper {
     public void onCreate(SQLiteDatabase db) {
         String sql = "CREATE TABLE IF NOT EXISTS " + TABLE_PATIENT_INFORMATION
                 + "(" +COLUMN_PATIENT_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
+                + COLUMN_PATIENT_PROFILE_PICTURE + " BLOB, "
                 + COLUMN_PATIENT_NAME + " VARCHAR, "
                 + COLUMN_PATIENT_MOBILE + " INTEGER,"
                 + COLUMN_PATIENT_PASSWORD + " VARCHAR,"
