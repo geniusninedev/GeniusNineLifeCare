@@ -15,7 +15,11 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".Patient_Registration.Patient_Registration">
+        <activity android:name=".Patient_Registration.Patient_Registration"
+            android:screenOrientation="portrait">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".Login_Patient.Patient_Login" />
         </activity>
         <activity android:name=".Login_Patient.Patient_Login">
         </activity>

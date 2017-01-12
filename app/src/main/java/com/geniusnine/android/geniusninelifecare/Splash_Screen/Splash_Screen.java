@@ -67,6 +67,7 @@ public class Splash_Screen extends AwesomeSplash {
     @Override
     public void animationsFinished() {
         Intent intent=new Intent(Splash_Screen.this, Patient_Login.class);
+        finish();
         startActivity(intent);
         //transit to another activity here
         //or do whatever you want

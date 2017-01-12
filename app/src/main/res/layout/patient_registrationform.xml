@@ -1,15 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/registraionbackground">
-<ScrollView
+    <include
+        android:id="@+id/app_bar"
+        layout="@layout/app_bar" />
+    <ScrollView
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="wrap_content"
+    android:layout_marginTop="?attr/actionBarSize">
     <LinearLayout
         android:orientation="vertical"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        >
 
         <LinearLayout
             android:orientation="horizontal"
@@ -266,4 +271,5 @@
 
     </LinearLayout>
 </ScrollView>
-</LinearLayout>
+    </RelativeLayout>
+

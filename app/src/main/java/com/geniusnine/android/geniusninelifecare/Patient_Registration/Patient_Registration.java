@@ -4,6 +4,9 @@ import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.app.NavUtils;
+import android.support.v7.app.AppCompatActivity;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -26,7 +29,7 @@ import java.util.Locale;
  * Created by Dev on 12-01-2017.
  */
 
-public class Patient_Registration extends Activity {
+public class Patient_Registration extends AppCompatActivity {
     DBHelper dbHelper;
     EditText edittextPatientname,edittextPatientmobilenumber,edittextpatientpassword,edittextPatientemail,edittextPatientage,edittextpatientheight,edittextpatientweight,edittextpatientbloodgroup,edittextpatientaddress,edittextpatientpincode;
     Spinner spinnerPatientgender;
@@ -39,6 +42,10 @@ public class Patient_Registration extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.patient_registrationform);
+        android.support.v7.widget.Toolbar toolbar = (android.support.v7.widget.Toolbar) findViewById(R.id.app_bar);
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setHomeButtonEnabled(true);
         dbHelper = new DBHelper(Patient_Registration.this);
          textViewcurrentdate=(TextView)findViewById(R.id.textViewcurrentDate);
          edittextPatientname = (EditText) findViewById(R.id.edittextpatientname);
@@ -142,5 +149,20 @@ public class Patient_Registration extends Activity {
             }
         });
 
+    }
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle action bar item clicks here. The action bar will
+        // automatically handle clicks on the Home/Up button, so long
+        // as you specify a parent activity in AndroidManifest.xml.
+        int id = item.getItemId();
+
+        //noinspection SimplifiableIfStatement
+        if (id == android.R.id.home) {
+            NavUtils.navigateUpFromSameTask(this);
+
+        }
+
+        return super.onOptionsItemSelected(item);
     }
 }
