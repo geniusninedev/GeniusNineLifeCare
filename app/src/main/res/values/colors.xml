@@ -8,4 +8,9 @@
     <color name="white">#ffffff</color>
     <color name="pink">#7ec0fa</color>
     <color name="appcolor">#4998de</color>
+    <color name="red_pressed">#DD4B39</color>
+    <color name="red_normal">#B64032</color>
+
+    <color name="blue_pressed">#5A76B1</color>
+    <color name="blue_normal">#516590</color>
 </resources>

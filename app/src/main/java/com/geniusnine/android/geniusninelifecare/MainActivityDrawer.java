@@ -1,5 +1,10 @@
 package com.geniusnine.android.geniusninelifecare;
 
+import android.app.AlertDialog;
+import android.content.Context;
+import android.content.DialogInterface;
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.FragmentManager;
@@ -10,12 +15,11 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.Toast;
 
-import com.geniusnine.android.geniusninelifecare.Fragments.Accounts;
-import com.geniusnine.android.geniusninelifecare.Fragments.Categories;
-import com.geniusnine.android.geniusninelifecare.Fragments.CustHome;
 import com.geniusnine.android.geniusninelifecare.Fragments.Patient_Home;
+import com.geniusnine.android.geniusninelifecare.Fragments.Patient_Profile;
+import com.geniusnine.android.geniusninelifecare.Helper.Config;
+import com.geniusnine.android.geniusninelifecare.Login_Patient.Patient_Login;
 
 
 public class MainActivityDrawer extends AppCompatActivity {
@@ -61,50 +65,17 @@ public class MainActivityDrawer extends AppCompatActivity {
 
                 if (menuItem.getItemId() == R.id.Profile) {
                     FragmentTransaction fragmentTransaction = mFragmentManager.beginTransaction();
-                    fragmentTransaction.replace(R.id.containerView, new Accounts()).commit();
+                    fragmentTransaction.replace(R.id.containerView, new Patient_Profile()).commit();
 
                 }
                 if (menuItem.getItemId() == R.id.Inbox) {
                     FragmentTransaction fragmentTransaction = mFragmentManager.beginTransaction();
-                    fragmentTransaction.replace(R.id.containerView, new Categories()).commit();
+                    fragmentTransaction.replace(R.id.containerView, new Patient_Profile()).commit();
 
                 }
 
-
-               /* if (menuItem.getItemId() == R.id.Login) {
-                 *//*   Intent i = new Intent(MainActivityDrawer.this, LoginActivity.class);
-                    startActivity(i);*//*
-                    FragmentTransaction xfragmentTransaction = mFragmentManager.beginTransaction();
-                    xfragmentTransaction.replace(R.id.containerView,new TabFragment()).commit();
-                }*/
-
-                if (menuItem.getItemId() == R.id.Gallery) {
-                    FragmentTransaction xfragmentTransaction = mFragmentManager.beginTransaction();
-                    xfragmentTransaction.replace(R.id.containerView, new CustHome()).commit();
-                }
-
-                if (menuItem.getItemId() == R.id.Facility) {
-                    FragmentTransaction xfragmentTransaction = mFragmentManager.beginTransaction();
-                    xfragmentTransaction.replace(R.id.containerView, new CustHome()).commit();
-                }
-
-                if (menuItem.getItemId() == R.id.Commitment) {
-                    FragmentTransaction xfragmentTransaction = mFragmentManager.beginTransaction();
-                    xfragmentTransaction.replace(R.id.containerView, new CustHome()).commit();
-                }
-
-                if (menuItem.getItemId() == R.id.Pricelist) {
-                    FragmentTransaction xfragmentTransaction = mFragmentManager.beginTransaction();
-                    xfragmentTransaction.replace(R.id.containerView, new CustHome()).commit();
-                }
-
-                if (menuItem.getItemId() == R.id.Feedback) {
-                    FragmentTransaction xfragmentTransaction = mFragmentManager.beginTransaction();
-                    xfragmentTransaction.replace(R.id.containerView, new CustHome()).commit();
-                }
-                if (menuItem.getItemId() == R.id.Contact_us) {
-                    FragmentTransaction xfragmentTransaction = mFragmentManager.beginTransaction();
-                    xfragmentTransaction.replace(R.id.containerView, new CustHome()).commit();
+                if (menuItem.getItemId() == R.id.Logout) {
+                    logout();
                 }
 
                 return false;
@@ -161,6 +132,7 @@ public class MainActivityDrawer extends AppCompatActivity {
         }*/
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_logout) {
+            logout();
             return true;
         }
         //noinspection SimplifiableIfStatement
@@ -169,6 +141,50 @@ public class MainActivityDrawer extends AppCompatActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+    //Logout function
+    private void logout(){
+        //Creating an alert dialog to confirm logout
+        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
+        alertDialogBuilder.setMessage("Are you sure you want to logout?");
+        alertDialogBuilder.setPositiveButton("Yes",
+                new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface arg0, int arg1) {
+
+                        //Getting out sharedpreferences
+                        SharedPreferences preferences = getSharedPreferences(Config.SHARED_PREF_NAME, Context.MODE_PRIVATE);
+                        //Getting editor
+                        SharedPreferences.Editor editor = preferences.edit();
+
+                        //Puting the value false for loggedin
+                        editor.putBoolean(Config.PATIENT_LOGGEDIN_SHARED_PREF, false);
+
+                        //Putting blank value to email
+                        editor.putString(Config.PATIENT_MOBILE_NO_SHARED_PREF, "");
+
+                        //Saving the sharedpreferences
+                        editor.commit();
+
+                        //Starting login activity
+                        Intent intent = new Intent(MainActivityDrawer.this, Patient_Login.class);
+                        finish();
+                        startActivity(intent);
+                    }
+                });
+
+        alertDialogBuilder.setNegativeButton("No",
+                new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface arg0, int arg1) {
+
+                    }
+                });
+
+        //Showing the alert dialog
+        AlertDialog alertDialog = alertDialogBuilder.create();
+        alertDialog.show();
+
     }
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {

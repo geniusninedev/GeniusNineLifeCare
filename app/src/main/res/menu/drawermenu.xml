@@ -78,8 +78,8 @@
     </group>
     <group android:id="@+id/grp13" android:checkableBehavior="single" >
         <item
-            android:id="@+id/Facility"
-            android:icon="@android:drawable/ic_dialog_dialer"
-            android:title="Some Happy" />
+            android:id="@+id/Logout"
+            android:icon="@drawable/ic_power_settings_new_black_24dp"
+            android:title="Logout" />
     </group>
 </menu>

@@ -2,7 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/loginbackground"
+    android:background="@drawable/transp_background"
     android:orientation="vertical"
     >
 
@@ -23,12 +23,17 @@
         <EditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:inputType="textPersonName"
-            android:hint="Mobile Number"
-            android:ems="10"
-            android:background="@android:drawable/editbox_background"
             android:id="@+id/editTextUserName"
-            android:layout_weight="1" />
+            android:drawableLeft="@drawable/ic_account_circle_white_24dp"
+            android:hint="  Enter User Name"
+            android:maxLength="10"
+            android:inputType="number"
+            android:textColorHint="#999999"
+            android:textColor="#FFFFFF"
+            android:textSize="20sp"
+            android:layout_below="@+id/textView3"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="47dp" />
     </LinearLayout>
 
     <LinearLayout
@@ -42,12 +47,16 @@
         <EditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:inputType="textPersonName"
-            android:hint="Password"
+            android:inputType="textPassword"
             android:ems="10"
-            android:background="@android:drawable/editbox_background"
-            android:id="@+id/editTextPassword"
-            android:layout_weight="1" />
+            android:hint=" Enter User Passwrod"
+            android:drawableLeft="@drawable/ic_lock_outline_white_24dp"
+            android:textSize="20sp"
+            android:textColorHint="#999999"
+            android:textColor="#FFFFFF"
+            android:maxLength="10"
+            android:digits="abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789@#*~`!$^+-*/=."
+            android:id="@+id/editTextPassword" />
     </LinearLayout>
 
     <LinearLayout
@@ -62,16 +71,25 @@
             android:layout_height="wrap_content"
             android:id="@+id/buttonSignIn"
             android:layout_weight="1"
-            style="@style/Widget.AppCompat.Button.Colored" />
-
+            android:paddingRight="5dp"
+            android:background="@drawable/blue_btn_drawable"
+            android:textColor="@android:color/primary_text_dark" />
+<TextView
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:id="@+id/textViewspace"
+    android:text="    "
+    />
 
         <Button
             android:text="Sign Up"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/buttonSignUp"
+            android:paddingLeft="5dp"
             android:layout_weight="1"
-            style="@style/Widget.AppCompat.Button.Colored" />
+            android:background="@drawable/blue_btn_drawable"
+            android:textColor="@android:color/primary_text_dark"/>
     </LinearLayout>
 
     <LinearLayout

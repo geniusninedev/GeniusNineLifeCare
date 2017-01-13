@@ -139,9 +139,10 @@ public class Patient_Registration extends AppCompatActivity {
                     edittextpatientpincode.setError("Picode is Required");
                 }
                 else{
-                    dbHelper.addUser(patientname,patientpassword,patientmobilenumber,patientemail,patientgender,patientage,patientheight,patientweight,patientbloodgroup,patientaddress,patientpincode,patientregistrationdate);
+                    dbHelper.addUser(patientname,patientmobilenumber,patientpassword,patientemail,patientgender,patientage,patientheight,patientweight,patientbloodgroup,patientaddress,patientpincode,patientregistrationdate);
                     Toast.makeText(Patient_Registration.this,"Patient Registred Successfully",Toast.LENGTH_LONG).show();
                     Intent i=new Intent(Patient_Registration.this, Patient_Login.class);
+                    finish();
                     startActivity(i);
                 }
 
