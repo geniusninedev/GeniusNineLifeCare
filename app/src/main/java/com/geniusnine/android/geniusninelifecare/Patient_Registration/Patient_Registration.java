@@ -124,7 +124,7 @@ public class Patient_Registration extends AppCompatActivity {
                 }else if(!edittextPatientemail.getText().toString().trim().matches(emailpattern)){
                     edittextPatientemail.setError("Please Enter Valid Email");
                 } else if(spinnerPatientgender.getSelectedItem().toString().trim().equals("")){
-                  Toast.makeText(Patient_Registration.this,"Gender id Required",Toast.LENGTH_LONG).show();
+                  Toast.makeText(Patient_Registration.this,"Gender is Required",Toast.LENGTH_LONG).show();
                 }else if(edittextPatientage.getText().toString().trim().equals("")){
                     edittextPatientage.setError("Age is Required");
                 }else if(edittextpatientheight.getText().toString().trim().equals("")){

@@ -7,11 +7,13 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 
+
 /**
  * Created by Dev on 13-01-2017.
  */
 
 public class Utils {
+    // convert from bitmap to byte array
     public static byte[] getImageBytes(Bitmap bitmap) {
         ByteArrayOutputStream stream = new ByteArrayOutputStream();
         bitmap.compress(Bitmap.CompressFormat.PNG, 100, stream);
@@ -33,5 +35,4 @@ public class Utils {
         }
         return byteBuffer.toByteArray();
     }
-
 }

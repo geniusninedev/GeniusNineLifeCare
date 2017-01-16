@@ -2,6 +2,7 @@ package com.geniusnine.android.geniusninelifecare.Helper;
 
 import android.app.Activity;
 import android.content.ContentValues;
+import android.content.Context;
 import android.database.Cursor;
 import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
@@ -33,17 +34,16 @@ public class DBHelper extends SQLiteOpenHelper {
     public static final String COLUMN_PATIENT_PINCODE = "patient_pincode";
     public static final String COLUMN_PATIENT_REGISRTION_DATE = "date";
 
-    private DBHelper DBHelper;
+
 
     private static final int DB_VERSION = 1;
-    SQLiteDatabase db;
 
     public DBHelper(Activity context1) {
         super(context1, DB_NAME, null, DB_VERSION);
     }
 
-
-
+    private DBHelper DBHelper;
+    SQLiteDatabase db;
 
     @Override
     public void onCreate(SQLiteDatabase db) {
@@ -69,7 +69,7 @@ public class DBHelper extends SQLiteOpenHelper {
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         String sql = "DROP TABLE IF EXISTS patient_information";
         db.execSQL(sql);
-        //  onCreate(db);
+          onCreate(db);
     }
     public boolean addUser(String patientname,String patientmobilenumber,String patientpassword,String patientemail,String patientgender,String patientage,String patientheight,String patientweight,String patientbloodgroup,String patientaddress,String patientpincode,String patientregistrationdate) {
         SQLiteDatabase db = this.getWritableDatabase();
@@ -91,33 +91,39 @@ public class DBHelper extends SQLiteOpenHelper {
         return true;
     }
 
-    public boolean UpdateProfile(int patient_id, byte[] imageBytes) {
+    // Adding new UpdateProfile
+    public void UpdateProfile(String patient_id,byte[] imageBytes) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
         contentValues.put(COLUMN_PATIENT_PROFILE_PICTURE, imageBytes);
+        db.update(TABLE_PATIENT_INFORMATION,contentValues,COLUMN_PATIENT_ID+"="+"'"+patient_id+"'",null);
+        db.close();
+
+    }
+    public boolean UpdateProfileDetails(String patient_id,String patientname,String patientmobilenumber,String patientpassword,String patientemail,String patientgender,String patientage,String patientheight,String patientweight,String patientbloodgroup,String patientaddress,String patientpincode) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues contentValues = new ContentValues();
+        contentValues.put(COLUMN_PATIENT_NAME, patientname);
+        contentValues.put(COLUMN_PATIENT_MOBILE, patientmobilenumber);
+        contentValues.put(COLUMN_PATIENT_PASSWORD, patientpassword);
+        contentValues.put(COLUMN_PATIENT_EMAIL, patientemail);
+        contentValues.put(COLUMN_PATIENT_GENDER, patientgender);
+        contentValues.put(COLUMN_PATIENT_AGE, patientage);
+        contentValues.put(COLUMN_PATIENT_HEIGHT, patientheight);
+        contentValues.put(COLUMN_PATIENT_WEIGHT, patientweight);
+        contentValues.put(COLUMN_PATIENT_BLOOD_GROUP, patientbloodgroup);
+        contentValues.put(COLUMN_PATIENT_ADDRESS, patientaddress);
+        contentValues.put(COLUMN_PATIENT_PINCODE, patientpincode);
         db.update(TABLE_PATIENT_INFORMATION,contentValues,COLUMN_PATIENT_ID+"="+"'"+patient_id+"'",null);
         db.close();
         return true;
     }
-
-    // Insert the image to the Sqlite DB
-    public void insertImage(int patient_id, byte[] imageBytes) {
-       /* SQLiteDatabase db = this.getWritableDatabase();
-        ContentValues contentValues = new ContentValues();
-        contentValues.put(COLUMN_PATIENT_PROFILE_PICTURE, imageBytes);
-        db .insert(TABLE_PATIENT_INFORMATION, null, contentValues);*/
-        SQLiteDatabase db = this.getWritableDatabase();
-        ContentValues contentValues = new ContentValues();
-        contentValues.put(COLUMN_PATIENT_PROFILE_PICTURE, imageBytes);
-        db.update(TABLE_PATIENT_INFORMATION,contentValues,COLUMN_PATIENT_ID+"="+"'"+patient_id+"'",null);
-        db.close();
-    }
-
     // Get the image from SQLite DB
     // We will just get the last image we just saved for convenience...
-    public byte[] retreiveImageFromDB(int patient_id) {
+    public byte[] retreiveImageFromDB(String  patient_id) {
         SQLiteDatabase db = this.getWritableDatabase();
-        Cursor cur = db.query(true, TABLE_PATIENT_INFORMATION, new String[]{COLUMN_PATIENT_PROFILE_PICTURE,}, null, null, null, null, COLUMN_PATIENT_ID , String.valueOf(patient_id));
+        Cursor cur = db .query(true, TABLE_PATIENT_INFORMATION, new String[]{COLUMN_PATIENT_PROFILE_PICTURE,},
+                null, null, null, null, COLUMN_PATIENT_ID , patient_id);
         if (cur.moveToFirst()) {
             byte[] blob = cur.getBlob(cur.getColumnIndex(COLUMN_PATIENT_PROFILE_PICTURE));
             cur.close();
@@ -126,17 +132,25 @@ public class DBHelper extends SQLiteOpenHelper {
         cur.close();
         return null;
     }
+    //
+    public Cursor getPatientData(String patient_mobile) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        String sql = "SELECT * FROM patient_information WHERE patient_mobile ='" + patient_mobile + "'";
+        Cursor c = db.rawQuery(sql, null);
+        return c;
+    }
     //---opens the database---
     public DBHelper open() throws SQLException
     {
-        db = DBHelper.getWritableDatabase();
+        SQLiteDatabase db = this.getWritableDatabase();
         return this;
     }
 
     //---closes the database---
     public void close()
     {
-        DBHelper.close();
+        SQLiteDatabase db = this.getWritableDatabase();
+        db.close();
     }
 }
 
