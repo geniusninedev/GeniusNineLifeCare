@@ -33,7 +33,47 @@ public class DBHelper extends SQLiteOpenHelper {
     public static final String COLUMN_PATIENT_ADDRESS = "patient_address";
     public static final String COLUMN_PATIENT_PINCODE = "patient_pincode";
     public static final String COLUMN_PATIENT_REGISRTION_DATE = "date";
+    //database for the doctor
+    public static final String TABLE_DOCTOR_INFORMATION = "doctor_information";
+    public static final String COLUMN_DOCTOR_ID = "doctor_id";
+    public static final String COLUMN_DOCTOR_PROFILE_PICTURE = "doctor_profile_picture";
+    public static final String COLUMN_DOCTOR_NAME = "doctor_name";
+    public static final String COLUMN_DOCTOR_DEGREE = "doctor_degree";
+    public static final String COLUMN_DOCTOR_SPECILIZATION = "doctor_specialization";
+    public static final String COLUMN_DOCTOR_EXPERIENCE = "doctor_experience";
+    public static final String COLUMN_DOCTOR_FEES = "doctor_fees";
+    public static final String COLUMN_DOCTOR_ACHIEVEMENT = "doctor_achievement";
+    public static final String COLUMN_DOCTOR_EMAIL = "doctor_email";
+    public static final String COLUMN_DOCTOR_FAX = "doctor_fax";
+    public static final String COLUMN_DOCTOR_MOBILE = "doctor_mobile";
+    public static final String COLUMN_DOCTOR_PASSWORD = "doctor_password";
+    public static final String COLUMN_DOCTOR_GENDER = "doctor_gender";
+    public static final String COLUMN_DOCTOR_AGE = "doctor_age";
+    public static final String COLUMN_DOCTOR_ADDRESS = "doctor_address";
+    public static final String COLUMN_DOCTOR_CONNECTED_HOSPITAL = "doctor_connected_hospital";
+    public static final String COLUMN_DOCTOR_AVAILABILITY = "doctor_availability";
+    public static final String COLUMN_DOCTOR_FACEBOOK = "doctor_facebook";
+    public static final String COLUMN_DOCTOR_TWITTER = "doctor_twitter";
+    public static final String COLUMN_DOCTOR_REGISRTION_DATE = "date";
 
+
+    //database table for the book appointment
+    public static final String TABLE_BOOK_APPOINTMENT= "book_appointment_information";
+    public static final String COLUMN_BOOK_APPOINTMENT_ID = "book_appointment_id";
+    public static final String COLUMN_BOOK_APPOINTMENT_DATE = "book_appointment_date";
+    public static final String COLUMN_BOOK_APPOINTMENT_TIME = "book_appointment_time";
+    public static final String COLUMN_BOOK_APPOINTMENT_REASON = "book_appointment_reason";
+    public static final String COLUMN_BOOK_APPOINTMENT_FROM_DAYS = "book_appointment_from_days";
+    public static final String COLUMN_BOOK_APPOINTMENT_PATIENT_ID = "patient_id";
+    public static final String COLUMN_APPOINTMENT_REGISRTION_DATE = "appointment_registered_date";
+
+
+
+    //database table for the categories
+    public static final String TABLE_CATEGORY= "category_information";
+    public static final String COLUMN_CATEGORY_ID = "category_id";
+    public static final String COLUMN_CATEGORY_NAME = "category_name";
+    public static final String COLUMN_CATEGORY_IMAGE = "category_name";
 
 
     private static final int DB_VERSION = 1;
@@ -63,14 +103,66 @@ public class DBHelper extends SQLiteOpenHelper {
                 + COLUMN_PATIENT_PINCODE + " INTEGER,"
                 + COLUMN_PATIENT_REGISRTION_DATE + " DATE" + ")";
         db.execSQL(sql);
+        //Table for the doctor
+        String sq2 = "CREATE TABLE IF NOT EXISTS " + TABLE_DOCTOR_INFORMATION
+                + "(" +COLUMN_DOCTOR_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
+                + COLUMN_DOCTOR_PROFILE_PICTURE + " BLOB, "
+                + COLUMN_DOCTOR_NAME + " VARCHAR, "
+                + COLUMN_DOCTOR_DEGREE + " VARCHAR,"
+                + COLUMN_DOCTOR_SPECILIZATION + " VARCHAR,"
+                + COLUMN_DOCTOR_EXPERIENCE + " INTEGER,"
+                + COLUMN_DOCTOR_FEES + " INTEGER,"
+                + COLUMN_DOCTOR_ACHIEVEMENT + " VARCHAR,"
+                + COLUMN_DOCTOR_EMAIL + " VARCHAR,"
+                + COLUMN_DOCTOR_FAX + " VARCHAR,"
+                + COLUMN_DOCTOR_MOBILE + " INTEGER,"
+                + COLUMN_DOCTOR_PASSWORD + " VARCHAR,"
+                + COLUMN_DOCTOR_GENDER + " VARCHAR,"
+                + COLUMN_DOCTOR_AGE + " INTEGER,"
+                + COLUMN_DOCTOR_ADDRESS + " VARCHAR,"
+                + COLUMN_DOCTOR_CONNECTED_HOSPITAL + " VARCHAR,"
+                + COLUMN_DOCTOR_AVAILABILITY + " DOUBLE,"
+                + COLUMN_DOCTOR_FACEBOOK + " VARCHAR,"
+                + COLUMN_DOCTOR_TWITTER + " VARCHAR,"
+                + COLUMN_DOCTOR_REGISRTION_DATE + " DATE" + ")";
+        db.execSQL(sq2);
+
+        //Table for book appointment
+        String sq3 = "CREATE TABLE IF NOT EXISTS " + TABLE_BOOK_APPOINTMENT
+                + "(" +COLUMN_BOOK_APPOINTMENT_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
+                + COLUMN_BOOK_APPOINTMENT_DATE + " DATE,"
+                + COLUMN_BOOK_APPOINTMENT_TIME + " DOUBLE,"
+                + COLUMN_BOOK_APPOINTMENT_REASON + " VARCHAR,"
+                + COLUMN_BOOK_APPOINTMENT_FROM_DAYS + " VARCHAR,"
+                + COLUMN_BOOK_APPOINTMENT_PATIENT_ID + " INTEGER,"
+                + COLUMN_APPOINTMENT_REGISRTION_DATE + " DATE" + ")";
+        db.execSQL(sq3);
+
+
+        //Table for book category
+        String sq4 = "CREATE TABLE IF NOT EXISTS " + TABLE_CATEGORY
+                + "(" +COLUMN_CATEGORY_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
+                + COLUMN_CATEGORY_NAME + " VARCHAR, "
+                + COLUMN_CATEGORY_IMAGE + " BLOB" + ")";
+        db.execSQL(sq4);
     }
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         String sql = "DROP TABLE IF EXISTS patient_information";
         db.execSQL(sql);
+
+        String sq2 = "DROP TABLE IF EXISTS doctor_information";
+        db.execSQL(sq2);
+
+        String sq3 = "DROP TABLE IF EXISTS book_appointment_information";
+        db.execSQL(sq3);
+
+        String sq4 = "DROP TABLE IF EXISTS category_information";
+        db.execSQL(sq4);
           onCreate(db);
     }
+    //insertion of patient patient
     public boolean addUser(String patientname,String patientmobilenumber,String patientpassword,String patientemail,String patientgender,String patientage,String patientheight,String patientweight,String patientbloodgroup,String patientaddress,String patientpincode,String patientregistrationdate) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
@@ -90,7 +182,60 @@ public class DBHelper extends SQLiteOpenHelper {
         db.close();
         return true;
     }
+    //insertion of doctor information
+    public boolean addDoctor(String doctorname,String doctordegree,String doctorspecialization,String doctorexperience,String fees,String doctorachievement,String doctoremail,String doctorfax,String doctormobilenumber,String doctorpassword,String doctorgender,String doctorage,String doctoraddress,String doctorconnectedhospital,String doctoravalibility,String doctorfacebook,String doctortwitter,String doctorregistrationdate) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues contentValues = new ContentValues();
+        contentValues.put(COLUMN_DOCTOR_NAME, doctorname);
+        contentValues.put(COLUMN_DOCTOR_DEGREE, doctordegree);
+        contentValues.put(COLUMN_DOCTOR_SPECILIZATION, doctorspecialization);
+        contentValues.put(COLUMN_DOCTOR_EXPERIENCE, doctorexperience);
+        contentValues.put(COLUMN_DOCTOR_FEES, fees);
+        contentValues.put(COLUMN_DOCTOR_ACHIEVEMENT, doctorachievement);
+        contentValues.put(COLUMN_DOCTOR_EMAIL, doctoremail);
+        contentValues.put(COLUMN_DOCTOR_FAX, doctorfax);
+        contentValues.put(COLUMN_DOCTOR_MOBILE, doctormobilenumber);
+        contentValues.put(COLUMN_DOCTOR_PASSWORD, doctorpassword);
+        contentValues.put(COLUMN_DOCTOR_GENDER, doctorgender);
+        contentValues.put(COLUMN_DOCTOR_AGE, doctorage);
+        contentValues.put(COLUMN_DOCTOR_ADDRESS, doctoraddress);
+        contentValues.put(COLUMN_DOCTOR_CONNECTED_HOSPITAL, doctorconnectedhospital);
+        contentValues.put(COLUMN_DOCTOR_AVAILABILITY, doctoravalibility);
+        contentValues.put(COLUMN_DOCTOR_FACEBOOK, doctorfacebook);
+        contentValues.put(COLUMN_DOCTOR_TWITTER, doctortwitter);
+        contentValues.put(COLUMN_DOCTOR_REGISRTION_DATE, doctorregistrationdate);
+        db.insert(TABLE_DOCTOR_INFORMATION, null, contentValues);
+        db.close();
+        return true;
+    }
 
+    //insertion of book appointment information
+    public boolean addBookAppointment(String bookappointmentdate,String bookappointmenttime,String bookappointmentreason,String bookappointmentfromdays,String bookappointmentpatientid,String bookappointmentregistrationdate) {
+
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues contentValues = new ContentValues();
+        contentValues.put(COLUMN_BOOK_APPOINTMENT_DATE, bookappointmentdate);
+        contentValues.put(COLUMN_BOOK_APPOINTMENT_TIME, bookappointmenttime);
+        contentValues.put(COLUMN_BOOK_APPOINTMENT_REASON, bookappointmentreason);
+        contentValues.put(COLUMN_BOOK_APPOINTMENT_FROM_DAYS, bookappointmentfromdays);
+        contentValues.put(COLUMN_BOOK_APPOINTMENT_PATIENT_ID, bookappointmentpatientid);
+        contentValues.put(COLUMN_APPOINTMENT_REGISRTION_DATE, bookappointmentregistrationdate);
+        db.insert(TABLE_BOOK_APPOINTMENT, null, contentValues);
+        db.close();
+        return true;
+    }
+
+    //insertion of Category information
+    public boolean addCategory(String categoryname,String categoryimage) {
+
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues contentValues = new ContentValues();
+        contentValues.put(COLUMN_CATEGORY_NAME, categoryname);
+        contentValues.put(COLUMN_CATEGORY_IMAGE, categoryimage);
+        db.insert(TABLE_CATEGORY, null, contentValues);
+        db.close();
+        return true;
+    }
     // Adding new UpdateProfile
     public void UpdateProfile(String patient_id,byte[] imageBytes) {
         SQLiteDatabase db = this.getWritableDatabase();
