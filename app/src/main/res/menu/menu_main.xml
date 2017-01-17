@@ -17,23 +17,23 @@
         android:orderInCategory="100"
         android:title="@string/action_import"
         app:showAsAction="never" />-->
-    <item
+   <!-- <item
         android:id="@+id/action_logout"
         android:orderInCategory="100"
         android:title="@string/action_logout"
-        app:showAsAction="never" />
-    <item
+        app:showAsAction="never" />-->
+   <!-- <item
         android:id="@+id/action_settings"
         android:orderInCategory="100"
         android:title="@string/action_settings"
-        app:showAsAction="never" />
-   <!-- <item
-        android:id="@+id/action_list"
-        android:icon="@drawable/ft_enquiry_icon"
-        android:title="List"
+        app:showAsAction="never" />-->
+    <item
+        android:id="@+id/action_profile"
+        android:icon="@drawable/ic_account_circle_white_24dp"
+        android:title="Profile"
         android:orderInCategory="5"
         app:showAsAction="ifRoom|collapseActionView" />
-    <item
+    <!--<item
         android:id="@+id/action_chart"
         android:icon="@drawable/ic_piachart"
         android:title="Chart"

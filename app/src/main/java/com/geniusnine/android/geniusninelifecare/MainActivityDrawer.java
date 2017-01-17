@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.database.Cursor;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.FragmentManager;
@@ -12,13 +13,19 @@ import android.support.v4.app.FragmentTransaction;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.ImageView;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import com.geniusnine.android.geniusninelifecare.Fragments.Patient_Home;
 import com.geniusnine.android.geniusninelifecare.Fragments.Patient_Profile;
 import com.geniusnine.android.geniusninelifecare.Helper.Config;
+import com.geniusnine.android.geniusninelifecare.Helper.DBHelper;
+import com.geniusnine.android.geniusninelifecare.Helper.Utils;
 import com.geniusnine.android.geniusninelifecare.Login_Patient.Patient_Login;
 
 
@@ -27,11 +34,23 @@ public class MainActivityDrawer extends AppCompatActivity {
     NavigationView mNavigationView;
     FragmentManager mFragmentManager;
     FragmentTransaction mFragmentTransaction;
-
+    DBHelper dbHelper;
+    ImageView profilePictureView;
+    private static final String TAG = "MainActivityDrawer";
+    Cursor cursor;
+    private String patient_mobile_Number;
+    String patient_id,patientname,patientmobilenumber,patientemail;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.drawermain);
+        dbHelper=new DBHelper(MainActivityDrawer.this);
+
+        //fetching value from sharedpreference
+        SharedPreferences sharedPreferences =getSharedPreferences(Config.SHARED_PREF_NAME, Context.MODE_PRIVATE);
+        //Fetching thepatient_mobile_Number value form sharedpreferences
+        patient_mobile_Number = sharedPreferences.getString(Config.PATIENT_MOBILE_NO_SHARED_PREF,null);
+
         /**
          *Setup the DrawerLayout and NavigationView
          */
@@ -39,7 +58,23 @@ public class MainActivityDrawer extends AppCompatActivity {
 
         mDrawerLayout = (DrawerLayout) findViewById(R.id.drawerLayout);
         mNavigationView = (NavigationView) findViewById(R.id.shitstuff);
+        TextView Name = (TextView) mNavigationView.getHeaderView(0).findViewById(R.id.name);
+        TextView email = (TextView) mNavigationView.getHeaderView(0).findViewById(R.id.email);
+        profilePictureView = (ImageView) mNavigationView.getHeaderView(0).findViewById(R.id.imageView);
+        dbHelper.getPatientData(patient_mobile_Number);
+        cursor = dbHelper.getPatientData(patient_mobile_Number);
+        cursor.moveToFirst();
+        if (cursor != null) {
+            patient_id = cursor.getString(cursor.getColumnIndex(dbHelper.COLUMN_PATIENT_ID));
+            patientname = cursor.getString(cursor.getColumnIndex(dbHelper.COLUMN_PATIENT_NAME));
+            Name.setText(patientname);
+           /* patientmobilenumber = cursor.getString(cursor.getColumnIndex(dbHelper.COLUMN_PATIENT_MOBILE));
+            edittextPatientmobilenumber.setText(patientmobilenumber);*/
+            patientemail = cursor.getString(cursor.getColumnIndex(dbHelper.COLUMN_PATIENT_EMAIL));
+            email.setText(patientemail);
 
+        }
+        loadImageFromDB();
         /**
          * Lets inflate the very first fragment
          * Here , we are inflating the TabFragment as the first Fragment
@@ -58,20 +93,22 @@ public class MainActivityDrawer extends AppCompatActivity {
             public boolean onNavigationItemSelected(MenuItem menuItem) {
                 mDrawerLayout.closeDrawers();
                 if (menuItem.getItemId() == R.id.Home) {
+                    loadImageFromDB();
                     FragmentTransaction fragmentTransaction = mFragmentManager.beginTransaction();
                     fragmentTransaction.replace(R.id.containerView, new Patient_Home()).commit();
 
                 }
 
-                if (menuItem.getItemId() == R.id.Profile) {
+                if (menuItem.getItemId() == R.id.Aboutus) {
+                    loadImageFromDB();
                     FragmentTransaction fragmentTransaction = mFragmentManager.beginTransaction();
                     fragmentTransaction.replace(R.id.containerView, new Patient_Profile()).commit();
 
                 }
                 if (menuItem.getItemId() == R.id.Inbox) {
+                    loadImageFromDB();
                     FragmentTransaction fragmentTransaction = mFragmentManager.beginTransaction();
                     fragmentTransaction.replace(R.id.containerView, new Patient_Profile()).commit();
-
                 }
 
                 if (menuItem.getItemId() == R.id.Logout) {
@@ -94,6 +131,21 @@ public class MainActivityDrawer extends AppCompatActivity {
 
         mDrawerToggle.syncState();
 
+
+    }
+    Boolean loadImageFromDB() {
+        try {
+            dbHelper.open();
+            byte[] bytes = dbHelper.retreiveImageFromDB(patient_id);
+            dbHelper.close();
+            // Show Image from DB in ImageView
+            profilePictureView.setImageBitmap(Utils.getImage(bytes));
+            return true;
+        } catch (Exception e) {
+            Log.e(TAG, "<loadImageFromDB> Error : " + e.getLocalizedMessage());
+            dbHelper.close();
+            return false;
+        }
     }
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -108,12 +160,13 @@ public class MainActivityDrawer extends AppCompatActivity {
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
-      /*  //noinspection SimplifiableIfStatement
-        if (id == R.id.action_list) {
-            Toast.makeText(getApplication(),"List clicked",Toast.LENGTH_LONG).show();
+       //noinspection SimplifiableIfStatement
+        if (id == R.id.action_profile) {
+            FragmentTransaction fragmentTransaction = mFragmentManager.beginTransaction();
+            fragmentTransaction.replace(R.id.containerView, new Patient_Profile()).commit();
             return true;
         }
-        //noinspection SimplifiableIfStatement
+      /*   //noinspection SimplifiableIfStatement
         if (id == R.id.action_chart) {
             Toast.makeText(getApplication(),"Pia Chart Clicked clicked",Toast.LENGTH_LONG).show();
             return true;
@@ -131,14 +184,14 @@ public class MainActivityDrawer extends AppCompatActivity {
             return true;
         }*/
         //noinspection SimplifiableIfStatement
-        if (id == R.id.action_logout) {
+        /*if (id == R.id.action_logout) {
             logout();
             return true;
-        }
+        }*/
         //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
+       /* if (id == R.id.action_settings) {
             return true;
-        }
+        }*/
 
         return super.onOptionsItemSelected(item);
     }
