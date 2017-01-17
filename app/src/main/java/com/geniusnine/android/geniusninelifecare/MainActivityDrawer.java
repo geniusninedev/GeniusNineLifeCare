@@ -21,7 +21,11 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.geniusnine.android.geniusninelifecare.Fragments.Doctor_Categories;
+import com.geniusnine.android.geniusninelifecare.Fragments.Doctor_Registraion;
+import com.geniusnine.android.geniusninelifecare.Fragments.Patient_Book_Appointment;
 import com.geniusnine.android.geniusninelifecare.Fragments.Patient_Home;
+import com.geniusnine.android.geniusninelifecare.Fragments.Patient_Order;
 import com.geniusnine.android.geniusninelifecare.Fragments.Patient_Profile;
 import com.geniusnine.android.geniusninelifecare.Helper.Config;
 import com.geniusnine.android.geniusninelifecare.Helper.DBHelper;
@@ -98,17 +102,35 @@ public class MainActivityDrawer extends AppCompatActivity {
                     fragmentTransaction.replace(R.id.containerView, new Patient_Home()).commit();
 
                 }
-
-                if (menuItem.getItemId() == R.id.Aboutus) {
-                    loadImageFromDB();
-                    FragmentTransaction fragmentTransaction = mFragmentManager.beginTransaction();
-                    fragmentTransaction.replace(R.id.containerView, new Patient_Profile()).commit();
-
-                }
                 if (menuItem.getItemId() == R.id.Inbox) {
                     loadImageFromDB();
                     FragmentTransaction fragmentTransaction = mFragmentManager.beginTransaction();
                     fragmentTransaction.replace(R.id.containerView, new Patient_Profile()).commit();
+                }
+                if (menuItem.getItemId() == R.id.My_Orders) {
+                    loadImageFromDB();
+                    FragmentTransaction fragmentTransaction = mFragmentManager.beginTransaction();
+                    fragmentTransaction.replace(R.id.containerView, new Patient_Order()).commit();
+
+                }
+                if (menuItem.getItemId() == R.id.Book_Appointment) {
+                    loadImageFromDB();
+                    FragmentTransaction fragmentTransaction = mFragmentManager.beginTransaction();
+                    fragmentTransaction.replace(R.id.containerView, new Patient_Book_Appointment()).commit();
+
+                }
+                if (menuItem.getItemId() == R.id.Add_Categories) {
+                    loadImageFromDB();
+                    FragmentTransaction fragmentTransaction = mFragmentManager.beginTransaction();
+                    fragmentTransaction.replace(R.id.containerView, new Doctor_Categories()).commit();
+
+                }
+
+                if (menuItem.getItemId() == R.id.Add_Doctor) {
+                    loadImageFromDB();
+                    FragmentTransaction fragmentTransaction = mFragmentManager.beginTransaction();
+                    fragmentTransaction.replace(R.id.containerView, new Doctor_Registraion()).commit();
+
                 }
 
                 if (menuItem.getItemId() == R.id.Logout) {

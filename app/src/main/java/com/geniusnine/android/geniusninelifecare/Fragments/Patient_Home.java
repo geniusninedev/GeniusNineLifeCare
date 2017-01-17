@@ -112,7 +112,7 @@ public class Patient_Home extends Fragment {
          * This method returns the title of the tab according to the position.
          */
 
-        @Override
+  /*      @Override
         public CharSequence getPageTitle(int position) {
 
             switch (position) {
@@ -128,6 +128,6 @@ public class Patient_Home extends Fragment {
                     return "Forums";
             }
             return null;
-        }
+        }*/
     }
 }

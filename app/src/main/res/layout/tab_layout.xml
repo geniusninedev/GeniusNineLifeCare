@@ -8,7 +8,7 @@
             android:id="@+id/tabs"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@color/appcolor"
+            android:background="#df6a6a"
             android:fillViewport="false"
             app:tabGravity="fill"
             app:tabIndicatorColor="@color/white"
