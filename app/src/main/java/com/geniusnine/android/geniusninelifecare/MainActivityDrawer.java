@@ -21,8 +21,11 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.geniusnine.android.geniusninelifecare.Fragments.About_Us;
+import com.geniusnine.android.geniusninelifecare.Fragments.Contact_US;
 import com.geniusnine.android.geniusninelifecare.Fragments.Doctor_Categories;
 import com.geniusnine.android.geniusninelifecare.Fragments.Doctor_Registraion;
+import com.geniusnine.android.geniusninelifecare.Fragments.Feedback;
 import com.geniusnine.android.geniusninelifecare.Fragments.Patient_Book_Appointment;
 import com.geniusnine.android.geniusninelifecare.Fragments.Patient_Home;
 import com.geniusnine.android.geniusninelifecare.Fragments.Patient_Order;
@@ -132,7 +135,25 @@ public class MainActivityDrawer extends AppCompatActivity {
                     fragmentTransaction.replace(R.id.containerView, new Doctor_Registraion()).commit();
 
                 }
+                if (menuItem.getItemId() == R.id.Feedback) {
+                    loadImageFromDB();
+                    FragmentTransaction fragmentTransaction = mFragmentManager.beginTransaction();
+                    fragmentTransaction.replace(R.id.containerView, new Feedback()).commit();
 
+                }
+
+                if (menuItem.getItemId() == R.id.About_Us) {
+                    loadImageFromDB();
+                    FragmentTransaction fragmentTransaction = mFragmentManager.beginTransaction();
+                    fragmentTransaction.replace(R.id.containerView, new About_Us()).commit();
+
+                }
+                if (menuItem.getItemId() == R.id.Contact_Us) {
+                    loadImageFromDB();
+                    FragmentTransaction fragmentTransaction = mFragmentManager.beginTransaction();
+                    fragmentTransaction.replace(R.id.containerView, new Contact_US()).commit();
+
+                }
                 if (menuItem.getItemId() == R.id.Logout) {
                     logout();
                 }

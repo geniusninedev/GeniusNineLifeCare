@@ -105,7 +105,7 @@
                         android:layout_height="wrap_content"
                         android:id="@+id/edittextdoctordegree"
                         android:digits="abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ ,."
-                        android:hint="Enter  Degree/College:"
+                        android:hint="Enter  Degree:"
                         android:inputType="text" />
                 </android.support.design.widget.TextInputLayout>
             </LinearLayout>
@@ -186,17 +186,19 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
 
-                <android.support.design.widget.TextInputLayout
-                    android:id="@+id/text_input_layout21"
+                <TextView
+                    android:text="Timings"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent">
-                    <EditText
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:id="@+id/edittextdoctoravailabletimings"
-                        android:hint="Enter  Available timings:"
-                        android:inputType="text" />
-                </android.support.design.widget.TextInputLayout>
+                    android:layout_height="wrap_content"
+                    android:id="@+id/textViewTimings"
+                    android:layout_weight="1"
+                    android:textSize="18sp" />
+
+                <Spinner
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/spinnerdoctortimings"
+                    android:layout_weight="1" />
             </LinearLayout>
             <LinearLayout
                 android:orientation="vertical"
@@ -290,24 +292,25 @@
                 android:orientation="vertical"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
-
-                <android.support.design.widget.TextInputLayout
-                    android:id="@+id/text_input_layout27"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent">
-                    <EditText
+                <TextView
+                        android:text="Gender"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:id="@+id/edittextdoctorgender"
-                        android:digits="abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ "
-                        android:hint="Enter  Gender:"
-                        android:inputType="text" />
-                </android.support.design.widget.TextInputLayout>
+                        android:id="@+id/textViewgender"
+                        android:layout_weight="1"
+                        android:textSize="18sp" />
+
+                    <Spinner
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/spinnerdoctogender"/>
+
             </LinearLayout>
             <LinearLayout
-                android:orientation="vertical"
+
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
+                android:layout_height="match_parent"
+                android:orientation="vertical">
 
                 <android.support.design.widget.TextInputLayout
                     android:id="@+id/text_input_layout28"
@@ -323,9 +326,10 @@
                 </android.support.design.widget.TextInputLayout>
             </LinearLayout>
             <LinearLayout
-                android:orientation="vertical"
+
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
+                android:layout_height="match_parent"
+                android:orientation="vertical">
 
                 <android.support.design.widget.TextInputLayout
                     android:id="@+id/text_input_layout29"

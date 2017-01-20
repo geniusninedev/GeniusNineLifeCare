@@ -26,6 +26,12 @@
         </activity>
         <activity android:name=".MainActivityDrawer">
         </activity>
+        <activity android:name=".Activitys.DoctorListActivity"
+            android:screenOrientation="portrait">
+           <meta-data
+            android:name="android.support.PARENT_ACTIVITY"
+            android:value=".MainActivityDrawer" />
+        </activity>
 
     </application>
 

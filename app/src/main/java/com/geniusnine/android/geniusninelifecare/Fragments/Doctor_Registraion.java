@@ -1,20 +1,26 @@
 package com.geniusnine.android.geniusninelifecare.Fragments;
 
 import android.app.DatePickerDialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 import com.geniusnine.android.geniusninelifecare.Helper.DBHelper;
+import com.geniusnine.android.geniusninelifecare.MainActivityDrawer;
 import com.geniusnine.android.geniusninelifecare.R;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.List;
 import java.util.Locale;
 
 /**
@@ -22,6 +28,7 @@ import java.util.Locale;
  */
 
 public class Doctor_Registraion extends Fragment {
+    Spinner spinnergender,spinnertimings;
     DBHelper dbHelper;
     EditText editTextname,editTextmobile,editTextemail,editTextdegree,editTextspecialization,editTextexperience,editTextachievements,editTextconnectedhospitals,editTextavailabletimings,
             editTextfax,editTexttwitter,editTextfacebook,editTextpassword,editTextfees,editTextgender,editTextage,editTextaddress;
@@ -34,6 +41,8 @@ public class Doctor_Registraion extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.doctor_registration_form, null);
         dbHelper = new DBHelper(getActivity());
+        spinnergender=(Spinner)v.findViewById(R.id.spinnerdoctogender);
+        spinnertimings=(Spinner)v.findViewById(R.id.spinnerdoctortimings);
         buttonsubmitdoctor=(Button)v.findViewById(R.id.buttondoctorsubmit);
         textViewcurrentdate=(TextView)v.findViewById(R.id.textViewcurrentDate);
         editTextname=(EditText)v.findViewById(R.id.edittextdoctorname);
@@ -44,13 +53,11 @@ public class Doctor_Registraion extends Fragment {
         editTextexperience=(EditText)v.findViewById(R.id.edittextdoctorexperience);
         editTextachievements=(EditText)v.findViewById(R.id.edittextdoctorAchievements);
         editTextconnectedhospitals=(EditText)v.findViewById(R.id.edittextdoctorconnectedhospitals);
-        editTextavailabletimings=(EditText)v.findViewById(R.id.edittextdoctoravailabletimings);
         editTextfax=(EditText)v.findViewById(R.id.edittextdoctorfax);
         editTexttwitter=(EditText)v.findViewById(R.id.edittextdoctortwitter);
         editTextfacebook=(EditText)v.findViewById(R.id.edittextdoctorfacebook);
         editTextpassword=(EditText)v.findViewById(R.id.edittextdoctorpassword);
         editTextfees=(EditText)v.findViewById(R.id.edittextdoctorfees);
-        editTextgender=(EditText)v.findViewById(R.id.edittextdoctorgender);
         editTextage=(EditText)v.findViewById(R.id.edittextdoctorage);
         editTextaddress=(EditText)v.findViewById(R.id.edittextdoctoraddress);
         final DatePickerDialog.OnDateSetListener date = new DatePickerDialog.OnDateSetListener() {
@@ -65,6 +72,28 @@ public class Doctor_Registraion extends Fragment {
             }
 
         };
+        textViewcurrentdate.setText(sdf.format(cal.getTime()));
+        List<String> gender = new ArrayList<String>();
+        gender.add("Male");
+        gender.add("Female");
+        // Creating adapter for spinner
+        ArrayAdapter<String> Adapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_spinner_item, gender);
+        // Drop down layout style - list view with radio button
+        Adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        // attaching data adapter to spinner
+        spinnergender.setAdapter(Adapter);
+
+        // Creating adapter for spinner
+        List<String> timings = new ArrayList<String>();
+        timings.add("11.00 AM - 01.00 PM");
+        timings.add("02.30 PM - 05.00 PM");
+        timings.add("06.30 PM - 10.00 PM");
+        ArrayAdapter<String> Adapter1 = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_spinner_item, timings);
+        // Drop down layout style - list view with radio button
+        Adapter1.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        // attaching data adapter to spinner
+        spinnertimings.setAdapter(Adapter1);
+
         buttonsubmitdoctor.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -78,13 +107,13 @@ public class Doctor_Registraion extends Fragment {
                 doctorexperience = editTextexperience.getText().toString();
                 doctorachievements = editTextachievements.getText().toString();
                 doctorconnectedhospitals =editTextconnectedhospitals .getText().toString();
-                doctoravailabletimings = editTextavailabletimings.getText().toString();
+                doctoravailabletimings =spinnertimings.getSelectedItem().toString().trim();
                 doctorfax = editTextfax.getText().toString();
                 doctortwitter = editTexttwitter.getText().toString();
                 doctorfacebook = editTextfacebook.getText().toString();
                 doctorpassword = editTextpassword.getText().toString();
                 doctorfees = editTextfees.getText().toString();
-                doctorgender = editTextgender.getText().toString();
+                doctorgender = spinnergender.getSelectedItem().toString().trim();
                 doctorage = editTextage.getText().toString();
                 doctoraddress = editTextaddress.getText().toString();
                 doctorcurrentdate=textViewcurrentdate.getText().toString().trim();
@@ -117,8 +146,8 @@ public class Doctor_Registraion extends Fragment {
                     editTextachievements.setError("Achievemnets is Required");
                 }else if(editTextconnectedhospitals.getText().toString().trim().equals("")){
                     editTextconnectedhospitals.setError("Connecting Hospitals is Required");
-                }else if(editTextavailabletimings.getText().toString().trim().equals("")){
-                    editTextavailabletimings.setError("Available Timings is Required");
+                }else if(spinnertimings.getSelectedItem().toString().trim().equals("")){
+                    Toast.makeText(getActivity(),"Available Timings is Required",Toast.LENGTH_LONG).show();
                 }else if(editTextfax.getText().toString().trim().equals("")){
                     editTextfax.setError("Fax is Required");
                 }else if(editTextfacebook.getText().toString().trim().equals("")){
@@ -131,12 +160,15 @@ public class Doctor_Registraion extends Fragment {
                     editTextage.setError("Age is Required");
                 }else if(editTextaddress.getText().toString().trim().equals("")){
                     editTextaddress.setError("Address is Required");
-                }else if(editTextgender.getText().toString().trim().equals("")){
-                    editTextgender.setError("Gender is Required");
+                }else if(spinnergender.getSelectedItem().toString().trim().equals("")){
+                    Toast.makeText(getActivity(),"Gender is Required",Toast.LENGTH_LONG).show();
                 }
                 else{
                     dbHelper.addDoctor(doctorname, doctormobile, doctoremail, doctordegree,doctorspecialization,doctorexperience,doctorachievements,doctorconnectedhospitals,doctoravailabletimings,doctorfax,doctortwitter,doctorfacebook,doctorpassword,doctorfees,doctorgender,doctorage,doctoraddress,doctorcurrentdate);
                     Toast.makeText(getActivity(), "Registered succssfully", Toast.LENGTH_LONG).show();
+                    Intent intent=new Intent(getActivity(), MainActivityDrawer.class);
+                    getActivity().finish();
+                    getActivity().startActivity(intent);
                 }
 
             }

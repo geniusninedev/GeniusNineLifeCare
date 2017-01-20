@@ -64,14 +64,14 @@
     </group>
     <group android:id="@+id/grp10" android:checkableBehavior="single" >
         <item
-            android:id="@+id/FeedBack"
+            android:id="@+id/Feedback"
             android:icon="@drawable/ic_people"
             android:title="Feedback" />
 
     </group>
     <group android:id="@+id/grp11" android:checkableBehavior="single" >
         <item
-            android:id="@+id/Aboutus"
+            android:id="@+id/About_Us"
             android:icon="@drawable/ic_info_white_24dp"
             android:title="About US" />
 

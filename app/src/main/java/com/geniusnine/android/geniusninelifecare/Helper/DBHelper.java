@@ -33,6 +33,8 @@ public class DBHelper extends SQLiteOpenHelper {
     public static final String COLUMN_PATIENT_ADDRESS = "patient_address";
     public static final String COLUMN_PATIENT_PINCODE = "patient_pincode";
     public static final String COLUMN_PATIENT_REGISRTION_DATE = "date";
+
+
     //database for the doctor
     public static final String TABLE_DOCTOR_INFORMATION = "doctor_information";
     public static final String COLUMN_DOCTOR_ID = "doctor_id";
@@ -73,7 +75,16 @@ public class DBHelper extends SQLiteOpenHelper {
     public static final String TABLE_CATEGORY= "category_information";
     public static final String COLUMN_CATEGORY_ID = "category_id";
     public static final String COLUMN_CATEGORY_NAME = "category_name";
-    public static final String COLUMN_CATEGORY_IMAGE = "category_name";
+    public static final String COLUMN_CATEGORY_IMAGE = "category_image";
+
+    //database table for the Feedback
+    public static final String TABLE_FEEDBACK= "feedback_information";
+    public static final String COLUMN_FEEDBACK_ID = "feedback_id";
+    public static final String COLUMN_FEEDBACK_PATIENT_ID = "patient_id";
+    public static final String COLUMN_FEEDBACK_MESSAGE = "feedback_message";
+    public static final String COLUMN_FEEDBACK_CHECKING = "feedback_checking";
+    public static final String COLUMN_FEEDBACK_APP_RATING = "feedback_app_rating";
+    public static final String COLUMN_FEEDBACK_SUGGESTION = "feedback_suggestion";
 
 
     private static final int DB_VERSION = 1;
@@ -109,21 +120,21 @@ public class DBHelper extends SQLiteOpenHelper {
                 + COLUMN_DOCTOR_PROFILE_PICTURE + " BLOB, "
                 + COLUMN_DOCTOR_NAME + " VARCHAR, "
                 + COLUMN_DOCTOR_DEGREE + " VARCHAR,"
-                + COLUMN_DOCTOR_SPECILIZATION + " VARCHAR,"
-                + COLUMN_DOCTOR_EXPERIENCE + " INTEGER,"
-                + COLUMN_DOCTOR_FEES + " INTEGER,"
-                + COLUMN_DOCTOR_ACHIEVEMENT + " VARCHAR,"
-                + COLUMN_DOCTOR_EMAIL + " VARCHAR,"
-                + COLUMN_DOCTOR_FAX + " VARCHAR,"
-                + COLUMN_DOCTOR_MOBILE + " INTEGER,"
-                + COLUMN_DOCTOR_PASSWORD + " VARCHAR,"
-                + COLUMN_DOCTOR_GENDER + " VARCHAR,"
-                + COLUMN_DOCTOR_AGE + " INTEGER,"
-                + COLUMN_DOCTOR_ADDRESS + " VARCHAR,"
-                + COLUMN_DOCTOR_CONNECTED_HOSPITAL + " VARCHAR,"
-                + COLUMN_DOCTOR_AVAILABILITY + " DOUBLE,"
-                + COLUMN_DOCTOR_FACEBOOK + " VARCHAR,"
-                + COLUMN_DOCTOR_TWITTER + " VARCHAR,"
+                + COLUMN_DOCTOR_SPECILIZATION + " VARCHAR, "
+                + COLUMN_DOCTOR_EXPERIENCE + " INTEGER, "
+                + COLUMN_DOCTOR_FEES + " INTEGER, "
+                + COLUMN_DOCTOR_ACHIEVEMENT + " VARCHAR, "
+                + COLUMN_DOCTOR_EMAIL + " VARCHAR, "
+                + COLUMN_DOCTOR_FAX + " VARCHAR, "
+                + COLUMN_DOCTOR_MOBILE + " INTEGER, "
+                + COLUMN_DOCTOR_PASSWORD + " VARCHAR, "
+                + COLUMN_DOCTOR_GENDER + " VARCHAR, "
+                + COLUMN_DOCTOR_AGE + " INTEGER, "
+                + COLUMN_DOCTOR_ADDRESS + " VARCHAR, "
+                + COLUMN_DOCTOR_CONNECTED_HOSPITAL + " VARCHAR, "
+                + COLUMN_DOCTOR_AVAILABILITY + " DOUBLE, "
+                + COLUMN_DOCTOR_FACEBOOK + " VARCHAR, "
+                + COLUMN_DOCTOR_TWITTER + " VARCHAR, "
                 + COLUMN_DOCTOR_REGISRTION_DATE + " DATE" + ")";
         db.execSQL(sq2);
 
@@ -143,8 +154,17 @@ public class DBHelper extends SQLiteOpenHelper {
         String sq4 = "CREATE TABLE IF NOT EXISTS " + TABLE_CATEGORY
                 + "(" +COLUMN_CATEGORY_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
                 + COLUMN_CATEGORY_NAME + " VARCHAR, "
-                + COLUMN_CATEGORY_IMAGE + " BLOB" + ")";
+                + COLUMN_CATEGORY_IMAGE + " BLOB"  + ")";
         db.execSQL(sq4);
+        //Table for  Feedback
+        String sq5 = "CREATE TABLE IF NOT EXISTS " + TABLE_FEEDBACK
+                + "(" +COLUMN_FEEDBACK_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
+                + COLUMN_FEEDBACK_PATIENT_ID + " INTEGER, "
+                + COLUMN_FEEDBACK_MESSAGE + " VARCHAR, "
+                +  COLUMN_FEEDBACK_CHECKING  + " INTEGER, "
+                + COLUMN_FEEDBACK_APP_RATING + " INTEGER, "
+                + COLUMN_FEEDBACK_SUGGESTION + " VARCHAR" + ")";
+        db.execSQL(sq5);
     }
 
     @Override
@@ -160,6 +180,9 @@ public class DBHelper extends SQLiteOpenHelper {
 
         String sq4 = "DROP TABLE IF EXISTS category_information";
         db.execSQL(sq4);
+
+        String sq5 = "DROP TABLE IF EXISTS feedback_information";
+        db.execSQL(sq5);
           onCreate(db);
     }
     //insertion of patient patient
@@ -226,7 +249,7 @@ public class DBHelper extends SQLiteOpenHelper {
     }
 
     //insertion of Category information
-    public boolean addCategory(String categoryname,String categoryimage) {
+    public boolean addCategory(String categoryname,byte[] categoryimage) {
 
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
@@ -236,6 +259,50 @@ public class DBHelper extends SQLiteOpenHelper {
         db.close();
         return true;
     }
+    //insertion of Category information
+    public boolean submitfeedback(String patient_id,String message,String checking,String rating,String suggestion) {
+
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues contentValues = new ContentValues();
+        contentValues.put(COLUMN_FEEDBACK_PATIENT_ID, patient_id);
+        contentValues.put(COLUMN_FEEDBACK_MESSAGE, message);
+        contentValues.put(COLUMN_FEEDBACK_CHECKING, checking);
+        contentValues.put(COLUMN_FEEDBACK_APP_RATING, rating);
+        contentValues.put(COLUMN_FEEDBACK_SUGGESTION, suggestion);
+        db.insert(TABLE_FEEDBACK, null, contentValues);
+        db.close();
+        return true;
+    }
+// showcategories
+public Cursor getCategory() {
+    String[] cols = { COLUMN_CATEGORY_ID, COLUMN_CATEGORY_NAME,COLUMN_CATEGORY_IMAGE};
+    SQLiteDatabase db = this.getWritableDatabase();
+    Cursor c = db.query(TABLE_CATEGORY, cols, null,
+            null, null, null, null);
+    return c;
+}
+   /* public List<String> getCategory(){
+        List<String> labels = new ArrayList<String>();
+
+        // Select All Query
+        String selectQuery = "SELECT * FROM category_information ";
+
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = db.rawQuery(selectQuery, null);
+
+        // looping through all rows and adding to list
+        if (cursor.moveToFirst()) {
+
+            labels.add(cursor.getString(0));
+        }
+
+        // closing connection
+        cursor.close();
+        db.close();
+
+        // returning lables
+        return labels;
+    }*/
     // Adding new UpdateProfile
     public void UpdateProfile(String patient_id,byte[] imageBytes) {
         SQLiteDatabase db = this.getWritableDatabase();
@@ -245,6 +312,7 @@ public class DBHelper extends SQLiteOpenHelper {
         db.close();
 
     }
+
     public boolean UpdateProfileDetails(String patient_id,String patientname,String patientmobilenumber,String patientpassword,String patientemail,String patientgender,String patientage,String patientheight,String patientweight,String patientbloodgroup,String patientaddress,String patientpincode) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
@@ -297,6 +365,8 @@ public class DBHelper extends SQLiteOpenHelper {
         SQLiteDatabase db = this.getWritableDatabase();
         db.close();
     }
+
+
 }
 
 

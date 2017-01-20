@@ -7,5 +7,7 @@
     <string name="action_logout">Logout</string>
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
-
+    <string name="about_us1"><p><b>GeniusNine</b> is startup focusing to change the traditional computing. Our goal is to provide both a superior customer experience and tremendous value for our customers.</p></string>
+    <string name="about_us2"><p>Vaishali Pawar the founder has over <b>17 </b>years of experience in <b>IT hardware and software products</b> and is passionate about exceeding your expectations. We have dedicated research facilities for IoT, Cloud Computing and Data Center.</p></string>
+    <string name="about_us3"><p>We love our customers and welcome your feedback and suggestions. Use our <font color="#3F51B5"><u><b>Contact Us </b></u></font> page to tell us what we’re doing right or what we can improve on.</p></string>
 </resources>
