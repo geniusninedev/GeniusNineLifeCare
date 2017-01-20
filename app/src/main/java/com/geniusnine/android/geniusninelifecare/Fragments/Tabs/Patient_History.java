@@ -15,7 +15,7 @@ import com.geniusnine.android.geniusninelifecare.R;
 public class Patient_History extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View v = inflater.inflate(R.layout.patient_home, null);
+        View v = inflater.inflate(R.layout.tab_histoy, null);
         return v;
     }
 }
