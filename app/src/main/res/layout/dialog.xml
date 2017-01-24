@@ -15,7 +15,8 @@
             android:layout_height="wrap_content"
             android:id="@+id/textViewtitle"
             android:textStyle="normal|bold"
-            android:gravity="center" />
+            android:gravity="center"
+            android:textColor="#1d5cd9"/>
         <ImageView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

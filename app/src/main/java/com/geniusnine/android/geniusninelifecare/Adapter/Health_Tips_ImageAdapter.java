@@ -70,17 +70,26 @@ public class Health_Tips_ImageAdapter extends RecyclerView.Adapter<Health_Tips_I
        holder.textViewdescription.setOnClickListener(new View.OnClickListener() {
            @Override
            public void onClick(View v) {
-               final Dialog d=new Dialog(context);
-               d.setContentView(R.layout.dialog);
-               final TextView textViewtitle = (TextView) d.findViewById(R.id.textViewtitle);
-               final ImageView imageViewheltandtipsimage = (ImageView)d.findViewById(R.id.imageViewheltandtipsimage);
-               final TextView textViewdescription = (TextView) d.findViewById(R.id.textViewdescription);
-               d.setTitle("Tip No:");
+               LayoutInflater inflater = (LayoutInflater)context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+               View alertLayout = inflater.inflate(R.layout.dialog, null);
+               final TextView textViewtitle = (TextView)alertLayout .findViewById(R.id.textViewtitle);
+               final ImageView imageViewheltandtipsimage = (ImageView) alertLayout .findViewById(R.id.imageViewheltandtipsimage);
+               final TextView textViewdescription = (TextView) alertLayout .findViewById(R.id.textViewdescription);
                textViewtitle.setText(health_and_tipsName.get(position));
                imageViewheltandtipsimage.setImageBitmap(bitmaps.get(position));
                textViewdescription.setText(health_and_tipsDescription.get(position));
-
-               d.show();
+               AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(context);
+               alertDialogBuilder.setTitle("Tip No:"+health_and_tipsID.get(position));
+               // this is set the view from XML inside AlertDialog
+               alertDialogBuilder.setView(alertLayout);
+               alertDialogBuilder.setPositiveButton("Close",
+                       new DialogInterface.OnClickListener() {
+                           @Override
+                           public void onClick(DialogInterface arg0, int arg1) {
+                           }
+                       });
+               AlertDialog alertDialog = alertDialogBuilder.create();
+               alertDialog.show();
 
            }
        });
