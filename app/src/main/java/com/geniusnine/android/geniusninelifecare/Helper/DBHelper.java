@@ -408,28 +408,7 @@ public Cursor getCategory() {
                 null, null, null, null);
         return c;
     }
-   /* public List<String> getCategory(){
-        List<String> labels = new ArrayList<String>();
 
-        // Select All Query
-        String selectQuery = "SELECT * FROM category_information ";
-
-        SQLiteDatabase db = this.getReadableDatabase();
-        Cursor cursor = db.rawQuery(selectQuery, null);
-
-        // looping through all rows and adding to list
-        if (cursor.moveToFirst()) {
-
-            labels.add(cursor.getString(0));
-        }
-
-        // closing connection
-        cursor.close();
-        db.close();
-
-        // returning lables
-        return labels;
-    }*/
     // Adding new UpdateProfile
     public void UpdateProfile(String patient_id,byte[] imageBytes) {
         SQLiteDatabase db = this.getWritableDatabase();
