@@ -72,7 +72,26 @@
                         android:inputType="number" />
                 </android.support.design.widget.TextInputLayout>
             </LinearLayout>
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
 
+                <android.support.design.widget.TextInputLayout
+                    android:id="@+id/text_input_layout25"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+                    <EditText
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/edittextdoctorpassword"
+                        android:hint="Enter Password For Login:"
+                        android:digits="abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789@#*~`!$^+-*/=."
+                        android:inputType="textPassword"
+                        android:maxLength="10" />
+
+                </android.support.design.widget.TextInputLayout>
+            </LinearLayout>
             <LinearLayout
                 android:orientation="vertical"
                 android:layout_width="match_parent"
@@ -126,6 +145,25 @@
                         android:hint="Enter  Specialization:"
                         android:inputType="text" />
                 </android.support.design.widget.TextInputLayout>
+            </LinearLayout>
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <TextView
+                    android:text="Doctor Type/Category:"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/textViewCategory"
+                    android:layout_weight="1"
+                    android:textSize="18sp" />
+
+                <Spinner
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/spinnerdoctorcategory"
+                    android:layout_weight="1" />
             </LinearLayout>
             <LinearLayout
                 android:orientation="vertical"
@@ -200,6 +238,7 @@
                     android:id="@+id/spinnerdoctortimings"
                     android:layout_weight="1" />
             </LinearLayout>
+
             <LinearLayout
                 android:orientation="vertical"
                 android:layout_width="match_parent"
@@ -251,26 +290,7 @@
                         android:inputType="text" />
                 </android.support.design.widget.TextInputLayout>
             </LinearLayout>
-            <LinearLayout
-                android:orientation="vertical"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent">
 
-                <android.support.design.widget.TextInputLayout
-                    android:id="@+id/text_input_layout25"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent">
-                    <EditText
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:id="@+id/edittextdoctorpassword"
-                        android:hint="Enter Password For Login:"
-                        android:digits="abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789@#*~`!$^+-*/=."
-                        android:inputType="textPassword"
-                        android:maxLength="10" />
-
-                </android.support.design.widget.TextInputLayout>
-            </LinearLayout>
             <LinearLayout
                 android:orientation="vertical"
                 android:layout_width="match_parent"

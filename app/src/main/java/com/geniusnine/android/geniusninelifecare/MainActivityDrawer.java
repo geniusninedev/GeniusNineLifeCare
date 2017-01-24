@@ -22,10 +22,12 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.geniusnine.android.geniusninelifecare.Fragments.About_Us;
+import com.geniusnine.android.geniusninelifecare.Fragments.Add_Health_and_Tips;
 import com.geniusnine.android.geniusninelifecare.Fragments.Contact_US;
 import com.geniusnine.android.geniusninelifecare.Fragments.Doctor_Categories;
 import com.geniusnine.android.geniusninelifecare.Fragments.Doctor_Registraion;
 import com.geniusnine.android.geniusninelifecare.Fragments.Feedback;
+import com.geniusnine.android.geniusninelifecare.Fragments.Health_and_Tips;
 import com.geniusnine.android.geniusninelifecare.Fragments.Patient_Book_Appointment;
 import com.geniusnine.android.geniusninelifecare.Fragments.Patient_Home;
 import com.geniusnine.android.geniusninelifecare.Fragments.Patient_Order;
@@ -111,6 +113,35 @@ public class MainActivityDrawer extends AppCompatActivity {
                     fragmentTransaction.replace(R.id.containerView, new Patient_Profile()).commit();
                 }
                 if (menuItem.getItemId() == R.id.My_Orders) {
+                    loadImageFromDB();
+                    FragmentTransaction fragmentTransaction = mFragmentManager.beginTransaction();
+                    fragmentTransaction.replace(R.id.containerView, new Patient_Order()).commit();
+
+                }
+                if (menuItem.getItemId() == R.id.Medicines) {
+                    loadImageFromDB();
+                    FragmentTransaction fragmentTransaction = mFragmentManager.beginTransaction();
+                    fragmentTransaction.replace(R.id.containerView, new Patient_Order()).commit();
+
+                }
+                if (menuItem.getItemId() == R.id.Add_Medicines) {
+                    loadImageFromDB();
+                    FragmentTransaction fragmentTransaction = mFragmentManager.beginTransaction();
+                    fragmentTransaction.replace(R.id.containerView, new Patient_Order()).commit();
+
+                }
+                if (menuItem.getItemId() == R.id.Health_And_Tips) {
+                    loadImageFromDB();
+                    FragmentTransaction fragmentTransaction = mFragmentManager.beginTransaction();
+                    fragmentTransaction.replace(R.id.containerView, new Health_and_Tips()).commit();
+
+                }
+                if (menuItem.getItemId() == R.id.Add_Health_And_Tips){
+                    loadImageFromDB();
+                    FragmentTransaction fragmentTransaction = mFragmentManager.beginTransaction();
+                    fragmentTransaction.replace(R.id.containerView, new Add_Health_and_Tips()).commit();
+
+                }if (menuItem.getItemId() == R.id.Add_Labs) {
                     loadImageFromDB();
                     FragmentTransaction fragmentTransaction = mFragmentManager.beginTransaction();
                     fragmentTransaction.replace(R.id.containerView, new Patient_Order()).commit();

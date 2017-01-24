@@ -28,7 +28,7 @@ import java.util.Locale;
  */
 
 public class Doctor_Registraion extends Fragment {
-    Spinner spinnergender,spinnertimings;
+    Spinner spinnergender,spinnertimings,spinnerdoctorcategory;
     DBHelper dbHelper;
     EditText editTextname,editTextmobile,editTextemail,editTextdegree,editTextspecialization,editTextexperience,editTextachievements,editTextconnectedhospitals,editTextavailabletimings,
             editTextfax,editTexttwitter,editTextfacebook,editTextpassword,editTextfees,editTextgender,editTextage,editTextaddress;
@@ -43,6 +43,7 @@ public class Doctor_Registraion extends Fragment {
         dbHelper = new DBHelper(getActivity());
         spinnergender=(Spinner)v.findViewById(R.id.spinnerdoctogender);
         spinnertimings=(Spinner)v.findViewById(R.id.spinnerdoctortimings);
+        spinnerdoctorcategory=(Spinner)v.findViewById(R.id.spinnerdoctorcategory);
         buttonsubmitdoctor=(Button)v.findViewById(R.id.buttondoctorsubmit);
         textViewcurrentdate=(TextView)v.findViewById(R.id.textViewcurrentDate);
         editTextname=(EditText)v.findViewById(R.id.edittextdoctorname);
@@ -60,6 +61,7 @@ public class Doctor_Registraion extends Fragment {
         editTextfees=(EditText)v.findViewById(R.id.edittextdoctorfees);
         editTextage=(EditText)v.findViewById(R.id.edittextdoctorage);
         editTextaddress=(EditText)v.findViewById(R.id.edittextdoctoraddress);
+        loadSpinnerData();
         final DatePickerDialog.OnDateSetListener date = new DatePickerDialog.OnDateSetListener() {
 
             @Override
@@ -97,13 +99,14 @@ public class Doctor_Registraion extends Fragment {
         buttonsubmitdoctor.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String doctorname,doctormobile,doctoremail,doctordegree,doctorspecialization,doctorexperience,doctorachievements,doctorconnectedhospitals,doctoravailabletimings,
+                String doctorname,doctormobile,doctoremail,doctordegree,doctorspecialization,doctorcategory,doctorexperience,doctorachievements,doctorconnectedhospitals,doctoravailabletimings,
                         doctorfax,doctortwitter,doctorfacebook,doctorpassword,doctorfees,doctorgender,doctorage,doctoraddress,doctorcurrentdate;
                 doctorname = editTextname.getText().toString();
                 doctormobile = editTextmobile.getText().toString();
                 doctoremail = editTextemail.getText().toString();
                 doctordegree = editTextdegree.getText().toString();
                 doctorspecialization = editTextspecialization.getText().toString();
+                doctorcategory = spinnerdoctorcategory.getSelectedItem().toString().trim();
                 doctorexperience = editTextexperience.getText().toString();
                 doctorachievements = editTextachievements.getText().toString();
                 doctorconnectedhospitals =editTextconnectedhospitals .getText().toString();
@@ -140,7 +143,10 @@ public class Doctor_Registraion extends Fragment {
                     editTextdegree.setError("Degree is Required");
                 }else if(editTextspecialization.getText().toString().trim().equals("")){
                     editTextspecialization.setError("Specialization is Required");
-                }else if(editTextexperience.getText().toString().trim().equals("")){
+                }else if(spinnerdoctorcategory.getSelectedItem().toString().trim().equals("")){
+                    Toast.makeText(getActivity(),"Category/Type  Required",Toast.LENGTH_LONG).show();
+                }
+                else if(editTextexperience.getText().toString().trim().equals("")){
                     editTextexperience.setError("Experience is Required");
                 }else if(editTextachievements.getText().toString().trim().equals("")){
                     editTextachievements.setError("Achievemnets is Required");
@@ -164,7 +170,7 @@ public class Doctor_Registraion extends Fragment {
                     Toast.makeText(getActivity(),"Gender is Required",Toast.LENGTH_LONG).show();
                 }
                 else{
-                    dbHelper.addDoctor(doctorname, doctormobile, doctoremail, doctordegree,doctorspecialization,doctorexperience,doctorachievements,doctorconnectedhospitals,doctoravailabletimings,doctorfax,doctortwitter,doctorfacebook,doctorpassword,doctorfees,doctorgender,doctorage,doctoraddress,doctorcurrentdate);
+                    dbHelper.addDoctor(doctorname, doctormobile, doctoremail, doctordegree,doctorspecialization,doctorcategory,doctorexperience,doctorachievements,doctorconnectedhospitals,doctoravailabletimings,doctorfax,doctortwitter,doctorfacebook,doctorpassword,doctorfees,doctorgender,doctorage,doctoraddress,doctorcurrentdate);
                     Toast.makeText(getActivity(), "Registered succssfully", Toast.LENGTH_LONG).show();
                     Intent intent=new Intent(getActivity(), MainActivityDrawer.class);
                     getActivity().finish();
@@ -174,5 +180,18 @@ public class Doctor_Registraion extends Fragment {
             }
         });
         return  v;
+    }
+    private void loadSpinnerData() {
+        dbHelper = new DBHelper(getActivity());
+        List<String> labels = dbHelper.getAllCategory();
+
+        // Creating adapter for spinner
+        ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(getActivity(),android.R.layout.simple_spinner_item, labels);
+
+        // Drop down layout style - list view with radio button
+        dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+
+        // attaching data adapter to spinner
+        spinnerdoctorcategory.setAdapter(dataAdapter);
     }
 }

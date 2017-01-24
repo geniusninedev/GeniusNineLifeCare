@@ -42,6 +42,7 @@ public class DBHelper extends SQLiteOpenHelper {
     public static final String COLUMN_DOCTOR_NAME = "doctor_name";
     public static final String COLUMN_DOCTOR_DEGREE = "doctor_degree";
     public static final String COLUMN_DOCTOR_SPECILIZATION = "doctor_specialization";
+    public static final String COLUMN_DOCTOR_CATEGORY = "doctor_category";
     public static final String COLUMN_DOCTOR_EXPERIENCE = "doctor_experience";
     public static final String COLUMN_DOCTOR_FEES = "doctor_fees";
     public static final String COLUMN_DOCTOR_ACHIEVEMENT = "doctor_achievement";
@@ -68,6 +69,8 @@ public class DBHelper extends SQLiteOpenHelper {
     public static final String COLUMN_BOOK_APPOINTMENT_FROM_DAYS = "book_appointment_from_days";
     public static final String COLUMN_BOOK_APPOINTMENT_PATIENT_ID = "patient_id";
     public static final String COLUMN_APPOINTMENT_REGISRTION_DATE = "appointment_registered_date";
+    public static final String COLUMN_BOOK_APPOINTMENT_PATIENT_STATUS = "patient_appointment_status";
+    public static final String COLUMN_APPOINTMENT_PATIENT_STATUS_PERCENT = "patient_appointment_status_percent";
 
 
 
@@ -85,6 +88,28 @@ public class DBHelper extends SQLiteOpenHelper {
     public static final String COLUMN_FEEDBACK_CHECKING = "feedback_checking";
     public static final String COLUMN_FEEDBACK_APP_RATING = "feedback_app_rating";
     public static final String COLUMN_FEEDBACK_SUGGESTION = "feedback_suggestion";
+
+    //database table for the Health And Tips
+    public static final String TABLE_HEALTH_AND_TIPS= "health_and_tips_information";
+    public static final String COLUMN_HEALTH_AND_TIPS_ID = "health_and_tips_id";
+    public static final String COLUMN_HEALTH_AND_TIPS_NAME = "health_and_tips_name";
+    public static final String COLUMN_HEALTH_AND_TIPS_DESCRIPTION = "health_and_tips_description";
+    public static final String COLUMN_HEALTH_AND_TIPS_IMAGE = "health_and_tips_image";
+
+    //database table for the Lab
+    public static final String TABLE_LAB= "lab_information";
+    public static final String COLUMN_LAB_ID = "lab_id";
+    public static final String COLUMN_LAB_NAME = "lab_name";
+    public static final String COLUMN_LAB_DESCRIPTION = "lab_description";
+    public static final String COLUMN_LAB_IMAGE = "lab_image";
+
+    //database table for the Medicines
+    public static final String TABLE_MEDICINES= "medicines_information";
+    public static final String COLUMN_MEDICINES_ID = "medicines_id";
+    public static final String COLUMN_MEDICINES_NAME = "medicines_name";
+    public static final String COLUMN_MEDICINES_DESCRIPTION = "medicines_description";
+    public static final String COLUMN_MEDICINES_IMAGE = "medicines_image";
+
 
 
     private static final int DB_VERSION = 1;
@@ -121,6 +146,7 @@ public class DBHelper extends SQLiteOpenHelper {
                 + COLUMN_DOCTOR_NAME + " VARCHAR, "
                 + COLUMN_DOCTOR_DEGREE + " VARCHAR,"
                 + COLUMN_DOCTOR_SPECILIZATION + " VARCHAR, "
+                + COLUMN_DOCTOR_CATEGORY + " VARCHAR, "
                 + COLUMN_DOCTOR_EXPERIENCE + " INTEGER, "
                 + COLUMN_DOCTOR_FEES + " INTEGER, "
                 + COLUMN_DOCTOR_ACHIEVEMENT + " VARCHAR, "
@@ -146,6 +172,8 @@ public class DBHelper extends SQLiteOpenHelper {
                 + COLUMN_BOOK_APPOINTMENT_REASON + " VARCHAR,"
                 + COLUMN_BOOK_APPOINTMENT_FROM_DAYS + " VARCHAR,"
                 + COLUMN_BOOK_APPOINTMENT_PATIENT_ID + " INTEGER,"
+                + COLUMN_BOOK_APPOINTMENT_PATIENT_STATUS + " VARCHAR,"
+                + COLUMN_APPOINTMENT_PATIENT_STATUS_PERCENT + " VARCHAR,"
                 + COLUMN_APPOINTMENT_REGISRTION_DATE + " DATE" + ")";
         db.execSQL(sq3);
 
@@ -165,6 +193,28 @@ public class DBHelper extends SQLiteOpenHelper {
                 + COLUMN_FEEDBACK_APP_RATING + " INTEGER, "
                 + COLUMN_FEEDBACK_SUGGESTION + " VARCHAR" + ")";
         db.execSQL(sq5);
+        //Table for Health_and_Tips
+        String sq6 = "CREATE TABLE IF NOT EXISTS " + TABLE_HEALTH_AND_TIPS
+                + "(" +COLUMN_HEALTH_AND_TIPS_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
+                + COLUMN_HEALTH_AND_TIPS_NAME + " VARCHAR, "
+                + COLUMN_HEALTH_AND_TIPS_DESCRIPTION + " VARCHAR, "
+                + COLUMN_HEALTH_AND_TIPS_IMAGE + " BLOB"  + ")";
+        db.execSQL(sq6);
+
+        //Table for Lab
+        String sq7 = "CREATE TABLE IF NOT EXISTS " + TABLE_LAB
+                + "(" +COLUMN_LAB_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
+                + COLUMN_LAB_NAME + " VARCHAR, "
+                + COLUMN_LAB_DESCRIPTION + " VARCHAR, "
+                + COLUMN_LAB_IMAGE + " BLOB"  + ")";
+        db.execSQL(sq7);
+        //Table for Lab
+        String sq8 = "CREATE TABLE IF NOT EXISTS " + TABLE_MEDICINES
+                + "(" +COLUMN_MEDICINES_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
+                + COLUMN_MEDICINES_NAME + " VARCHAR, "
+                + COLUMN_MEDICINES_DESCRIPTION + " VARCHAR, "
+                + COLUMN_MEDICINES_IMAGE + " BLOB"  + ")";
+        db.execSQL(sq8);
     }
 
     @Override
@@ -183,6 +233,16 @@ public class DBHelper extends SQLiteOpenHelper {
 
         String sq5 = "DROP TABLE IF EXISTS feedback_information";
         db.execSQL(sq5);
+
+        String sq6 = "DROP TABLE IF EXISTS health_and_tips_information";
+        db.execSQL(sq6);
+
+
+        String sq7 = "DROP TABLE IF EXISTS lab_information";
+        db.execSQL(sq7);
+
+        String sq8 = "DROP TABLE IF EXISTS medicines_information";
+        db.execSQL(sq8);
           onCreate(db);
     }
     //insertion of patient patient
@@ -206,12 +266,13 @@ public class DBHelper extends SQLiteOpenHelper {
         return true;
     }
     //insertion of doctor information
-    public boolean addDoctor(String doctorname,String doctordegree,String doctorspecialization,String doctorexperience,String fees,String doctorachievement,String doctoremail,String doctorfax,String doctormobilenumber,String doctorpassword,String doctorgender,String doctorage,String doctoraddress,String doctorconnectedhospital,String doctoravalibility,String doctorfacebook,String doctortwitter,String doctorregistrationdate) {
+    public boolean addDoctor(String doctorname,String doctordegree,String doctorspecialization,String doctorcategory,String doctorexperience,String fees,String doctorachievement,String doctoremail,String doctorfax,String doctormobilenumber,String doctorpassword,String doctorgender,String doctorage,String doctoraddress,String doctorconnectedhospital,String doctoravalibility,String doctorfacebook,String doctortwitter,String doctorregistrationdate) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
         contentValues.put(COLUMN_DOCTOR_NAME, doctorname);
         contentValues.put(COLUMN_DOCTOR_DEGREE, doctordegree);
         contentValues.put(COLUMN_DOCTOR_SPECILIZATION, doctorspecialization);
+        contentValues.put(COLUMN_DOCTOR_CATEGORY, doctorcategory);
         contentValues.put(COLUMN_DOCTOR_EXPERIENCE, doctorexperience);
         contentValues.put(COLUMN_DOCTOR_FEES, fees);
         contentValues.put(COLUMN_DOCTOR_ACHIEVEMENT, doctorachievement);
@@ -259,6 +320,40 @@ public class DBHelper extends SQLiteOpenHelper {
         db.close();
         return true;
     }
+    public List<String> getAllCategory(){
+        List<String> list = new ArrayList<String>();
+
+        // Select All Query
+        String selectQuery = "SELECT * FROM " + TABLE_CATEGORY;
+
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = db.rawQuery(selectQuery, null);//selectQuery,selectedArguments
+
+        // looping through all rows and adding to list
+        if (cursor.moveToFirst()) {
+            do {
+                list.add(cursor.getString(cursor.getColumnIndex(COLUMN_CATEGORY_NAME)));//adding 2nd column data
+            } while (cursor.moveToNext());
+        }
+        // closing connection
+        cursor.close();
+        db.close();
+
+        // returning lables
+        return list;
+    }
+    //insertion of Category information
+    public boolean addhealth_and_tips(String health_tips_name,String health_tips_desc,byte[] health_tips_image) {
+
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues contentValues = new ContentValues();
+        contentValues.put(COLUMN_HEALTH_AND_TIPS_NAME, health_tips_name);
+        contentValues.put(COLUMN_HEALTH_AND_TIPS_DESCRIPTION, health_tips_desc);
+        contentValues.put(COLUMN_HEALTH_AND_TIPS_IMAGE, health_tips_image);
+        db.insert(TABLE_HEALTH_AND_TIPS, null, contentValues);
+        db.close();
+        return true;
+    }
     //insertion of Category information
     public boolean submitfeedback(String patient_id,String message,String checking,String rating,String suggestion) {
 
@@ -281,6 +376,14 @@ public Cursor getCategory() {
             null, null, null, null);
     return c;
 }
+    // showHealth and Tips
+    public Cursor getHealth_and_tips() {
+        String[] cols = { COLUMN_HEALTH_AND_TIPS_ID, COLUMN_HEALTH_AND_TIPS_NAME,COLUMN_HEALTH_AND_TIPS_DESCRIPTION,COLUMN_HEALTH_AND_TIPS_IMAGE};
+        SQLiteDatabase db = this.getWritableDatabase();
+        Cursor c = db.query(TABLE_HEALTH_AND_TIPS, cols, null,
+                null, null, null, null);
+        return c;
+    }
    /* public List<String> getCategory(){
         List<String> labels = new ArrayList<String>();
 
