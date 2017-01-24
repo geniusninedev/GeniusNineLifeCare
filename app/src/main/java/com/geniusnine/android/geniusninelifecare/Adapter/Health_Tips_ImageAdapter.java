@@ -1,16 +1,22 @@
 package com.geniusnine.android.geniusninelifecare.Adapter;
 
 
+import android.app.Activity;
+import android.app.Dialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.graphics.Bitmap;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.geniusnine.android.geniusninelifecare.R;
 
@@ -29,12 +35,13 @@ public class Health_Tips_ImageAdapter extends RecyclerView.Adapter<Health_Tips_I
     ArrayList<String> health_and_tipsDescription;
     private ArrayList<Bitmap> bitmaps;
     byte[] health_and_tipsimage;
+    Activity activity;
 
 
 
-    public Health_Tips_ImageAdapter(Context context2, ArrayList<String> id, ArrayList<String> name,ArrayList<String> description, ArrayList<Bitmap> bitm) {
+    public Health_Tips_ImageAdapter(Context context, ArrayList<String> id, ArrayList<String> name,ArrayList<String> description, ArrayList<Bitmap> bitm) {
         super();
-        this.context = context2;
+        this.context = context;
         this.health_and_tipsID = id;
         this.health_and_tipsName =  name;
         this.health_and_tipsDescription =  description;
@@ -54,20 +61,29 @@ public class Health_Tips_ImageAdapter extends RecyclerView.Adapter<Health_Tips_I
     }
 
     @Override
-    public void onBindViewHolder(ListViewHolder holder, int position) {
+    public void onBindViewHolder(final ListViewHolder holder, final int position) {
 
         holder.textViewid.setText(health_and_tipsID.get(position));
         holder.tv_name.setText(health_and_tipsName.get(position));
         holder.textViewdescription.setText(health_and_tipsDescription.get(position));
         holder.iv_delete.setImageBitmap(bitmaps.get(position));
+       holder.textViewdescription.setOnClickListener(new View.OnClickListener() {
+           @Override
+           public void onClick(View v) {
+               final Dialog d=new Dialog(context);
+               d.setContentView(R.layout.dialog);
+               final TextView textViewtitle = (TextView) d.findViewById(R.id.textViewtitle);
+               final ImageView imageViewheltandtipsimage = (ImageView)d.findViewById(R.id.imageViewheltandtipsimage);
+               final TextView textViewdescription = (TextView) d.findViewById(R.id.textViewdescription);
+               d.setTitle("Tip No:");
+               textViewtitle.setText(health_and_tipsName.get(position));
+               imageViewheltandtipsimage.setImageBitmap(bitmaps.get(position));
+               textViewdescription.setText(health_and_tipsDescription.get(position));
 
-        holder.iv_delete.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                // listener.nameToChnge(dataList.get((Integer) v.getTag()).name);
+               d.show();
 
-            }
-        });
+           }
+       });
         animate(holder);
     }
 

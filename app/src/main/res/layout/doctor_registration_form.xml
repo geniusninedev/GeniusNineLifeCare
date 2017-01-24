@@ -180,7 +180,7 @@
                         android:id="@+id/edittextdoctorexperience"
                         android:hint="Enter  Experience:"
                         android:inputType="numberDecimal"
-                        android:maxLength="5"/>
+                        android:maxLength="3"/>
                 </android.support.design.widget.TextInputLayout>
             </LinearLayout>
             <LinearLayout
@@ -196,7 +196,6 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:id="@+id/edittextdoctorAchievements"
-                        android:digits="abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ ,."
                         android:hint="Enter  Achievements:"
                         android:inputType="text" />
                 </android.support.design.widget.TextInputLayout>
@@ -225,6 +224,25 @@
                 android:layout_height="match_parent">
 
                 <TextView
+                    android:text="Open On Days"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/textViewDays"
+                    android:layout_weight="1"
+                    android:textSize="18sp" />
+
+                <Spinner
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/spinnerdoctorDays"
+                    android:layout_weight="1" />
+            </LinearLayout>
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <TextView
                     android:text="Timings"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -238,7 +256,25 @@
                     android:id="@+id/spinnerdoctortimings"
                     android:layout_weight="1" />
             </LinearLayout>
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
 
+                <TextView
+                    android:text="Lunch Time"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/textViewLunchTimings"
+                    android:layout_weight="1"
+                    android:textSize="18sp" />
+
+                <Spinner
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/spinnerdoctorLunchtimings"
+                    android:layout_weight="1" />
+            </LinearLayout>
             <LinearLayout
                 android:orientation="vertical"
                 android:layout_width="match_parent"
@@ -253,7 +289,8 @@
                         android:layout_height="wrap_content"
                         android:id="@+id/edittextdoctorfax"
                         android:hint="Enter  Fax:"
-                        android:inputType="number" />
+                        android:inputType="number"
+                        android:maxLength="12"/>
                 </android.support.design.widget.TextInputLayout>
             </LinearLayout>
             <LinearLayout
@@ -362,6 +399,25 @@
                         android:digits="abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ ,."
                         android:hint="Enter  Address:"
                         android:inputType="text" />
+                </android.support.design.widget.TextInputLayout>
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+                <android.support.design.widget.TextInputLayout
+                    android:id="@+id/text_input_layout30"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+                    <EditText
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/edittextdoctorareapincode"
+                        android:digits="0123456789"
+                        android:hint="Enter  Pincode:"
+                        android:inputType="number"
+                        android:maxLength="6"/>
                 </android.support.design.widget.TextInputLayout>
             </LinearLayout>
             <LinearLayout

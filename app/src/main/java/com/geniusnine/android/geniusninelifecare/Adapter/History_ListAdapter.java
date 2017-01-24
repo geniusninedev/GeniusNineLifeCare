@@ -24,20 +24,28 @@ public class History_ListAdapter extends RecyclerView.Adapter<History_ListAdapte
 
     Context context;
     LayoutInflater inflater;
-    ArrayList<String> categoryID;
-    ArrayList<String> categoryName;
-    private ArrayList<Bitmap> bitmaps;
-    byte[] categoryimage;
+    ArrayList<String> appointmentID;
+    ArrayList<String> appointmentregistrationdate;
+    ArrayList<String> appointmentdate;
+    ArrayList<String> appointmentcauses;
+    ArrayList<String> appointmentstatus;
+    ArrayList<String> appointmentstatuspercent;
 
 
 
-    public History_ListAdapter(Context context2, ArrayList<String> id, ArrayList<String> name, ArrayList<Bitmap> bitm) {
+
+
+    public History_ListAdapter(Context context2, ArrayList<String> appointmentID, ArrayList<String> appointmentregistrationdate,ArrayList<String> appointmentdate,ArrayList<String> appointmentcauses,ArrayList<String> appointmentstatus,ArrayList<String> appointmentstatuspercent) {
         super();
         this.context = context2;
-        this.categoryID = id;
-        this.categoryName =  name;
-        this.bitmaps=bitm;
-        // this.listener = context;
+        this.appointmentID = appointmentID;
+        this.appointmentregistrationdate =  appointmentregistrationdate;
+        this.appointmentdate =  appointmentdate;
+        this.appointmentcauses =  appointmentcauses;
+        this.appointmentstatus =  appointmentstatus;
+        this.appointmentstatuspercent =  appointmentstatuspercent;
+
+        //  this.listener = context;
         inflater = LayoutInflater.from(context);
 
 
@@ -55,35 +63,44 @@ public class History_ListAdapter extends RecyclerView.Adapter<History_ListAdapte
     public void onBindViewHolder(ListViewHolder holder, int position) {
 
 
-        holder.tv_name.setText(categoryName.get(position));
-        holder.textViewid.setText(categoryID.get(position));
-        holder.iv_delete.setImageBitmap(bitmaps.get(position));
+        holder.textView_appointmentid.setText(appointmentID.get(position));
+        holder.textView_appointmentregistrationdate.setText(appointmentregistrationdate.get(position));
+        holder.textView_appointmentdate.setText(appointmentdate.get(position));
+        holder.textView_appointmentcauses.setText(appointmentcauses.get(position));
+        holder.textView_appointmentstatus.setText(appointmentstatus.get(position));
+        holder.textView_appointmentstatuspercent.setText(appointmentstatuspercent.get(position));
 
-        holder.iv_delete.setOnClickListener(new View.OnClickListener() {
+
+
+      /*  holder.iv_delete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 // listener.nameToChnge(dataList.get((Integer) v.getTag()).name);
 
             }
-        });
+        });*/
         animate(holder);
     }
 
     @Override
     public int getItemCount() {
-        return categoryID.size();
+        return appointmentID.size();
     }
 
     class ListViewHolder extends RecyclerView.ViewHolder {
-        TextView tv_name,textViewid;
-        ImageView iv_delete;
+        TextView textView_appointmentid,textView_appointmentregistrationdate,textView_appointmentdate,textView_appointmentcauses,textView_appointmentstatus,textView_appointmentstatuspercent;
+
 
         public ListViewHolder(View itemView) {
             super(itemView);
 
-            tv_name = (TextView) itemView.findViewById(R.id.label);
-            textViewid = (TextView) itemView.findViewById(R.id.id);
-            iv_delete = (ImageView) itemView.findViewById(R.id.imageViewcategory);
+            textView_appointmentid = (TextView) itemView.findViewById(R.id.historyappointmentid);
+            textView_appointmentregistrationdate = (TextView) itemView.findViewById(R.id.history_bookappointmentregistrationdate);
+            textView_appointmentdate = (TextView) itemView.findViewById(R.id.history_bookappointmentdate);
+            textView_appointmentcauses = (TextView) itemView.findViewById(R.id.history_bookappointmentcauses);
+            textView_appointmentstatus = (TextView) itemView.findViewById(R.id.history_bookappointmentstatus);
+            textView_appointmentstatuspercent = (TextView) itemView.findViewById(R.id.history_bookappointmentstatuspercent);
+
 
         }
     }

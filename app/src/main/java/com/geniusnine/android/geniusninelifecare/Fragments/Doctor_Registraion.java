@@ -28,10 +28,10 @@ import java.util.Locale;
  */
 
 public class Doctor_Registraion extends Fragment {
-    Spinner spinnergender,spinnertimings,spinnerdoctorcategory;
+    Spinner spinnergender,spinnertimings,spinnerdoctorcategory,spinnerLunchtimings,spinnerdays;
     DBHelper dbHelper;
     EditText editTextname,editTextmobile,editTextemail,editTextdegree,editTextspecialization,editTextexperience,editTextachievements,editTextconnectedhospitals,editTextavailabletimings,
-            editTextfax,editTexttwitter,editTextfacebook,editTextpassword,editTextfees,editTextgender,editTextage,editTextaddress;
+            editTextfax,editTexttwitter,editTextfacebook,editTextpassword,editTextfees,editTextage,editTextaddress,edittextdoctorareapincode;
     TextView textViewcurrentdate;
     final Calendar cal = Calendar.getInstance();
     String myFormat = "yyyy-MM-DD"; //In which you need put here
@@ -41,8 +41,10 @@ public class Doctor_Registraion extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.doctor_registration_form, null);
         dbHelper = new DBHelper(getActivity());
+        spinnerdays=(Spinner)v.findViewById(R.id.spinnerdoctorDays);
         spinnergender=(Spinner)v.findViewById(R.id.spinnerdoctogender);
         spinnertimings=(Spinner)v.findViewById(R.id.spinnerdoctortimings);
+        spinnerLunchtimings=(Spinner)v.findViewById(R.id.spinnerdoctorLunchtimings);
         spinnerdoctorcategory=(Spinner)v.findViewById(R.id.spinnerdoctorcategory);
         buttonsubmitdoctor=(Button)v.findViewById(R.id.buttondoctorsubmit);
         textViewcurrentdate=(TextView)v.findViewById(R.id.textViewcurrentDate);
@@ -61,6 +63,7 @@ public class Doctor_Registraion extends Fragment {
         editTextfees=(EditText)v.findViewById(R.id.edittextdoctorfees);
         editTextage=(EditText)v.findViewById(R.id.edittextdoctorage);
         editTextaddress=(EditText)v.findViewById(R.id.edittextdoctoraddress);
+        edittextdoctorareapincode=(EditText)v.findViewById(R.id.edittextdoctorareapincode);
         loadSpinnerData();
         final DatePickerDialog.OnDateSetListener date = new DatePickerDialog.OnDateSetListener() {
 
@@ -75,6 +78,29 @@ public class Doctor_Registraion extends Fragment {
 
         };
         textViewcurrentdate.setText(sdf.format(cal.getTime()));
+        //Spinner For Cliec Open On Days
+        List<String> Days= new ArrayList<String>();
+        Days.add("Mon - Friday");
+        Days.add("Mon,Tue,Wen,Fri,Sat");
+        // Creating adapter for spinner
+        ArrayAdapter<String> AdapterDays = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_spinner_item, Days);
+        // Drop down layout style - list view with radio button
+        AdapterDays.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        // attaching data adapter to spinner
+        spinnerdays.setAdapter(AdapterDays);
+
+        //Spinner For LuchTime
+        List<String> lunchtime= new ArrayList<String>();
+        lunchtime.add("01.00 pm - 2.00 pm");
+        lunchtime.add("01.30 pm - 2.30 pm");
+        // Creating adapter for spinner
+        ArrayAdapter<String> Adapterlunchtime = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_spinner_item, lunchtime);
+        // Drop down layout style - list view with radio button
+        Adapterlunchtime.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        // attaching data adapter to spinner
+        spinnerLunchtimings.setAdapter(Adapterlunchtime);
+
+        //Spinner For Gender
         List<String> gender = new ArrayList<String>();
         gender.add("Male");
         gender.add("Female");
@@ -87,9 +113,9 @@ public class Doctor_Registraion extends Fragment {
 
         // Creating adapter for spinner
         List<String> timings = new ArrayList<String>();
-        timings.add("11.00 AM - 01.00 PM");
-        timings.add("02.30 PM - 05.00 PM");
-        timings.add("06.30 PM - 10.00 PM");
+        timings.add("10.00 AM - 07.00 PM");
+        timings.add("11.00 PM - 08.00 PM");
+        timings.add("12.00 PM - 09.00 PM");
         ArrayAdapter<String> Adapter1 = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_spinner_item, timings);
         // Drop down layout style - list view with radio button
         Adapter1.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
@@ -99,8 +125,9 @@ public class Doctor_Registraion extends Fragment {
         buttonsubmitdoctor.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String doctorname,doctormobile,doctoremail,doctordegree,doctorspecialization,doctorcategory,doctorexperience,doctorachievements,doctorconnectedhospitals,doctoravailabletimings,
-                        doctorfax,doctortwitter,doctorfacebook,doctorpassword,doctorfees,doctorgender,doctorage,doctoraddress,doctorcurrentdate;
+                String doctorname,doctormobile,doctoremail,doctordegree,doctorspecialization,doctorcategory,doctorexperience,doctorachievements,doctorconnectedhospitals,
+                        doctordays,doctoravailabletimings,doctorlunchtimings,
+                        doctorfax,doctortwitter,doctorfacebook,doctorpassword,doctorfees,doctorgender,doctorage,doctoraddress,doctorpincode,doctorcurrentdate;
                 doctorname = editTextname.getText().toString();
                 doctormobile = editTextmobile.getText().toString();
                 doctoremail = editTextemail.getText().toString();
@@ -110,7 +137,9 @@ public class Doctor_Registraion extends Fragment {
                 doctorexperience = editTextexperience.getText().toString();
                 doctorachievements = editTextachievements.getText().toString();
                 doctorconnectedhospitals =editTextconnectedhospitals .getText().toString();
+                doctordays =spinnerdays.getSelectedItem().toString().trim();
                 doctoravailabletimings =spinnertimings.getSelectedItem().toString().trim();
+                doctorlunchtimings =spinnerLunchtimings.getSelectedItem().toString().trim();
                 doctorfax = editTextfax.getText().toString();
                 doctortwitter = editTexttwitter.getText().toString();
                 doctorfacebook = editTextfacebook.getText().toString();
@@ -119,6 +148,7 @@ public class Doctor_Registraion extends Fragment {
                 doctorgender = spinnergender.getSelectedItem().toString().trim();
                 doctorage = editTextage.getText().toString();
                 doctoraddress = editTextaddress.getText().toString();
+                doctorpincode = edittextdoctorareapincode.getText().toString();
                 doctorcurrentdate=textViewcurrentdate.getText().toString().trim();
                 String MobileNumberpattern = "[0-9]{10}";
                 String emailpattern = "[a-zA-Z0-9._-]+@[a-z]+\\.+[a-z]+";
@@ -152,9 +182,15 @@ public class Doctor_Registraion extends Fragment {
                     editTextachievements.setError("Achievemnets is Required");
                 }else if(editTextconnectedhospitals.getText().toString().trim().equals("")){
                     editTextconnectedhospitals.setError("Connecting Hospitals is Required");
-                }else if(spinnertimings.getSelectedItem().toString().trim().equals("")){
+                }else if(spinnerdays.getSelectedItem().toString().trim().equals("")){
+                    Toast.makeText(getActivity(),"Clinic Open Days Required",Toast.LENGTH_LONG).show();
+                }
+                else if(spinnertimings.getSelectedItem().toString().trim().equals("")){
                     Toast.makeText(getActivity(),"Available Timings is Required",Toast.LENGTH_LONG).show();
-                }else if(editTextfax.getText().toString().trim().equals("")){
+                }else if(spinnerLunchtimings.getSelectedItem().toString().trim().equals("")){
+                    Toast.makeText(getActivity(),"Lunch Time Required",Toast.LENGTH_LONG).show();
+                }
+                else if(editTextfax.getText().toString().trim().equals("")){
                     editTextfax.setError("Fax is Required");
                 }else if(editTextfacebook.getText().toString().trim().equals("")){
                     editTextfacebook.setError("Facebook URL is Required");
@@ -166,12 +202,15 @@ public class Doctor_Registraion extends Fragment {
                     editTextage.setError("Age is Required");
                 }else if(editTextaddress.getText().toString().trim().equals("")){
                     editTextaddress.setError("Address is Required");
-                }else if(spinnergender.getSelectedItem().toString().trim().equals("")){
+                }else if(edittextdoctorareapincode.getText().toString().trim().equals("")){
+                    edittextdoctorareapincode.setError("Area Pincode is Required");
+                }
+                else if(spinnergender.getSelectedItem().toString().trim().equals("")){
                     Toast.makeText(getActivity(),"Gender is Required",Toast.LENGTH_LONG).show();
                 }
                 else{
-                    dbHelper.addDoctor(doctorname, doctormobile, doctoremail, doctordegree,doctorspecialization,doctorcategory,doctorexperience,doctorachievements,doctorconnectedhospitals,doctoravailabletimings,doctorfax,doctortwitter,doctorfacebook,doctorpassword,doctorfees,doctorgender,doctorage,doctoraddress,doctorcurrentdate);
-                    Toast.makeText(getActivity(), "Registered succssfully", Toast.LENGTH_LONG).show();
+                    dbHelper.addDoctor(doctorname, doctormobile,doctorpassword,doctoremail, doctordegree,doctorspecialization,doctorcategory,doctorexperience,doctorachievements,doctorconnectedhospitals,doctordays,doctoravailabletimings,doctorlunchtimings,doctorfax,doctortwitter,doctorfacebook,doctorfees,doctorgender,doctorage,doctoraddress,doctorpincode,doctorcurrentdate);
+                    Toast.makeText(getActivity(), "Registered successfully", Toast.LENGTH_LONG).show();
                     Intent intent=new Intent(getActivity(), MainActivityDrawer.class);
                     getActivity().finish();
                     getActivity().startActivity(intent);

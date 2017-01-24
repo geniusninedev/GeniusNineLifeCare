@@ -3,137 +3,28 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
-
+<ScrollView
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
     <LinearLayout
         android:orientation="vertical"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        >
-
-        <LinearLayout
-            android:orientation="horizontal"
+        android:layout_height="wrap_content">
+        <TextView
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/textView"
-                android:text="Book Appointment"
-                android:textStyle="normal|bold"
-                android:textAlignment="center"
-                android:textColor="@color/colorPrimaryDark" />
-
-            <TextView
-                android:text="TextView"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="right"
-                android:textColor="@color/black"
-                android:textStyle="normal|bold|italic"
-                android:id="@+id/textViewcurrentdate" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:orientation="vertical"
+            android:layout_height="wrap_content"
+            android:id="@+id/textViewtitle"
+            android:textStyle="normal|bold"
+            android:gravity="center" />
+        <ImageView
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
-
-            <android.support.design.widget.TextInputLayout
-                android:id="@+id/text_input_layout11"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent">
-                <EditText
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/edittextpatientcauses"
-                    android:digits="abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ ,"
-                    android:hint="Enter  Causes:"
-                    android:inputType="text" />
-            </android.support.design.widget.TextInputLayout>
-        </LinearLayout>
-        <LinearLayout
-            android:orientation="vertical"
+            android:layout_height="wrap_content"
+            android:id="@+id/imageViewheltandtipsimage"/>
+        <TextView
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="wrap_content"
+            android:id="@+id/textViewdescription"/>
 
-            <android.support.design.widget.TextInputLayout
-                android:id="@+id/text_input_layout12"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent">
-                <EditText
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/edittextpatientFrom"
-                    android:maxLength="2"
-                    android:hint="Enter  Number Of Day's:"
-                    android:inputType="number" />
-            </android.support.design.widget.TextInputLayout>
-        </LinearLayout>
-        <LinearLayout
-            android:orientation="vertical"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
-
-            <android.support.design.widget.TextInputLayout
-                android:id="@+id/text_input_layout13"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent">
-                <EditText
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/edittextpatientReason"
-                    android:digits="abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ ,"
-                    android:hint="Enter  Reason:"
-                    android:inputType="text" />
-            </android.support.design.widget.TextInputLayout>
-        </LinearLayout>
-        <LinearLayout
-            android:orientation="vertical"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
-
-            <TextView
-                android:text="Appointment Time:"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:id="@+id/textViewTimings"
-                android:layout_weight="1"
-                android:textSize="18sp" />
-
-            <Spinner
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:id="@+id/spinnerpatienttimings"
-                android:layout_weight="1" />
-        </LinearLayout>
-        <LinearLayout
-            android:orientation="vertical"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-
-            <Button
-                android:text="Submit"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:id="@+id/buttonsubmitpatient"
-                android:layout_weight="1"
-                style="@style/Widget.AppCompat.Button.Colored" />
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:orientation="vertical"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            >
-
-            <android.support.v7.widget.RecyclerView
-                android:id="@+id/recyclerView"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-
-                >
-            </android.support.v7.widget.RecyclerView>
-        </LinearLayout>
-    </LinearLayout>
+     </LinearLayout>
+</ScrollView>
 </LinearLayout>

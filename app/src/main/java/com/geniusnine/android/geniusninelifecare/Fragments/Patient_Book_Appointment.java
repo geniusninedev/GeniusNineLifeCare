@@ -45,16 +45,22 @@ public class Patient_Book_Appointment extends Fragment {
 
     EditText edittestpatientcauses,edittestpatientfrom,edittestpatientreason;
     Spinner spinnerPatienttimings;
-    Button buttonsubmituser;
+    Button buttonsubmituser,buttonAppointmentDate;
     DBHelper dbHelper;
     private String patient_mobile_Number;
     String patient_id;
-    TextView textViewcurrentdate;
+    TextView textViewcurrentdate,textViewAppointmentDate;
     ArrayList<String> ID_ArrayList = new ArrayList<String>();
     ArrayList<String> NAME_ArrayList = new ArrayList<String>();
     ArrayList<Bitmap> bitmaps = new ArrayList<Bitmap>();
     Cursor cursor;
     Bitmap bitmap = null;
+    //For calender
+    public Calendar calender;
+    private int day;
+    private int month;
+    private int year;
+
     final Calendar cal = Calendar.getInstance();
     String myFormat = "yyyy-MM-DD"; //In which you need put here
     SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.US);
@@ -69,8 +75,10 @@ public class Patient_Book_Appointment extends Fragment {
 
 
         textViewcurrentdate=(TextView)v.findViewById(R.id.textViewcurrentdate);
+        textViewAppointmentDate=(TextView)v.findViewById(R.id.textViewAppointmentDate);
         spinnerPatienttimings = (Spinner)v. findViewById(R.id.spinnerpatienttimings);
         buttonsubmituser = (Button)v. findViewById(R.id.buttonsubmitpatient);
+        buttonAppointmentDate = (Button)v. findViewById(R.id.buttonCalenderAppointmentdate);
         edittestpatientcauses = (EditText)v. findViewById(R.id.edittextpatientcauses);
         edittestpatientfrom = (EditText)v. findViewById(R.id.edittextpatientFrom);
         edittestpatientreason = (EditText)v. findViewById(R.id.edittextpatientReason);
@@ -80,7 +88,7 @@ public class Patient_Book_Appointment extends Fragment {
         recyclerView.setLayoutManager(new GridLayoutManager(getContext(),2));
         loadCategoryData();
 
-              final DatePickerDialog.OnDateSetListener date = new DatePickerDialog.OnDateSetListener() {
+        final DatePickerDialog.OnDateSetListener date = new DatePickerDialog.OnDateSetListener() {
 
             @Override
             public void onDateSet(DatePicker view, int year, int monthOfYear,
@@ -109,6 +117,33 @@ public class Patient_Book_Appointment extends Fragment {
         timings.add("2.00 pm - 4.00 pm");
         timings.add("6.30 pm - 8.00 pm");
 
+        buttonAppointmentDate.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                // Process to get Current Date
+                calender = Calendar.getInstance();
+                day = cal.get(Calendar.DAY_OF_MONTH);
+                month = cal.get(Calendar.MONTH);
+                year = cal.get(Calendar.YEAR);
+                // Launch Date Picker Dialog
+                DatePickerDialog dpd = new DatePickerDialog(getActivity(),
+                        new DatePickerDialog.OnDateSetListener() {
+
+                            @Override
+                            public void onDateSet(DatePicker view, int year,
+                                                  int monthOfYear, int dayOfMonth) {
+                                // Display Selected date in textbox
+                                textViewAppointmentDate.setText(year + "-" + (monthOfYear + 1) + "-" + dayOfMonth);
+
+                            }
+                        }, year, month, day);
+                dpd.show();
+            }
+
+
+        });
+
         // Creating adapter for spinner
         ArrayAdapter<String> Adapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_spinner_item, timings);
 
@@ -120,23 +155,26 @@ public class Patient_Book_Appointment extends Fragment {
         buttonsubmituser.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String patientcauses, patientfrom, patientreasons, patienttimings,currenttime;
+                String appointment_status="Request sent",appointment_status_percent="10";
+
+                String patientcauses, appointment_from_days, patientreasons, appointmenttimings,currentdate;
                 patientcauses = edittestpatientcauses.getText().toString();
-                patientfrom = edittestpatientfrom.getText().toString();
+                String appointmentdate=textViewAppointmentDate.getText().toString().trim();
+                appointment_from_days = edittestpatientfrom.getText().toString();
                 patientreasons = edittestpatientreason.getText().toString();
-                patienttimings = spinnerPatienttimings.getSelectedItem().toString().trim();
-                currenttime=textViewcurrentdate.getText().toString().trim();
+                appointmenttimings = spinnerPatienttimings.getSelectedItem().toString().trim();
+                currentdate=textViewcurrentdate.getText().toString().trim();
                 if (patientcauses.equals("")) {
                     edittestpatientcauses.setError("Causes is Required");
-                } else if (patientfrom.equals("")) {
-                    edittestpatientfrom.setError("From is Required");
+                } else if (appointment_from_days.equals("")) {
+                    edittestpatientfrom.setError("Duration is Required");
                 } else if (patientreasons.equals("")) {
-                    edittestpatientreason.setError("reason is Required");
+                    edittestpatientreason.setError("Reason is Required");
                 } else if (spinnerPatienttimings.getSelectedItem().toString().trim().equals("")) {
                     Toast.makeText(getActivity(), "Timings Required", Toast.LENGTH_LONG).show();
 
                 } else {
-                     dbHelper.addBookAppointment(patientcauses, patientfrom, patientreasons, patienttimings,patient_id,currenttime);
+                    dbHelper.addBookAppointment(patient_id,currentdate,appointmentdate,appointmenttimings,patientcauses,patientreasons,appointment_from_days,appointment_status,appointment_status_percent);
                     Toast.makeText(getActivity(), "Appointment Booked Successfully", Toast.LENGTH_LONG).show();
                     Intent intent=new Intent(getActivity(), MainActivityDrawer.class);
                     getActivity().finish();

@@ -54,10 +54,14 @@ public class DBHelper extends SQLiteOpenHelper {
     public static final String COLUMN_DOCTOR_AGE = "doctor_age";
     public static final String COLUMN_DOCTOR_ADDRESS = "doctor_address";
     public static final String COLUMN_DOCTOR_CONNECTED_HOSPITAL = "doctor_connected_hospital";
-    public static final String COLUMN_DOCTOR_AVAILABILITY = "doctor_availability";
+    public static final String COLUMN_DOCTOR_AVAILABILITY_IN_DAYS = "doctor_availability_days";//days
+    public static final String COLUMN_DOCTOR_AVAILABILITY = "doctor_availability";//timeing
+    public static final String COLUMN_DOCTOR_LUNCHTIME = "doctor_lunch_time";//Lunchtime
     public static final String COLUMN_DOCTOR_FACEBOOK = "doctor_facebook";
     public static final String COLUMN_DOCTOR_TWITTER = "doctor_twitter";
+    public static final String COLUMN_DOCTOR_PINCODE = "doctor_pincode";
     public static final String COLUMN_DOCTOR_REGISRTION_DATE = "date";
+
 
 
     //database table for the book appointment
@@ -66,11 +70,13 @@ public class DBHelper extends SQLiteOpenHelper {
     public static final String COLUMN_BOOK_APPOINTMENT_DATE = "book_appointment_date";
     public static final String COLUMN_BOOK_APPOINTMENT_TIME = "book_appointment_time";
     public static final String COLUMN_BOOK_APPOINTMENT_REASON = "book_appointment_reason";
+    public static final String COLUMN_BOOK_APPOINTMENT_CAUSES = "book_appointment_causes";
     public static final String COLUMN_BOOK_APPOINTMENT_FROM_DAYS = "book_appointment_from_days";
     public static final String COLUMN_BOOK_APPOINTMENT_PATIENT_ID = "patient_id";
     public static final String COLUMN_APPOINTMENT_REGISRTION_DATE = "appointment_registered_date";
     public static final String COLUMN_BOOK_APPOINTMENT_PATIENT_STATUS = "patient_appointment_status";
     public static final String COLUMN_APPOINTMENT_PATIENT_STATUS_PERCENT = "patient_appointment_status_percent";
+
 
 
 
@@ -158,23 +164,27 @@ public class DBHelper extends SQLiteOpenHelper {
                 + COLUMN_DOCTOR_AGE + " INTEGER, "
                 + COLUMN_DOCTOR_ADDRESS + " VARCHAR, "
                 + COLUMN_DOCTOR_CONNECTED_HOSPITAL + " VARCHAR, "
-                + COLUMN_DOCTOR_AVAILABILITY + " DOUBLE, "
+                + COLUMN_DOCTOR_AVAILABILITY_IN_DAYS + "  VARCHAR, "
+                + COLUMN_DOCTOR_AVAILABILITY + "  VARCHAR, "
+                + COLUMN_DOCTOR_LUNCHTIME + "  VARCHAR, "
                 + COLUMN_DOCTOR_FACEBOOK + " VARCHAR, "
                 + COLUMN_DOCTOR_TWITTER + " VARCHAR, "
+                + COLUMN_DOCTOR_PINCODE + " INTEGER,"
                 + COLUMN_DOCTOR_REGISRTION_DATE + " DATE" + ")";
         db.execSQL(sq2);
 
         //Table for book appointment
         String sq3 = "CREATE TABLE IF NOT EXISTS " + TABLE_BOOK_APPOINTMENT
                 + "(" +COLUMN_BOOK_APPOINTMENT_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
+                + COLUMN_BOOK_APPOINTMENT_PATIENT_ID + " INTEGER,"
+                + COLUMN_APPOINTMENT_REGISRTION_DATE + " DATE,"
                 + COLUMN_BOOK_APPOINTMENT_DATE + " DATE,"
                 + COLUMN_BOOK_APPOINTMENT_TIME + " DOUBLE,"
+                + COLUMN_BOOK_APPOINTMENT_CAUSES + " VARCHAR,"
                 + COLUMN_BOOK_APPOINTMENT_REASON + " VARCHAR,"
                 + COLUMN_BOOK_APPOINTMENT_FROM_DAYS + " VARCHAR,"
-                + COLUMN_BOOK_APPOINTMENT_PATIENT_ID + " INTEGER,"
                 + COLUMN_BOOK_APPOINTMENT_PATIENT_STATUS + " VARCHAR,"
-                + COLUMN_APPOINTMENT_PATIENT_STATUS_PERCENT + " VARCHAR,"
-                + COLUMN_APPOINTMENT_REGISRTION_DATE + " DATE" + ")";
+                + COLUMN_APPOINTMENT_PATIENT_STATUS_PERCENT + " VARCHAR" + ")";
         db.execSQL(sq3);
 
 
@@ -266,49 +276,63 @@ public class DBHelper extends SQLiteOpenHelper {
         return true;
     }
     //insertion of doctor information
-    public boolean addDoctor(String doctorname,String doctordegree,String doctorspecialization,String doctorcategory,String doctorexperience,String fees,String doctorachievement,String doctoremail,String doctorfax,String doctormobilenumber,String doctorpassword,String doctorgender,String doctorage,String doctoraddress,String doctorconnectedhospital,String doctoravalibility,String doctorfacebook,String doctortwitter,String doctorregistrationdate) {
+    public boolean addDoctor(String doctorname,String doctormobile,String doctorpassword,String doctoremail,String doctordegree,String doctorspecialization,String doctorcategory,String doctorexperience,String doctorachievements,String doctorconnectedhospitals,String doctordays,String doctoravailabletimings,String doctorlunchtimings,String doctorfax,String doctortwitter,String doctorfacebook,String doctorfees,String doctorgender,String doctorage,String doctoraddress,String doctorpincode,String doctorcurrentdate) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
         contentValues.put(COLUMN_DOCTOR_NAME, doctorname);
+        contentValues.put(COLUMN_DOCTOR_MOBILE, doctormobile);
+        contentValues.put(COLUMN_DOCTOR_PASSWORD, doctorpassword);
+        contentValues.put(COLUMN_DOCTOR_EMAIL, doctoremail);
         contentValues.put(COLUMN_DOCTOR_DEGREE, doctordegree);
         contentValues.put(COLUMN_DOCTOR_SPECILIZATION, doctorspecialization);
         contentValues.put(COLUMN_DOCTOR_CATEGORY, doctorcategory);
         contentValues.put(COLUMN_DOCTOR_EXPERIENCE, doctorexperience);
-        contentValues.put(COLUMN_DOCTOR_FEES, fees);
-        contentValues.put(COLUMN_DOCTOR_ACHIEVEMENT, doctorachievement);
-        contentValues.put(COLUMN_DOCTOR_EMAIL, doctoremail);
+        contentValues.put(COLUMN_DOCTOR_ACHIEVEMENT, doctorachievements);
+        contentValues.put(COLUMN_DOCTOR_CONNECTED_HOSPITAL, doctorconnectedhospitals);
+        contentValues.put(COLUMN_DOCTOR_AVAILABILITY_IN_DAYS, doctordays);
+        contentValues.put(COLUMN_DOCTOR_AVAILABILITY, doctoravailabletimings);
+        contentValues.put(COLUMN_DOCTOR_LUNCHTIME, doctorlunchtimings);
         contentValues.put(COLUMN_DOCTOR_FAX, doctorfax);
-        contentValues.put(COLUMN_DOCTOR_MOBILE, doctormobilenumber);
-        contentValues.put(COLUMN_DOCTOR_PASSWORD, doctorpassword);
+        contentValues.put(COLUMN_DOCTOR_TWITTER, doctortwitter);
+        contentValues.put(COLUMN_DOCTOR_FACEBOOK, doctorfacebook);
+        contentValues.put(COLUMN_DOCTOR_FEES, doctorfees);
         contentValues.put(COLUMN_DOCTOR_GENDER, doctorgender);
         contentValues.put(COLUMN_DOCTOR_AGE, doctorage);
         contentValues.put(COLUMN_DOCTOR_ADDRESS, doctoraddress);
-        contentValues.put(COLUMN_DOCTOR_CONNECTED_HOSPITAL, doctorconnectedhospital);
-        contentValues.put(COLUMN_DOCTOR_AVAILABILITY, doctoravalibility);
-        contentValues.put(COLUMN_DOCTOR_FACEBOOK, doctorfacebook);
-        contentValues.put(COLUMN_DOCTOR_TWITTER, doctortwitter);
-        contentValues.put(COLUMN_DOCTOR_REGISRTION_DATE, doctorregistrationdate);
+        contentValues.put(COLUMN_DOCTOR_PINCODE, doctorpincode);
+        contentValues.put(COLUMN_DOCTOR_REGISRTION_DATE, doctorcurrentdate);
         db.insert(TABLE_DOCTOR_INFORMATION, null, contentValues);
         db.close();
         return true;
     }
 
     //insertion of book appointment information
-    public boolean addBookAppointment(String bookappointmentdate,String bookappointmenttime,String bookappointmentreason,String bookappointmentfromdays,String bookappointmentpatientid,String bookappointmentregistrationdate) {
+    public boolean addBookAppointment(String bookappointmentpatientid,String bookregistrationappointmentdate,String bookappointmentdate,String bookappointmenttime,String bookappointmentcauses,String bookappointmentreasons,String bookappointmentfromdays,String bookpatientappoinmentstatus,String bookpatientappoinmentstatuspercent) {
 
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
+        contentValues.put(COLUMN_BOOK_APPOINTMENT_PATIENT_ID, bookappointmentpatientid);
+        contentValues.put(COLUMN_APPOINTMENT_REGISRTION_DATE, bookregistrationappointmentdate);
         contentValues.put(COLUMN_BOOK_APPOINTMENT_DATE, bookappointmentdate);
         contentValues.put(COLUMN_BOOK_APPOINTMENT_TIME, bookappointmenttime);
-        contentValues.put(COLUMN_BOOK_APPOINTMENT_REASON, bookappointmentreason);
+        contentValues.put(COLUMN_BOOK_APPOINTMENT_CAUSES, bookappointmentcauses);
+        contentValues.put(COLUMN_BOOK_APPOINTMENT_REASON, bookappointmentreasons);
         contentValues.put(COLUMN_BOOK_APPOINTMENT_FROM_DAYS, bookappointmentfromdays);
-        contentValues.put(COLUMN_BOOK_APPOINTMENT_PATIENT_ID, bookappointmentpatientid);
-        contentValues.put(COLUMN_APPOINTMENT_REGISRTION_DATE, bookappointmentregistrationdate);
+        contentValues.put(COLUMN_BOOK_APPOINTMENT_PATIENT_STATUS, bookpatientappoinmentstatus);
+        contentValues.put(COLUMN_APPOINTMENT_PATIENT_STATUS_PERCENT, bookpatientappoinmentstatuspercent);
         db.insert(TABLE_BOOK_APPOINTMENT, null, contentValues);
         db.close();
         return true;
     }
 
+    // showhistorydetails
+    public Cursor getHistory() {
+        String[] cols = { COLUMN_BOOK_APPOINTMENT_ID, COLUMN_APPOINTMENT_REGISRTION_DATE,COLUMN_BOOK_APPOINTMENT_DATE,COLUMN_BOOK_APPOINTMENT_CAUSES,COLUMN_BOOK_APPOINTMENT_PATIENT_STATUS,COLUMN_APPOINTMENT_PATIENT_STATUS_PERCENT};
+        SQLiteDatabase db = this.getWritableDatabase();
+        Cursor c = db.query(TABLE_BOOK_APPOINTMENT, cols, null,
+                null, null, null, null,null);
+        return c;
+    }
     //insertion of Category information
     public boolean addCategory(String categoryname,byte[] categoryimage) {
 
