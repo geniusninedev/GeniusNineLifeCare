@@ -25,7 +25,7 @@ import com.geniusnine.android.geniusninelifecare.Helper.Utils;
 import com.geniusnine.android.geniusninelifecare.MainActivityDrawer;
 import com.geniusnine.android.geniusninelifecare.R;
 
-;import java.io.IOException;
+import java.io.IOException;
 import java.io.InputStream;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -33,12 +33,14 @@ import java.util.Locale;
 
 import static android.app.Activity.RESULT_OK;
 
+;
+
 
 /**
  * Created by Dev on 12-01-2017.
  */
 
-public class Add_Health_and_Tips extends Fragment {
+public class Add_Medicines extends Fragment {
     DBHelper dbHelper;
     EditText name,description;
     Button button;
@@ -47,24 +49,24 @@ public class Add_Health_and_Tips extends Fragment {
     final Calendar cal = Calendar.getInstance();
     String myFormat = "yyyy-MM-DD"; //In which you need put here
     SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.US);
-    ImageView uploadhealth_and_tipsProfilepicture;
+    ImageView uploadmedicinesProfilepicture;
     private static final int SELECT_PICTURE = 100;
     private static final int REQUEST_EXTERNAL_STORAGE = 1;
     private static String[] PERMISSIONS_STORAGE = {
             Manifest.permission.READ_EXTERNAL_STORAGE,
             Manifest.permission.WRITE_EXTERNAL_STORAGE
     };
-    String doctorhealth_and_tipsname,doctorhealth_and_tipsdecription,currentdate;
+    String doctormedicinesname,doctormedicinesdecription,currentdate;
     private static final String TAG = "MainActivityDrawer";
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View v = inflater.inflate(R.layout.add_helth_and_tips, null);
+        View v = inflater.inflate(R.layout.add_medicines, null);
         dbHelper = new DBHelper(getActivity());
         textViewcurrentdate=(TextView)v.findViewById(R.id.textViewcurrentdate);
         name=(EditText)v.findViewById(R.id.editTexttipsname);
         description=(EditText)v.findViewById(R.id.editTexttipsdescription);
-        uploadhealth_and_tipsProfilepicture=(ImageView)v.findViewById(R.id.imageViewhealth_and_tipspicture);
-        button=(Button)v.findViewById(R.id.buttonaddhealth_and_tipssubmit);
+        uploadmedicinesProfilepicture=(ImageView)v.findViewById(R.id.imageViewmedicinespicture);
+        button=(Button)v.findViewById(R.id.buttonaddmedicinessubmit);
         dbHelper=new DBHelper(getActivity());
         final DatePickerDialog.OnDateSetListener date = new DatePickerDialog.OnDateSetListener() {
 
@@ -79,7 +81,7 @@ public class Add_Health_and_Tips extends Fragment {
 
         };
         textViewcurrentdate.setText(sdf.format(cal.getTime()));
-        uploadhealth_and_tipsProfilepicture.setOnClickListener(
+        uploadmedicinesProfilepicture.setOnClickListener(
                 new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -89,16 +91,16 @@ public class Add_Health_and_Tips extends Fragment {
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                doctorhealth_and_tipsname = name.getText().toString().trim();
-                doctorhealth_and_tipsdecription = description.getText().toString().trim();
+                doctormedicinesname = name.getText().toString().trim();
+                doctormedicinesdecription = description.getText().toString().trim();
                 currentdate=textViewcurrentdate.getText().toString().trim();
                 if (null == selectedImageUri) {
-                    Toast.makeText(getActivity(), "Please Select Image For health_and_tips...", Toast.LENGTH_LONG).show();
+                    Toast.makeText(getActivity(), "Please Select Image For medicines...", Toast.LENGTH_LONG).show();
                 }
                 else if (name.getText().toString().trim().equals("")) {
-                    name.setError("health_and_tips Name Required");
+                    name.setError("Medicines Name Required");
                 }  else if (description.getText().toString().trim().equals("")) {
-                    description.setError("health_and_tips Description Required");
+                    description.setError("Medicines Description Required");
                 }
                 else {
                     if (null != selectedImageUri) {
@@ -106,7 +108,7 @@ public class Add_Health_and_Tips extends Fragment {
                         // Saving to Database...
                         if (saveImageInDB(selectedImageUri)) {
                             // showMessage("Image Saved in Database...");
-                            Toast.makeText(getActivity(), "health_and_tips Saved in Database...", Toast.LENGTH_LONG).show();
+                            Toast.makeText(getActivity(), "Medicines Saved in Database...", Toast.LENGTH_LONG).show();
                             Intent i=new Intent(getActivity(), MainActivityDrawer.class);
                             getActivity().finish();
                             getActivity().startActivity(i);
@@ -136,7 +138,7 @@ public class Add_Health_and_Tips extends Fragment {
                 selectedImageUri = data.getData();
 
                 if (null != selectedImageUri) {
-                    uploadhealth_and_tipsProfilepicture .setImageURI(selectedImageUri);
+                    uploadmedicinesProfilepicture .setImageURI(selectedImageUri);
 
                 }
 
@@ -152,7 +154,7 @@ public class Add_Health_and_Tips extends Fragment {
             dbHelper.open();
             InputStream iStream = getActivity().getContentResolver().openInputStream(selectedImageUri);
             byte[] inputData = Utils.getBytes(iStream);
-            dbHelper.addhealth_and_tips(doctorhealth_and_tipsname,doctorhealth_and_tipsdecription,inputData,currentdate);
+            dbHelper.addMedicines(doctormedicinesname,doctormedicinesdecription,inputData,currentdate);
             dbHelper.close();
             return true;
         } catch (IOException ioe) {

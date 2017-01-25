@@ -1,5 +1,6 @@
 package com.geniusnine.android.geniusninelifecare.Fragments;
 
+import android.app.DatePickerDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -10,6 +11,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.RatingBar;
 import android.widget.TextView;
@@ -20,7 +22,9 @@ import com.geniusnine.android.geniusninelifecare.Helper.DBHelper;
 import com.geniusnine.android.geniusninelifecare.MainActivityDrawer;
 import com.geniusnine.android.geniusninelifecare.R;
 
-;
+;import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Locale;
 
 
 /**
@@ -36,16 +40,34 @@ public class Feedback extends Fragment {
     DBHelper dbHelper;
     Cursor cursor;
     String patient_id;
+    TextView textViewcurrentdate;
+    final Calendar cal = Calendar.getInstance();
+    String myFormat = "yyyy-MM-DD"; //In which you need put here
+    SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.US);
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.feedback, null);
         dbHelper = new DBHelper(getActivity());
+        textViewcurrentdate=(TextView)v.findViewById(R.id.textViewcurrentdate);
         editTextmessage = (EditText) v.findViewById(R.id.edittextmessage);
         editTextcheck = (EditText) v.findViewById(R.id.edittextchecking);
         ratingBar = (RatingBar) v.findViewById(R.id.ratingBar);
         textViewratingstatus = (TextView) v.findViewById(R.id.textViewratingstatus);
         editTextsuggestion = (EditText) v.findViewById(R.id.edittextsuggestion);
         buttonsubmit = (Button) v.findViewById(R.id.buttonsubmit);
+        final DatePickerDialog.OnDateSetListener date = new DatePickerDialog.OnDateSetListener() {
+
+            @Override
+            public void onDateSet(DatePicker view, int year, int monthOfYear,
+                                  int dayOfMonth) {
+                // TODO Auto-generated method stub
+                cal.set(Calendar.YEAR, year);
+                cal.set(Calendar.MONTH, monthOfYear);
+                cal.set(Calendar.DAY_OF_MONTH, dayOfMonth);
+            }
+
+        };
+        textViewcurrentdate.setText(sdf.format(cal.getTime()));
         //if rating value is changed,
         //display the current rating value in the result (textview) automatically
         ratingBar.setOnRatingBarChangeListener(new RatingBar.OnRatingBarChangeListener() {
@@ -78,12 +100,13 @@ public class Feedback extends Fragment {
             buttonsubmit.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    String message, checking, rating, suggestion;
+                    String message, checking, rating, suggestion,currentdate;
                     message=editTextmessage.getText().toString().trim();
                     checking=editTextcheck.getText().toString().trim();
                     rating= String.valueOf(ratingBar.getRating());
                     suggestion=editTextsuggestion.getText().toString().trim();
-                    dbHelper.submitfeedback(patient_id,message, checking, rating, suggestion);
+                    currentdate=textViewcurrentdate.getText().toString().trim();
+                    dbHelper.submitfeedback(patient_id,message, checking, rating, suggestion,currentdate);
                     Toast.makeText(getActivity(),"Feedback Submitted Successfully",Toast.LENGTH_LONG).show();
                     Intent i=new Intent(getActivity(), MainActivityDrawer.class);
                     getActivity().finish();

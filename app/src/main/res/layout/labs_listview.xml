@@ -60,7 +60,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 app:srcCompat="@drawable/adddoctor"
-                android:id="@+id/imageViewhealth_and_tips"
+                android:id="@+id/imageViewlabs"
                 android:layout_gravity="center"/>
         <TextView
             android:id="@+id/description"

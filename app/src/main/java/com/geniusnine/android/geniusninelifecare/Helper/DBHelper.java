@@ -94,6 +94,7 @@ public class DBHelper extends SQLiteOpenHelper {
     public static final String COLUMN_FEEDBACK_CHECKING = "feedback_checking";
     public static final String COLUMN_FEEDBACK_APP_RATING = "feedback_app_rating";
     public static final String COLUMN_FEEDBACK_SUGGESTION = "feedback_suggestion";
+    public static final String COLUMN_FEEDBACK_SUBMITED_DATE = "date";
 
     //database table for the Health And Tips
     public static final String TABLE_HEALTH_AND_TIPS= "health_and_tips_information";
@@ -101,6 +102,7 @@ public class DBHelper extends SQLiteOpenHelper {
     public static final String COLUMN_HEALTH_AND_TIPS_NAME = "health_and_tips_name";
     public static final String COLUMN_HEALTH_AND_TIPS_DESCRIPTION = "health_and_tips_description";
     public static final String COLUMN_HEALTH_AND_TIPS_IMAGE = "health_and_tips_image";
+    public static final String COLUMN_HEALTH_AND_TIPS_UPLODED_DATE = "date";
 
     //database table for the Lab
     public static final String TABLE_LAB= "lab_information";
@@ -108,6 +110,7 @@ public class DBHelper extends SQLiteOpenHelper {
     public static final String COLUMN_LAB_NAME = "lab_name";
     public static final String COLUMN_LAB_DESCRIPTION = "lab_description";
     public static final String COLUMN_LAB_IMAGE = "lab_image";
+    public static final String COLUMN_LAB_REGISRTION_DATE = "date";
 
     //database table for the Medicines
     public static final String TABLE_MEDICINES= "medicines_information";
@@ -115,6 +118,7 @@ public class DBHelper extends SQLiteOpenHelper {
     public static final String COLUMN_MEDICINES_NAME = "medicines_name";
     public static final String COLUMN_MEDICINES_DESCRIPTION = "medicines_description";
     public static final String COLUMN_MEDICINES_IMAGE = "medicines_image";
+    public static final String COLUMN_MEDICINES_ADDED_DATE = "date";
 
 
 
@@ -201,14 +205,16 @@ public class DBHelper extends SQLiteOpenHelper {
                 + COLUMN_FEEDBACK_MESSAGE + " VARCHAR, "
                 +  COLUMN_FEEDBACK_CHECKING  + " INTEGER, "
                 + COLUMN_FEEDBACK_APP_RATING + " INTEGER, "
-                + COLUMN_FEEDBACK_SUGGESTION + " VARCHAR" + ")";
+                + COLUMN_FEEDBACK_SUGGESTION + " VARCHAR,"
+                + COLUMN_FEEDBACK_SUBMITED_DATE + " DATE" +")";
         db.execSQL(sq5);
         //Table for Health_and_Tips
         String sq6 = "CREATE TABLE IF NOT EXISTS " + TABLE_HEALTH_AND_TIPS
                 + "(" +COLUMN_HEALTH_AND_TIPS_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
                 + COLUMN_HEALTH_AND_TIPS_NAME + " VARCHAR, "
                 + COLUMN_HEALTH_AND_TIPS_DESCRIPTION + " VARCHAR, "
-                + COLUMN_HEALTH_AND_TIPS_IMAGE + " BLOB"  + ")";
+                + COLUMN_HEALTH_AND_TIPS_IMAGE + " BLOB,"
+                + COLUMN_HEALTH_AND_TIPS_UPLODED_DATE + " DATE" + ")";
         db.execSQL(sq6);
 
         //Table for Lab
@@ -216,14 +222,16 @@ public class DBHelper extends SQLiteOpenHelper {
                 + "(" +COLUMN_LAB_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
                 + COLUMN_LAB_NAME + " VARCHAR, "
                 + COLUMN_LAB_DESCRIPTION + " VARCHAR, "
-                + COLUMN_LAB_IMAGE + " BLOB"  + ")";
+                + COLUMN_LAB_IMAGE + " BLOB,"
+                + COLUMN_LAB_REGISRTION_DATE + " DATE" + ")";
         db.execSQL(sq7);
         //Table for Lab
         String sq8 = "CREATE TABLE IF NOT EXISTS " + TABLE_MEDICINES
                 + "(" +COLUMN_MEDICINES_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
                 + COLUMN_MEDICINES_NAME + " VARCHAR, "
                 + COLUMN_MEDICINES_DESCRIPTION + " VARCHAR, "
-                + COLUMN_MEDICINES_IMAGE + " BLOB"  + ")";
+                + COLUMN_MEDICINES_IMAGE + " BLOB,"
+                + COLUMN_MEDICINES_ADDED_DATE + " DATE" + ")";
         db.execSQL(sq8);
     }
 
@@ -367,19 +375,46 @@ public class DBHelper extends SQLiteOpenHelper {
         return list;
     }
     //insertion of Category information
-    public boolean addhealth_and_tips(String health_tips_name,String health_tips_desc,byte[] health_tips_image) {
+    public boolean addhealth_and_tips(String health_tips_name,String health_tips_desc,byte[] health_tips_image,String currentdate) {
 
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
         contentValues.put(COLUMN_HEALTH_AND_TIPS_NAME, health_tips_name);
         contentValues.put(COLUMN_HEALTH_AND_TIPS_DESCRIPTION, health_tips_desc);
         contentValues.put(COLUMN_HEALTH_AND_TIPS_IMAGE, health_tips_image);
+        contentValues.put(COLUMN_HEALTH_AND_TIPS_UPLODED_DATE, currentdate);
         db.insert(TABLE_HEALTH_AND_TIPS, null, contentValues);
         db.close();
         return true;
     }
     //insertion of Category information
-    public boolean submitfeedback(String patient_id,String message,String checking,String rating,String suggestion) {
+    public boolean addLabs(String labs_name,String labs_desc,byte[] labs_image,String currentdate) {
+
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues contentValues = new ContentValues();
+        contentValues.put(COLUMN_LAB_NAME, labs_name);
+        contentValues.put(COLUMN_LAB_DESCRIPTION, labs_desc);
+        contentValues.put(COLUMN_LAB_IMAGE, labs_image);
+        contentValues.put(COLUMN_LAB_REGISRTION_DATE, currentdate);
+        db.insert(TABLE_LAB, null, contentValues);
+        db.close();
+        return true;
+    }
+    //insertion of Category information
+    public boolean addMedicines(String medicines_name,String medicines_desc,byte[] medicines_image,String currentdate) {
+
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues contentValues = new ContentValues();
+        contentValues.put(COLUMN_MEDICINES_NAME, medicines_name);
+        contentValues.put(COLUMN_MEDICINES_DESCRIPTION, medicines_desc);
+        contentValues.put(COLUMN_MEDICINES_IMAGE, medicines_image);
+        contentValues.put(COLUMN_MEDICINES_ADDED_DATE, currentdate);
+        db.insert(TABLE_MEDICINES, null, contentValues);
+        db.close();
+        return true;
+    }
+    //insertion of Category information
+    public boolean submitfeedback(String patient_id,String message,String checking,String rating,String suggestion,String currentdate) {
 
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
@@ -388,6 +423,7 @@ public class DBHelper extends SQLiteOpenHelper {
         contentValues.put(COLUMN_FEEDBACK_CHECKING, checking);
         contentValues.put(COLUMN_FEEDBACK_APP_RATING, rating);
         contentValues.put(COLUMN_FEEDBACK_SUGGESTION, suggestion);
+        contentValues.put(COLUMN_FEEDBACK_SUBMITED_DATE, currentdate);
         db.insert(TABLE_FEEDBACK, null, contentValues);
         db.close();
         return true;
@@ -402,13 +438,25 @@ public Cursor getCategory() {
 }
     // showHealth and Tips
     public Cursor getHealth_and_tips() {
-        String[] cols = { COLUMN_HEALTH_AND_TIPS_ID, COLUMN_HEALTH_AND_TIPS_NAME,COLUMN_HEALTH_AND_TIPS_DESCRIPTION,COLUMN_HEALTH_AND_TIPS_IMAGE};
+        String[] cols = { COLUMN_HEALTH_AND_TIPS_ID, COLUMN_HEALTH_AND_TIPS_NAME,COLUMN_HEALTH_AND_TIPS_DESCRIPTION,COLUMN_HEALTH_AND_TIPS_IMAGE,COLUMN_HEALTH_AND_TIPS_UPLODED_DATE};
         SQLiteDatabase db = this.getWritableDatabase();
-        Cursor c = db.query(TABLE_HEALTH_AND_TIPS, cols, null,
-                null, null, null, null);
+        Cursor c = db.query(TABLE_HEALTH_AND_TIPS, cols, null, null, null, null,"date DESC LIMIT 10");
         return c;
     }
-
+    // showHealth and Tips
+    public Cursor getLabs() {
+        String[] cols = { COLUMN_LAB_ID, COLUMN_LAB_NAME,COLUMN_LAB_DESCRIPTION,COLUMN_LAB_IMAGE,COLUMN_LAB_REGISRTION_DATE};
+        SQLiteDatabase db = this.getWritableDatabase();
+        Cursor c = db.query(TABLE_LAB, cols, null, null, null, null,"date DESC LIMIT 10");
+        return c;
+    }
+    // showHealth and Tips
+    public Cursor getMedicines() {
+        String[] cols = { COLUMN_MEDICINES_ID, COLUMN_MEDICINES_NAME,COLUMN_MEDICINES_DESCRIPTION,COLUMN_MEDICINES_IMAGE,COLUMN_MEDICINES_ADDED_DATE};
+        SQLiteDatabase db = this.getWritableDatabase();
+        Cursor c = db.query(TABLE_MEDICINES, cols, null, null, null, null,"date DESC LIMIT 10");
+        return c;
+    }
     // Adding new UpdateProfile
     public void UpdateProfile(String patient_id,byte[] imageBytes) {
         SQLiteDatabase db = this.getWritableDatabase();

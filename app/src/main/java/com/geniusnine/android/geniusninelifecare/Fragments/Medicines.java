@@ -12,17 +12,20 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.geniusnine.android.geniusninelifecare.Adapter.Health_Tips_ImageAdapter;
+import com.geniusnine.android.geniusninelifecare.Adapter.Medicines_ImageAdapter;
 import com.geniusnine.android.geniusninelifecare.Helper.DBHelper;
 import com.geniusnine.android.geniusninelifecare.R;
 
-;import java.util.ArrayList;
+import java.util.ArrayList;
+
+;
 
 
 /**
  * Created by Dev on 12-01-2017.
  */
 
-public class Health_and_Tips extends Fragment {
+public class Medicines extends Fragment {
     ArrayList<String> ID_ArrayList = new ArrayList<String>();
     ArrayList<String> NAME_ArrayList = new ArrayList<String>();
     ArrayList<String> DESCRIPTION_ArrayList = new ArrayList<String>();
@@ -33,10 +36,10 @@ public class Health_and_Tips extends Fragment {
     Bitmap bitmap = null;
     //Creating Views
     private RecyclerView recyclerView;
-  Health_Tips_ImageAdapter healt_tips_imageadapter;
+     Medicines_ImageAdapter medicines_imageAdapter;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View v = inflater.inflate(R.layout.helth_and_tips, null);
+        View v = inflater.inflate(R.layout.medicines, null);
         dbHelper=new DBHelper(getActivity());
         //Initializing Views
         recyclerView = (RecyclerView)v.findViewById(R.id.recyclerView);
@@ -49,7 +52,7 @@ public class Health_and_Tips extends Fragment {
     }
 
     private void loadHealth_and_tips_Data() {
-        cursor = dbHelper.getHealth_and_tips();
+        cursor = dbHelper.getMedicines();
         ID_ArrayList.clear();
         NAME_ArrayList.clear();
         bitmaps.clear();
@@ -58,18 +61,18 @@ public class Health_and_Tips extends Fragment {
 
         if (cursor.moveToFirst()) {
             do {
-                ID_ArrayList.add(cursor.getString(cursor.getColumnIndex(dbHelper.COLUMN_HEALTH_AND_TIPS_ID)));
-                NAME_ArrayList.add(cursor.getString(cursor.getColumnIndex(dbHelper.COLUMN_HEALTH_AND_TIPS_NAME)));
-                DESCRIPTION_ArrayList.add(cursor.getString(cursor.getColumnIndex(dbHelper.COLUMN_HEALTH_AND_TIPS_DESCRIPTION)));
-                byte[] blob = cursor.getBlob(cursor.getColumnIndex(dbHelper.COLUMN_HEALTH_AND_TIPS_IMAGE));
+                ID_ArrayList.add(cursor.getString(cursor.getColumnIndex(dbHelper.COLUMN_MEDICINES_ID)));
+                NAME_ArrayList.add(cursor.getString(cursor.getColumnIndex(dbHelper.COLUMN_MEDICINES_NAME)));
+                DESCRIPTION_ArrayList.add(cursor.getString(cursor.getColumnIndex(dbHelper.COLUMN_MEDICINES_DESCRIPTION)));
+                byte[] blob = cursor.getBlob(cursor.getColumnIndex(dbHelper.COLUMN_MEDICINES_IMAGE));
                 bitmap = BitmapFactory.decodeByteArray(blob, 0, blob.length);
                 bitmaps.add(bitmap);
-                DATE_ArrayList.add(cursor.getString(cursor.getColumnIndex(dbHelper.COLUMN_HEALTH_AND_TIPS_UPLODED_DATE)));
+                DATE_ArrayList.add(cursor.getString(cursor.getColumnIndex(dbHelper.COLUMN_MEDICINES_ADDED_DATE)));
 
             } while (cursor.moveToNext());
         }
 
-        healt_tips_imageadapter = new Health_Tips_ImageAdapter(getActivity(),
+        medicines_imageAdapter = new Medicines_ImageAdapter(getActivity(),
 
                 ID_ArrayList,
                 NAME_ArrayList,
@@ -78,7 +81,7 @@ public class Health_and_Tips extends Fragment {
                 DATE_ArrayList
 
         );
-        recyclerView.setAdapter(healt_tips_imageadapter);
+        recyclerView.setAdapter(medicines_imageAdapter);
 
         cursor.close();
     }

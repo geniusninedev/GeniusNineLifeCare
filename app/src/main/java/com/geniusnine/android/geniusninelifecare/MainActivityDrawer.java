@@ -23,11 +23,14 @@ import android.widget.Toast;
 
 import com.geniusnine.android.geniusninelifecare.Fragments.About_Us;
 import com.geniusnine.android.geniusninelifecare.Fragments.Add_Health_and_Tips;
+import com.geniusnine.android.geniusninelifecare.Fragments.Add_Labs;
+import com.geniusnine.android.geniusninelifecare.Fragments.Add_Medicines;
 import com.geniusnine.android.geniusninelifecare.Fragments.Contact_US;
 import com.geniusnine.android.geniusninelifecare.Fragments.Doctor_Categories;
 import com.geniusnine.android.geniusninelifecare.Fragments.Doctor_Registraion;
 import com.geniusnine.android.geniusninelifecare.Fragments.Feedback;
 import com.geniusnine.android.geniusninelifecare.Fragments.Health_and_Tips;
+import com.geniusnine.android.geniusninelifecare.Fragments.Medicines;
 import com.geniusnine.android.geniusninelifecare.Fragments.Patient_Book_Appointment;
 import com.geniusnine.android.geniusninelifecare.Fragments.Patient_Home;
 import com.geniusnine.android.geniusninelifecare.Fragments.Patient_Order;
@@ -121,13 +124,13 @@ public class MainActivityDrawer extends AppCompatActivity {
                 if (menuItem.getItemId() == R.id.Medicines) {
                     loadImageFromDB();
                     FragmentTransaction fragmentTransaction = mFragmentManager.beginTransaction();
-                    fragmentTransaction.replace(R.id.containerView, new Patient_Order()).commit();
+                    fragmentTransaction.replace(R.id.containerView, new Medicines()).commit();
 
                 }
                 if (menuItem.getItemId() == R.id.Add_Medicines) {
                     loadImageFromDB();
                     FragmentTransaction fragmentTransaction = mFragmentManager.beginTransaction();
-                    fragmentTransaction.replace(R.id.containerView, new Patient_Order()).commit();
+                    fragmentTransaction.replace(R.id.containerView, new Add_Medicines()).commit();
 
                 }
                 if (menuItem.getItemId() == R.id.Health_And_Tips) {
@@ -144,7 +147,7 @@ public class MainActivityDrawer extends AppCompatActivity {
                 }if (menuItem.getItemId() == R.id.Add_Labs) {
                     loadImageFromDB();
                     FragmentTransaction fragmentTransaction = mFragmentManager.beginTransaction();
-                    fragmentTransaction.replace(R.id.containerView, new Patient_Order()).commit();
+                    fragmentTransaction.replace(R.id.containerView, new Add_Labs()).commit();
 
                 }
                 if (menuItem.getItemId() == R.id.Book_Appointment) {

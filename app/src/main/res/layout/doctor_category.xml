@@ -49,7 +49,6 @@
                 android:id="@+id/editTextUserName"
                 android:hint="  Enter Category Name:"
                 android:inputType="text"
-                android:digits="abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ "
                 android:textColorHint="#999999"
                 android:textSize="20sp"
                 />

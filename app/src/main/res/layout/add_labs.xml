@@ -16,7 +16,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id="@+id/textView"
-                android:text="Add Health And Tips"
+                android:text="Add Lab"
                 android:textStyle="normal|bold"
                 android:textAlignment="center"
                 android:textColor="@color/colorPrimaryDark" />
@@ -38,7 +38,7 @@
             <com.pkmmte.view.CircularImageView
                 android:layout_width="80dp"
                 android:layout_height="80dp"
-                android:id="@+id/imageViewhealth_and_tipspicture"
+                android:id="@+id/imageViewLabspicture"
                 android:src="@drawable/ic_account_circle_white_24dp"
                 app:border="true"
                 app:border_color="#EEEEEE"
@@ -54,7 +54,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:textAppearance="?android:attr/textAppearanceSmall"
-                android:text="Click the image to upload Health and Tip picture."
+                android:text="Click the image to upload Lab picture."
                 android:textColor="#000000"
                 android:textSize="14sp"
                 android:gravity="center_horizontal"
@@ -69,7 +69,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:id="@+id/editTexttipsname"
-                android:hint="  Enter Tip Name:"
+                android:hint="  Enter Lab Name:"
                 android:inputType="text"
                 android:textColorHint="#999999"
                 android:textSize="20sp"
@@ -83,7 +83,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:id="@+id/editTexttipsdescription"
-                android:hint="  Enter Tip Decription:"
+                android:hint="  Enter Lab Decription:"
                 android:inputType="text"
                 android:textColorHint="#999999"
                 android:textSize="20sp"
@@ -98,7 +98,7 @@
                 android:text="Add Lab"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:id="@+id/buttonaddhealth_and_tipssubmit"
+                android:id="@+id/buttonaddLabssubmit"
                 android:layout_weight="1"
                 style="@style/Widget.AppCompat.Button.Colored" />
         </LinearLayout>
