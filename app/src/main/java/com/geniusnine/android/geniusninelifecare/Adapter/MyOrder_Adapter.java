@@ -18,37 +18,29 @@ import android.widget.TextView;
 import com.geniusnine.android.geniusninelifecare.R;
 
 import java.util.ArrayList;
-import java.util.Locale;
 
 /**
  * Created by Dev on 18-01-2017.
  */
 
-public class Medicines_ImageAdapter extends RecyclerView.Adapter<Medicines_ImageAdapter.ListViewHolder> {
+public class MyOrder_Adapter extends RecyclerView.Adapter<MyOrder_Adapter.ListViewHolder> {
 
     Context context;
     LayoutInflater inflater;
-    ArrayList<String> medicinesID;
-    ArrayList<String> medicinesName;
-    ArrayList<String> medicinesNamefiliter;
-    ArrayList<String> medicinesDescription;
-    ArrayList<String> medicinesDate;
-    private ArrayList<Bitmap> bitmaps;
-    byte[] medicinesimage;
-    Activity activity;
+    ArrayList<String> MyOrderID;
+    ArrayList<String> MyOrderName;
+    ArrayList<String> MyOrderDescription;
+    ArrayList<String> MyOrderDate;
 
 
 
-    public Medicines_ImageAdapter(Context context, ArrayList<String> id, ArrayList<String> name, ArrayList<String> description, ArrayList<Bitmap> bitm, ArrayList<String> date) {
+    public MyOrder_Adapter(Context context, ArrayList<String> id, ArrayList<String> name, ArrayList<String> description, ArrayList<String> date) {
         super();
         this.context = context;
-        this.medicinesID = id;
-        this.medicinesName =  name;
-        this.medicinesNamefiliter =  name;
-        this.medicinesDescription =  description;
-        this.bitmaps=bitm;
-        this.medicinesDate=date;
-        // this.listener = context;
+        this.MyOrderID = id;
+        this.MyOrderName =  name;
+        this.MyOrderDescription =  description;
+        this.MyOrderDate=date;
         inflater = LayoutInflater.from(context);
 
 
@@ -57,7 +49,7 @@ public class Medicines_ImageAdapter extends RecyclerView.Adapter<Medicines_Image
     @Override
     public ListViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
 
-        View convertView = inflater.inflate(R.layout.medicines_listview, parent, false);
+        View convertView = inflater.inflate(R.layout.myorder_listview, parent, false);
         ListViewHolder viewHolder = new ListViewHolder(convertView);
         return viewHolder;
     }
@@ -65,24 +57,21 @@ public class Medicines_ImageAdapter extends RecyclerView.Adapter<Medicines_Image
     @Override
     public void onBindViewHolder(final ListViewHolder holder, final int position) {
 
-        holder.textViewid.setText(medicinesID.get(position));
-        holder.tv_name.setText(medicinesName.get(position));
-        holder.textViewdescription.setText(medicinesDescription.get(position));
-        holder.iv_delete.setImageBitmap(bitmaps.get(position));
-        holder.textViewdate.setText(medicinesDate.get(position));
-       holder.textViewdescription.setOnClickListener(new View.OnClickListener() {
+        holder.textViewid.setText(MyOrderID.get(position));
+        holder.tv_name.setText(MyOrderName.get(position));
+        holder.textViewdescription.setText(MyOrderDescription.get(position));
+        holder.textViewdate.setText(MyOrderDate.get(position));
+        holder.textViewdescription.setOnClickListener(new View.OnClickListener() {
            @Override
            public void onClick(View v) {
                LayoutInflater inflater = (LayoutInflater)context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-               View alertLayout = inflater.inflate(R.layout.dialog, null);
+               View alertLayout = inflater.inflate(R.layout.myorder_dialog, null);
                final TextView textViewtitle = (TextView)alertLayout .findViewById(R.id.textViewtitle);
-               final ImageView imageViewheltandtipsimage = (ImageView) alertLayout .findViewById(R.id.imageViewheltandtipsimage);
                final TextView textViewdescription = (TextView) alertLayout .findViewById(R.id.textViewdescription);
-               textViewtitle.setText(medicinesName.get(position));
-               imageViewheltandtipsimage.setImageBitmap(bitmaps.get(position));
-               textViewdescription.setText(medicinesDescription.get(position));
+               textViewtitle.setText(MyOrderName.get(position));
+               textViewdescription.setText(MyOrderDescription.get(position));
                AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(context);
-               alertDialogBuilder.setTitle("Medicines No:"+medicinesID.get(position));
+               alertDialogBuilder.setTitle("Order No:"+MyOrderID.get(position));
                // this is set the view from XML inside AlertDialog
                alertDialogBuilder.setView(alertLayout);
                alertDialogBuilder.setPositiveButton("Close",
@@ -101,19 +90,17 @@ public class Medicines_ImageAdapter extends RecyclerView.Adapter<Medicines_Image
 
     @Override
     public int getItemCount() {
-        return medicinesID.size();
+        return MyOrderID.size();
     }
 
     class ListViewHolder extends RecyclerView.ViewHolder {
         TextView textViewid,tv_name,textViewdescription,textViewdate;
-        ImageView iv_delete;
 
         public ListViewHolder(View itemView) {
             super(itemView);
             textViewid = (TextView) itemView.findViewById(R.id.id);
             tv_name = (TextView) itemView.findViewById(R.id.label);
             textViewdescription= (TextView) itemView.findViewById(R.id.description);
-            iv_delete = (ImageView) itemView.findViewById(R.id.imageViewmedicines);
             textViewdate= (TextView) itemView.findViewById(R.id.date);
 
         }

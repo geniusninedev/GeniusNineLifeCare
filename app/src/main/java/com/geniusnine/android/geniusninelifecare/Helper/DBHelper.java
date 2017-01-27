@@ -74,6 +74,8 @@ public class DBHelper extends SQLiteOpenHelper {
     public static final String COLUMN_BOOK_APPOINTMENT_FROM_DAYS = "book_appointment_from_days";
     public static final String COLUMN_BOOK_APPOINTMENT_PATIENT_ID = "patient_id";
     public static final String COLUMN_APPOINTMENT_REGISRTION_DATE = "appointment_registered_date";
+    public static final String COLUMN_APPOINTMENT_DOCTOR_ID = "doctor_id";
+    public static final String COLUMN_APPOINTMENT_DOCTOR_NAME = "doctor_name";
     public static final String COLUMN_BOOK_APPOINTMENT_PATIENT_STATUS = "patient_appointment_status";
     public static final String COLUMN_APPOINTMENT_PATIENT_STATUS_PERCENT = "patient_appointment_status_percent";
 
@@ -177,11 +179,14 @@ public class DBHelper extends SQLiteOpenHelper {
                 + COLUMN_DOCTOR_REGISRTION_DATE + " DATE" + ")";
         db.execSQL(sq2);
 
+
         //Table for book appointment
         String sq3 = "CREATE TABLE IF NOT EXISTS " + TABLE_BOOK_APPOINTMENT
                 + "(" +COLUMN_BOOK_APPOINTMENT_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
                 + COLUMN_BOOK_APPOINTMENT_PATIENT_ID + " INTEGER,"
                 + COLUMN_APPOINTMENT_REGISRTION_DATE + " DATE,"
+                + COLUMN_APPOINTMENT_DOCTOR_ID+ " INTEGER,"
+                + COLUMN_APPOINTMENT_DOCTOR_NAME + " VARCHAR,"
                 + COLUMN_BOOK_APPOINTMENT_DATE + " DATE,"
                 + COLUMN_BOOK_APPOINTMENT_TIME + " DOUBLE,"
                 + COLUMN_BOOK_APPOINTMENT_CAUSES + " VARCHAR,"
@@ -315,12 +320,14 @@ public class DBHelper extends SQLiteOpenHelper {
     }
 
     //insertion of book appointment information
-    public boolean addBookAppointment(String bookappointmentpatientid,String bookregistrationappointmentdate,String bookappointmentdate,String bookappointmenttime,String bookappointmentcauses,String bookappointmentreasons,String bookappointmentfromdays,String bookpatientappoinmentstatus,String bookpatientappoinmentstatuspercent) {
+    public boolean addBookAppointment(String bookappointmentpatientid,String bookregistrationappointmentdate,String appointmentdoctorid,String appointmentdoctorname,String bookappointmentdate,String bookappointmenttime,String bookappointmentcauses,String bookappointmentreasons,String bookappointmentfromdays,String bookpatientappoinmentstatus,String bookpatientappoinmentstatuspercent) {
 
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
         contentValues.put(COLUMN_BOOK_APPOINTMENT_PATIENT_ID, bookappointmentpatientid);
         contentValues.put(COLUMN_APPOINTMENT_REGISRTION_DATE, bookregistrationappointmentdate);
+        contentValues.put(COLUMN_APPOINTMENT_DOCTOR_ID, appointmentdoctorid);
+        contentValues.put(COLUMN_APPOINTMENT_DOCTOR_NAME, appointmentdoctorname);
         contentValues.put(COLUMN_BOOK_APPOINTMENT_DATE, bookappointmentdate);
         contentValues.put(COLUMN_BOOK_APPOINTMENT_TIME, bookappointmenttime);
         contentValues.put(COLUMN_BOOK_APPOINTMENT_CAUSES, bookappointmentcauses);
@@ -436,6 +443,14 @@ public Cursor getCategory() {
             null, null, null, null);
     return c;
 }
+
+    // showcategories
+    public Cursor getDoctorList(String doctorcategory) {
+        String[] cols = { COLUMN_DOCTOR_ID, COLUMN_DOCTOR_NAME,COLUMN_DOCTOR_PROFILE_PICTURE,COLUMN_DOCTOR_DEGREE,COLUMN_DOCTOR_EXPERIENCE,COLUMN_DOCTOR_SPECILIZATION};
+        SQLiteDatabase db = this.getWritableDatabase();
+        Cursor c = db.query(TABLE_DOCTOR_INFORMATION, cols,COLUMN_DOCTOR_CATEGORY +"="+"'"+doctorcategory+"'",null,null, null, null);
+        return c;
+    }
     // showHealth and Tips
     public Cursor getHealth_and_tips() {
         String[] cols = { COLUMN_HEALTH_AND_TIPS_ID, COLUMN_HEALTH_AND_TIPS_NAME,COLUMN_HEALTH_AND_TIPS_DESCRIPTION,COLUMN_HEALTH_AND_TIPS_IMAGE,COLUMN_HEALTH_AND_TIPS_UPLODED_DATE};
@@ -450,13 +465,32 @@ public Cursor getCategory() {
         Cursor c = db.query(TABLE_LAB, cols, null, null, null, null,"date DESC LIMIT 10");
         return c;
     }
-    // showHealth and Tips
+    // showMedicines
     public Cursor getMedicines() {
         String[] cols = { COLUMN_MEDICINES_ID, COLUMN_MEDICINES_NAME,COLUMN_MEDICINES_DESCRIPTION,COLUMN_MEDICINES_IMAGE,COLUMN_MEDICINES_ADDED_DATE};
         SQLiteDatabase db = this.getWritableDatabase();
         Cursor c = db.query(TABLE_MEDICINES, cols, null, null, null, null,"date DESC LIMIT 10");
         return c;
     }
+    // showSerchedMedicines
+    public Cursor getSerchedMedicines(String searchedquery) {
+        String[] cols = { COLUMN_MEDICINES_ID, COLUMN_MEDICINES_NAME,COLUMN_MEDICINES_DESCRIPTION,COLUMN_MEDICINES_IMAGE,COLUMN_MEDICINES_ADDED_DATE};
+        SQLiteDatabase db = this.getWritableDatabase();
+        Cursor c = db.query(TABLE_MEDICINES, cols,COLUMN_MEDICINES_NAME+" Like "+"'"+searchedquery+"%"+"'"+" OR "+COLUMN_MEDICINES_DESCRIPTION+" Like "+"'"+"%"+searchedquery+"%"+"'", null, null, null,null);
+        return c;
+    }
+
+    // show  Tracking
+    public Cursor getTracking(String patientid) {
+        String[] cols = {COLUMN_BOOK_APPOINTMENT_ID,COLUMN_BOOK_APPOINTMENT_PATIENT_ID, COLUMN_APPOINTMENT_REGISRTION_DATE,COLUMN_BOOK_APPOINTMENT_DATE,COLUMN_BOOK_APPOINTMENT_TIME,COLUMN_BOOK_APPOINTMENT_CAUSES,
+                COLUMN_BOOK_APPOINTMENT_REASON,COLUMN_BOOK_APPOINTMENT_FROM_DAYS,COLUMN_BOOK_APPOINTMENT_PATIENT_STATUS,COLUMN_APPOINTMENT_PATIENT_STATUS_PERCENT
+        };
+        SQLiteDatabase db = this.getWritableDatabase();
+        Cursor c = db.query(TABLE_BOOK_APPOINTMENT, cols, COLUMN_BOOK_APPOINTMENT_PATIENT_ID+"="+"'"+patientid+"'", null, null, null,"appointment_registered_date DESC LIMIT 10");
+        return c;
+    }
+
+
     // Adding new UpdateProfile
     public void UpdateProfile(String patient_id,byte[] imageBytes) {
         SQLiteDatabase db = this.getWritableDatabase();
@@ -503,6 +537,12 @@ public Cursor getCategory() {
     public Cursor getPatientData(String patient_mobile) {
         SQLiteDatabase db = this.getWritableDatabase();
         String sql = "SELECT * FROM patient_information WHERE patient_mobile ='" + patient_mobile + "'";
+        Cursor c = db.rawQuery(sql, null);
+        return c;
+    }
+    public Cursor getAppointmentData(String patient_id) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        String sql = "SELECT * FROM book_appointment_information WHERE patient_id='" + patient_id + "'";
         Cursor c = db.rawQuery(sql, null);
         return c;
     }

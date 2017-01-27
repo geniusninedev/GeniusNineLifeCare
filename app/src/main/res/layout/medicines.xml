@@ -16,13 +16,23 @@
         android:id="@+id/text_input_layout11"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
     <EditText
-        android:layout_width="match_parent"
+        android:layout_width="300dp"
         android:layout_height="wrap_content"
         android:inputType="textPersonName"
         android:hint="Search by name,cause"
         android:ems="10"
         android:id="@+id/editText" />
+            <Button
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:background="@drawable/search"
+                android:id="@+id/buttonsearch"/>
+        </LinearLayout>
 </android.support.design.widget.TextInputLayout>
     <android.support.v7.widget.RecyclerView
         android:id="@+id/recyclerView"

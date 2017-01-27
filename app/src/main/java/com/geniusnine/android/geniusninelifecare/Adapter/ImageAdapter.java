@@ -1,7 +1,10 @@
 package com.geniusnine.android.geniusninelifecare.Adapter;
 
 
+import android.app.Activity;
+import android.app.Dialog;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -12,7 +15,9 @@ import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 import android.widget.ListAdapter;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.geniusnine.android.geniusninelifecare.Activitys.DoctorListActivity;
 import com.geniusnine.android.geniusninelifecare.R;
 
 import java.util.ArrayList;
@@ -60,11 +65,13 @@ public class ImageAdapter  extends RecyclerView.Adapter<ImageAdapter.ListViewHol
         holder.textViewid.setText(categoryID.get(position));
         holder.iv_delete.setImageBitmap(bitmaps.get(position));
 
+        final String stringCategory=holder.tv_name.getText().toString().trim();
         holder.iv_delete.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) {
-                // listener.nameToChnge(dataList.get((Integer) v.getTag()).name);
-
+            public void onClick(View view) {
+              Intent i1=new Intent(context, DoctorListActivity.class);
+                i1.putExtra("CategoryName",stringCategory);
+                context.startActivity(i1);
             }
         });
         animate(holder);

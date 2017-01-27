@@ -74,21 +74,21 @@ public class Patient_Book_Appointment extends Fragment {
 
 
 
-        textViewcurrentdate=(TextView)v.findViewById(R.id.textViewcurrentdate);
+     /*   textViewcurrentdate=(TextView)v.findViewById(R.id.textViewcurrentdate);
         textViewAppointmentDate=(TextView)v.findViewById(R.id.textViewAppointmentDate);
         spinnerPatienttimings = (Spinner)v. findViewById(R.id.spinnerpatienttimings);
         buttonsubmituser = (Button)v. findViewById(R.id.buttonsubmitpatient);
         buttonAppointmentDate = (Button)v. findViewById(R.id.buttonCalenderAppointmentdate);
         edittestpatientcauses = (EditText)v. findViewById(R.id.edittextpatientcauses);
         edittestpatientfrom = (EditText)v. findViewById(R.id.edittextpatientFrom);
-        edittestpatientreason = (EditText)v. findViewById(R.id.edittextpatientReason);
+        edittestpatientreason = (EditText)v. findViewById(R.id.edittextpatientReason);*/
         //Initializing Views
         recyclerView = (RecyclerView)v.findViewById(R.id.recyclerView);
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new GridLayoutManager(getContext(),2));
         loadCategoryData();
 
-        final DatePickerDialog.OnDateSetListener date = new DatePickerDialog.OnDateSetListener() {
+     /*   final DatePickerDialog.OnDateSetListener date = new DatePickerDialog.OnDateSetListener() {
 
             @Override
             public void onDateSet(DatePicker view, int year, int monthOfYear,
@@ -181,7 +181,7 @@ public class Patient_Book_Appointment extends Fragment {
                     getActivity().startActivity(intent);
                 }
             }
-        });
+        });*/
 
         return v;
     }

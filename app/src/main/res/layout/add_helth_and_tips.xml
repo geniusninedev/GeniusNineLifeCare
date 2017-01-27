@@ -95,7 +95,7 @@
             android:layout_height="wrap_content">
 
             <Button
-                android:text="Add Lab"
+                android:text="Add Health And TIP"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:id="@+id/buttonaddhealth_and_tipssubmit"
