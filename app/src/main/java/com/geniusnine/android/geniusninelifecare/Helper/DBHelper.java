@@ -334,6 +334,18 @@ public class DBHelper extends SQLiteOpenHelper {
         db.close();
         return true;
     }
+    //insertion of doctor information
+    public boolean UpdateDoctorinfo(String doctorname,String medicalcouncil_id,String doctor_hospital_name,String hospital_location,String hospital_nearest_location,String hospital_km,String doctor_like,String doctor_rating,String doctor_review,String doctor_views) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues contentValues = new ContentValues();
+        contentValues.put(COLUMN_DOCTOR_NAME, doctorname);
+
+
+
+        db.insert(TABLE_DOCTOR_INFORMATION, null, contentValues);
+        db.close();
+        return true;
+    }
 
     //insertion of book appointment information
     public boolean addBookAppointment(String bookappointmentpatientid,String bookregistrationappointmentdate,String appointmentdoctorid,String appointmentdoctorname,String bookappointmentdate,String bookappointmenttime,String bookappointmentcauses,String bookappointmentreasons,String bookappointmentfromdays,String bookpatientappoinmentstatus,String bookpatientappoinmentstatuspercent) {

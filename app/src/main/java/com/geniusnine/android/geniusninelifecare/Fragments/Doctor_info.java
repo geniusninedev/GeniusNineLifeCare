@@ -53,11 +53,58 @@ public class Doctor_info extends Fragment {
         edittext_doctor_rating = (EditText)v. findViewById(R.id.edittextdoctorrating);
         edittext_doctor_review = (EditText)v. findViewById(R.id.edittextdoctorreview);
         edittext_doctor_views = (EditText)v. findViewById(R.id.edittextdoctorview);
-
-
-
-
         buttonsubmitdoctorInfo=(Button)v.findViewById(R.id.buttondoctorinfosubmit);
+        buttonsubmitdoctorInfo.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String doctorname,medicalcouncil_id,doctor_hospital_name,hospital_location,hospital_nearest_location,hospital_km,doctor_like,doctor_rating,doctor_review,doctor_views;
+                doctorname = spinnerDoctor_name.getSelectedItem().toString().trim();
+                medicalcouncil_id = edittext_medicalcouncil_id.getText().toString();
+                doctor_hospital_name = edittext_doctor_hospital_name.getText().toString();
+                hospital_location = edittext_hospital_location.getText().toString();
+                hospital_nearest_location = edittext_doctor_hospital_nearest_location.getText().toString();
+                hospital_km = edittext_hospital_km.getText().toString();
+                doctor_like = edittext_doctor_like.getText().toString();
+                doctor_rating = edittext_doctor_rating.getText().toString();
+                doctor_review = edittext_doctor_review.getText().toString();
+                doctor_views = edittext_doctor_views.getText().toString();
+
+
+                //validations for the doctor information field
+
+                if(spinnerDoctor_name.getSelectedItem().toString().trim().equals("")){
+                    Toast.makeText(getActivity(),"Doctor name Required",Toast.LENGTH_LONG).show();
+                }else if(edittext_medicalcouncil_id.getText().toString().trim().equals("")){
+                    edittext_medicalcouncil_id.setError("Medical council id is Required");
+                }else if(edittext_doctor_hospital_name.getText().toString().trim().equals("")){
+                    edittext_doctor_hospital_name.setError("Hospital Name Required");
+                } else if(edittext_hospital_location.getText().toString().trim().equals("")){
+                    edittext_hospital_location.setError("Hospital Location is Required");
+                } else if(edittext_doctor_hospital_nearest_location.getText().toString().trim().equals("")){
+                    edittext_doctor_hospital_nearest_location.setError("Hospital nearest location is Required");
+                }else if(edittext_hospital_km.getText().toString().trim().equals("")){
+                    edittext_hospital_km.setError("Please Enter Valid Distance From Nearest Location");
+                } else if(edittext_doctor_like.getText().toString().trim().equals("")){
+                    edittext_doctor_like.setError("Doctor likes Required");
+                }else if(edittext_doctor_rating.getText().toString().trim().equals("")){
+                    edittext_doctor_rating.setError("Doctor rating is Required");
+                }
+                else if(edittext_doctor_review.getText().toString().trim().equals("")){
+                    edittext_doctor_review.setError("Doctor reviews Required");
+                }else if(edittext_doctor_views.getText().toString().trim().equals("")){
+                    edittext_doctor_views.setError("Doctor views Required");
+                }
+                else{
+                    dbHelper.UpdateDoctorinfo(doctorname, medicalcouncil_id,doctor_hospital_name,hospital_location, hospital_nearest_location,hospital_km,doctor_like,doctor_rating,doctor_review,doctor_views);
+                    Toast.makeText(getActivity(), "Registered successfully", Toast.LENGTH_LONG).show();
+                    Intent intent=new Intent(getActivity(), MainActivityDrawer.class);
+                    getActivity().finish();
+                    getActivity().startActivity(intent);
+                }
+
+            }
+        });
+
 
 
 
