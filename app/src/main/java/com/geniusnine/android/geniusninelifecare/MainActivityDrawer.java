@@ -77,7 +77,7 @@ public class MainActivityDrawer extends AppCompatActivity {
         cursor = dbHelper.getPatientData(patient_mobile_Number);
         cursor.moveToFirst();
         if (cursor != null) {
-            patient_id = cursor.getString(cursor.getColumnIndex(dbHelper.COLUMN_PATIENT_ID));
+                       patient_id = cursor.getString(cursor.getColumnIndex(dbHelper.COLUMN_PATIENT_ID));
             patientname = cursor.getString(cursor.getColumnIndex(dbHelper.COLUMN_PATIENT_NAME));
             Name.setText(patientname);
            /* patientmobilenumber = cursor.getString(cursor.getColumnIndex(dbHelper.COLUMN_PATIENT_MOBILE));

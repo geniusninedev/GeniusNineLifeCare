@@ -1,8 +1,6 @@
 package com.geniusnine.android.geniusninelifecare.Adapter;
 
 
-import android.app.Activity;
-import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -13,13 +11,9 @@ import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
-import android.widget.ListAdapter;
 import android.widget.TextView;
-import android.widget.Toast;
-
 import com.geniusnine.android.geniusninelifecare.Activitys.DoctorListActivity;
 import com.geniusnine.android.geniusninelifecare.R;
-
 import java.util.ArrayList;
 
 /**
