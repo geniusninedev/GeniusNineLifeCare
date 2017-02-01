@@ -11,6 +11,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -30,21 +31,33 @@ import java.util.Locale;
  */
 
 public class Doctor_info extends Fragment {
-    Spinner spinnergender,spinnertimings,spinnerdoctorcategory,spinnerLunchtimings,spinnerdays;
+    Spinner spinnerDoctor_name;
     DBHelper dbHelper;
-    EditText editTextname,editTextmobile,editTextemail,editTextdegree,editTextspecialization,editTextexperience,editTextachievements;
+    EditText edittext_medicalcouncil_id,edittext_hospital_location,edittext_doctor_hospital_nearest_location,edittext_hospital_km,edittext_doctor_like,edittext_doctor_rating,edittext_doctor_review,edittext_doctor_views,edittext_doctor_hospital_name;
     TextView textViewcurrentdate;
+    ImageView imageViewDoctorProfilePicture;
 
-    Button buttonsubmitdoctor;
+    Button buttonsubmitdoctorInfo;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.doctor_info, null);
         dbHelper = new DBHelper(getActivity());
-        spinnerdays=(Spinner)v.findViewById(R.id.spinnerdoctorDays);
-        editTextname = (EditText)v. findViewById(R.id.edittextpatientFrom);
+        imageViewDoctorProfilePicture=(ImageView)v.findViewById(R.id.imageViewDoctorProfilePicture);
+        spinnerDoctor_name=(Spinner)v.findViewById(R.id.spinnerdoctorname);
+        edittext_medicalcouncil_id = (EditText)v. findViewById(R.id.edittextcouncilid);
+        edittext_doctor_hospital_name = (EditText)v. findViewById(R.id.edittexthospitalname);
+        edittext_hospital_location = (EditText)v. findViewById(R.id.edittexthospitallocation);
+        edittext_doctor_hospital_nearest_location = (EditText)v. findViewById(R.id.edittexthospitalnearestcity);
+        edittext_hospital_km = (EditText)v. findViewById(R.id.edittextdistancefromnearestcity);
+        edittext_doctor_like = (EditText)v. findViewById(R.id.edittextdoctorlike);
+        edittext_doctor_rating = (EditText)v. findViewById(R.id.edittextdoctorrating);
+        edittext_doctor_review = (EditText)v. findViewById(R.id.edittextdoctorreview);
+        edittext_doctor_views = (EditText)v. findViewById(R.id.edittextdoctorview);
 
 
-        buttonsubmitdoctor=(Button)v.findViewById(R.id.buttondoctorsubmit);
+
+
+        buttonsubmitdoctorInfo=(Button)v.findViewById(R.id.buttondoctorinfosubmit);
 
 
 
@@ -61,6 +74,6 @@ public class Doctor_info extends Fragment {
         dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 
         // attaching data adapter to spinner
-        spinnerdoctorcategory.setAdapter(dataAdapter);
+        spinnerDoctor_name.setAdapter(dataAdapter);
     }
 }

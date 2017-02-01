@@ -60,9 +60,10 @@ public class DBHelper extends SQLiteOpenHelper {
     public static final String COLUMN_DOCTOR_FACEBOOK = "doctor_facebook";
     public static final String COLUMN_DOCTOR_TWITTER = "doctor_twitter";
     public static final String COLUMN_DOCTOR_PINCODE = "doctor_pincode";
-    public static final String COLUMN_DOCTOR_SOURCE_FOR_HOSPITAL = "hospital_source";
+    public static final String COLUMN_DOCTOR_SOURCE_FOR_HOSPITAL = "hospital_nearest_city";
+    public static final String COLUMN_DOCTOR_MEDICAL_CONCIL_ID = "medical_council_id";
     public static final String COLUMN_DOCTOR_HOSPITAL_LOCATION= "doctor_hospital_location";//days
-    public static final String COLUMN_DOCTOR_HOSPITAL_LOCATION_IN_KM_FOR_SOURCE= "hospital_km";//timeing
+    public static final String COLUMN_DOCTOR_HOSPITAL_LOCATION_IN_KM_FOR_SOURCE= "distance_from_nearest_city";//timeing
     public static final String COLUMN_DOCTOR_LIKE = "doctor_like";//Lunchtime
     public static final String COLUMN_DOCTOR_RATING = "doctor_rating";
     public static final String COLUMN_DOCTOR_VIEWS= "doctor_views";
