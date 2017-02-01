@@ -36,12 +36,7 @@
             android:icon="@drawable/ic_pages"
             android:title="Add Medicines" />
     </group>
-    <group android:id="@+id/grp6" android:checkableBehavior="single" >
-        <item
-            android:id="@+id/Health_And_Tips"
-            android:icon="@drawable/ic_pages"
-            android:title="Health And Tips" />
-    </group>
+    <group android:id="@+id/grp6" android:checkableBehavior="single" ></group>
     <group android:id="@+id/grp7" android:checkableBehavior="single" >
         <item
             android:id="@+id/Add_Health_And_Tips"
@@ -53,6 +48,10 @@
             android:id="@+id/Add_Labs"
             android:icon="@drawable/ic_pages"
             android:title="Add Labs" />
+        <item
+            android:id="@+id/Health_And_Tips"
+            android:icon="@drawable/ic_pages"
+            android:title="Health And Tips" />
     </group>
     <group android:id="@+id/grp9" android:checkableBehavior="single" >
         <item
@@ -75,32 +74,39 @@
     </group>
     <group android:id="@+id/grp12" android:checkableBehavior="single" >
         <item
+            android:id="@+id/Doctor_info"
+            android:icon="@drawable/adddoctor"
+            android:title="Add Doctor" />
+
+    </group>
+    <group android:id="@+id/grp13" android:checkableBehavior="single" >
+        <item
             android:id="@+id/Book_Appointment"
             android:icon="@drawable/enq"
             android:title="Book Appointment" />
 
     </group>
-    <group android:id="@+id/grp13" android:checkableBehavior="single" >
+    <group android:id="@+id/grp14" android:checkableBehavior="single" >
         <item
             android:id="@+id/Feedback"
             android:icon="@drawable/ic_people"
             android:title="Feedback" />
 
     </group>
-    <group android:id="@+id/grp14" android:checkableBehavior="single" >
+    <group android:id="@+id/grp15" android:checkableBehavior="single" >
         <item
             android:id="@+id/About_Us"
             android:icon="@drawable/ic_info_white_24dp"
             android:title="About US" />
 
     </group>
-    <group android:id="@+id/grp15" android:checkableBehavior="single" >
+    <group android:id="@+id/grp16" android:checkableBehavior="single" >
         <item
             android:id="@+id/Contact_Us"
             android:icon="@drawable/ic_settings_phone_white_24dp"
             android:title="Contact Us" />
     </group>
-    <group android:id="@+id/grp16" android:checkableBehavior="single" >
+    <group android:id="@+id/grp17" android:checkableBehavior="single" >
         <item
             android:id="@+id/Logout"
             android:icon="@drawable/ic_power_settings_new_black_24dp"

@@ -66,8 +66,6 @@ public class Patient_Profile extends Fragment {
     };
 
     @Override
-
-
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.patient_profile, null);
         uploadPatientProfilepicture = (ImageView) v.findViewById(R.id.imageViewProfilePicture);

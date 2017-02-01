@@ -28,6 +28,7 @@ import com.geniusnine.android.geniusninelifecare.Fragments.Add_Medicines;
 import com.geniusnine.android.geniusninelifecare.Fragments.Contact_US;
 import com.geniusnine.android.geniusninelifecare.Fragments.Doctor_Categories;
 import com.geniusnine.android.geniusninelifecare.Fragments.Doctor_Registraion;
+import com.geniusnine.android.geniusninelifecare.Fragments.Doctor_info;
 import com.geniusnine.android.geniusninelifecare.Fragments.Feedback;
 import com.geniusnine.android.geniusninelifecare.Fragments.Health_and_Tips;
 import com.geniusnine.android.geniusninelifecare.Fragments.Medicines;
@@ -167,6 +168,12 @@ public class MainActivityDrawer extends AppCompatActivity {
                     loadImageFromDB();
                     FragmentTransaction fragmentTransaction = mFragmentManager.beginTransaction();
                     fragmentTransaction.replace(R.id.containerView, new Doctor_Registraion()).commit();
+
+                }
+                if (menuItem.getItemId() == R.id.Doctor_info) {
+                    loadImageFromDB();
+                    FragmentTransaction fragmentTransaction = mFragmentManager.beginTransaction();
+                    fragmentTransaction.replace(R.id.containerView, new Doctor_info()).commit();
 
                 }
                 if (menuItem.getItemId() == R.id.Feedback) {
