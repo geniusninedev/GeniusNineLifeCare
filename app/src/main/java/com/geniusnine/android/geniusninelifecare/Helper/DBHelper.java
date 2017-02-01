@@ -340,6 +340,9 @@ public class DBHelper extends SQLiteOpenHelper {
         ContentValues contentValues = new ContentValues();
         contentValues.put(COLUMN_DOCTOR_NAME, doctorname);
 
+        contentValues.put(COLUMN_DOCTOR_NAME, doctorname);
+        contentValues.put(COLUMN_DOCTOR_NAME, doctorname);
+
 
 
         db.insert(TABLE_DOCTOR_INFORMATION, null, contentValues);
