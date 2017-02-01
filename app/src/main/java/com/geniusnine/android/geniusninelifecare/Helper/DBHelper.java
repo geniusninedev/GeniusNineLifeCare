@@ -186,6 +186,7 @@ public class DBHelper extends SQLiteOpenHelper {
                 + COLUMN_DOCTOR_TWITTER + " VARCHAR, "
                 + COLUMN_DOCTOR_PINCODE + " INTEGER,"
                 + COLUMN_DOCTOR_SOURCE_FOR_HOSPITAL + " VARCHAR, "
+                + COLUMN_DOCTOR_MEDICAL_CONCIL_ID + " VARCHAR, "
                 + COLUMN_DOCTOR_HOSPITAL_LOCATION + " VARCHAR, "
                 + COLUMN_DOCTOR_HOSPITAL_LOCATION_IN_KM_FOR_SOURCE + "  DOUBLE, "
                 + COLUMN_DOCTOR_LIKE + "  INTEGER, "
@@ -340,8 +341,6 @@ public class DBHelper extends SQLiteOpenHelper {
         ContentValues contentValues = new ContentValues();
         contentValues.put(COLUMN_DOCTOR_NAME, doctorname);
 
-        contentValues.put(COLUMN_DOCTOR_NAME, doctorname);
-        contentValues.put(COLUMN_DOCTOR_NAME, doctorname);
 
 
 
