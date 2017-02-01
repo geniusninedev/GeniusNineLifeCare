@@ -41,14 +41,14 @@ public class Doctor_info extends Fragment {
         View v = inflater.inflate(R.layout.doctor_info, null);
         dbHelper = new DBHelper(getActivity());
         spinnerdays=(Spinner)v.findViewById(R.id.spinnerdoctorDays);
-        edittext = (EditText)v. findViewById(R.id.edittextpatientFrom);
+        editTextname = (EditText)v. findViewById(R.id.edittextpatientFrom);
 
 
         buttonsubmitdoctor=(Button)v.findViewById(R.id.buttondoctorsubmit);
 
 
 
-        return  v;+
+        return  v;
     }
     private void loadSpinnerData() {
         dbHelper = new DBHelper(getActivity());

@@ -61,7 +61,7 @@ public class DBHelper extends SQLiteOpenHelper {
     public static final String COLUMN_DOCTOR_TWITTER = "doctor_twitter";
     public static final String COLUMN_DOCTOR_PINCODE = "doctor_pincode";
     public static final String COLUMN_DOCTOR_SOURCE_FOR_HOSPITAL = "hospital_source";
-    public static final String COLUMN_DOCTOR_HOSPITAL_LOCATION= "doctor_availability_days";//days
+    public static final String COLUMN_DOCTOR_HOSPITAL_LOCATION= "doctor_hospital_location";//days
     public static final String COLUMN_DOCTOR_HOSPITAL_LOCATION_IN_KM_FOR_SOURCE= "hospital_km";//timeing
     public static final String COLUMN_DOCTOR_LIKE = "doctor_like";//Lunchtime
     public static final String COLUMN_DOCTOR_RATING = "doctor_rating";
