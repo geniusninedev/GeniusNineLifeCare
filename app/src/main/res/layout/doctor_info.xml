@@ -214,7 +214,7 @@
                 android:layout_height="wrap_content"
                 android:id="@+id/edittextdoctorview"
                 android:digits="abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ "
-                android:hint="Doctor review "
+                android:hint="Doctor view "
                 android:inputType="text" />
         </android.support.design.widget.TextInputLayout>
     </LinearLayout>

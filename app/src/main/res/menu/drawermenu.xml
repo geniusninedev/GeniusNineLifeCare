@@ -76,7 +76,7 @@
         <item
             android:id="@+id/Doctor_info"
             android:icon="@drawable/adddoctor"
-            android:title="Add Doctor" />
+            android:title="Doctor Info" />
 
     </group>
     <group android:id="@+id/grp13" android:checkableBehavior="single" >
