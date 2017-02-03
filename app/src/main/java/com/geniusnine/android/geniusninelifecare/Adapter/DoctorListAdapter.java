@@ -54,6 +54,15 @@ public class DoctorListAdapter  extends RecyclerView.Adapter<DoctorListAdapter.L
     ArrayList<String> doctorDegree;
     ArrayList<String> doctorSpecialization;
     ArrayList<String> doctorExperience;
+    ArrayList<String> doctorLikes;
+    ArrayList<String> doctorViews;
+    ArrayList<String> doctorReviews;
+    ArrayList<String> doctorHospitalname;
+    ArrayList<String> doctorHospitallocation;
+    ArrayList<String> doctorNearbylocation;
+    ArrayList<String> doctornearbylocationdistance;
+    ArrayList<String> doctorAvailibility;
+    ArrayList<String> doctorAvailibilitytime;
     private ArrayList<Bitmap> bitmaps;
     byte[] categoryimage;
     EditText edittestpatientcauses,edittestpatientfrom,edittestpatientreason;
@@ -77,20 +86,29 @@ public class DoctorListAdapter  extends RecyclerView.Adapter<DoctorListAdapter.L
 
     Activity activity;
 
-    public DoctorListAdapter(Context context, ArrayList<String> id, ArrayList<String> name, ArrayList<String> degree, ArrayList<String> specialization, ArrayList<String> experience) {
+    public DoctorListAdapter(Context context, ArrayList<String> doctorHospitalname,ArrayList<String> id, ArrayList<String> name, ArrayList<String> degree, ArrayList<String> doctorNearbylocation, ArrayList<String> doctorAvailibility,ArrayList<String> doctorAvailibilitytime, ArrayList<String> experience,
+            ArrayList<String> doctorLikes,ArrayList<String> doctorViews, ArrayList<String> doctorReviews, ArrayList<String> doctorHospitallocation,
+            ArrayList<String> doctornearbylocationdistance,ArrayList<Bitmap> bitm) {
         super();
         this.context= context;
         this.doctorID = id;
+        this.doctorHospitalname =  doctorHospitalname;
         this.doctorName =  name;
         this.doctorDegree = degree;
-        this.doctorSpecialization =  specialization;
+        this.doctorNearbylocation =  doctorNearbylocation;
+        this.doctorAvailibility =  doctorAvailibility;
+        this.doctorAvailibilitytime =  doctorAvailibilitytime;
+      //  this.doctorSpecialization =  specialization;
         this.doctorExperience =  experience;
-       // this.bitmaps=bitm;
+        this.doctorLikes = doctorLikes;
+        this.doctorViews = doctorViews;
+        this.doctorReviews =  doctorReviews;
+        this.doctorHospitallocation =  doctorHospitallocation;
+        this.doctornearbylocationdistance =  doctornearbylocationdistance;
+        this.bitmaps=bitm;
         // this.listener = context;
         inflater = LayoutInflater.from(context);
-
-
-    }
+   }
 
     @Override
     public ListViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
@@ -103,16 +121,25 @@ public class DoctorListAdapter  extends RecyclerView.Adapter<DoctorListAdapter.L
     @Override
     public void onBindViewHolder(ListViewHolder holder, int position) {
 
+        holder.textViewDoctorlikes.setText(doctorLikes.get(position));
+        holder.imageViewDoctor.setImageBitmap(bitmaps.get(position));
+        holder.textViewHospitalName.setText(doctorHospitalname.get(position)+","+doctorHospitallocation.get(position));
         holder.textViewid.setText(doctorID.get(position));
         holder.tv_name.setText(doctorName.get(position));
         holder.textViewDegree.setText(doctorDegree.get(position));
-        holder.textViewSpecicalizton.setText(doctorSpecialization.get(position));
+        holder.textViewNearbylocation.setText(doctorNearbylocation.get(position));
+        holder.textViewDoctorAvailibility.setText(doctorAvailibility.get(position));
+        holder.textViewDoctorAvailibilitytime.setText(doctorAvailibilitytime.get(position));
         holder.textViewExperience.setText(doctorExperience.get(position));
+        holder.textViewDoctorviews.setText(doctorViews.get(position));
+        holder.textViewDoctorreviews.setText(doctorReviews.get(position));
+        holder.textViewHospitalDistancevalue.setText(doctornearbylocationdistance.get(position));
+      //  holder.textViewDoctorH.setText(doctorReviews.get(position));
+     //  holder.textViewSpecicalizton.setText(doctorSpecialization.get(position));
         doctorid=holder.textViewid.getText().toString().trim();
         doctorname=holder.tv_name.getText().toString().trim();
-
         //holder.iv_delete.setImageBitmap(bitmaps.get(position));
-        holder.textViewBookAppointment.setOnClickListener(new View.OnClickListener() {
+        holder.ButtonBookAppointment.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 dbHelper=new DBHelper((Activity) context);
@@ -200,7 +227,7 @@ public class DoctorListAdapter  extends RecyclerView.Adapter<DoctorListAdapter.L
                         String patientcauses, appointment_from_days, patientreasons, appointmenttimings,currentdate;
                         patientcauses = edittestpatientcauses.getText().toString();
                         String appointmentdate=textViewAppointmentDate.getText().toString().trim();
-                        appointment_from_days = edittestpatientfrom.getText().toString();
+                        appointment_from_days = edittestpatientfrom.getText().toString().trim();
                         patientreasons = edittestpatientreason.getText().toString();
                         appointmenttimings = spinnerPatienttimings.getSelectedItem().toString().trim();
                         currentdate=textViewcurrentdate.getText().toString().trim();
@@ -249,18 +276,28 @@ public class DoctorListAdapter  extends RecyclerView.Adapter<DoctorListAdapter.L
     }
 
     class ListViewHolder extends RecyclerView.ViewHolder {
-       TextView tv_name,textViewid,textViewDegree,textViewSpecicalizton,textViewExperience,textViewBookAppointment;
-        ImageView iv_delete;
+       TextView tv_name,textViewid,textViewDegree,textViewDoctorAvailibility,textViewDoctorAvailibilitytime,textViewHospitalName,textViewDoctorlikes,textViewDoctorviews,textViewDoctorreviews,textViewNearbylocation,textViewHospitalDistancevalue,textViewSpecicalizton,textViewExperience;
+        ImageView imageViewDoctor;
+        Button ButtonBookAppointment;
 
         public ListViewHolder(View itemView) {
             super(itemView);
-            textViewid = (TextView) itemView.findViewById(R.id.doctorid);
-            tv_name = (TextView) itemView.findViewById(R.id.doctorName);
-            textViewDegree = (TextView) itemView.findViewById(R.id.doctorDegree);
-            textViewSpecicalizton = (TextView) itemView.findViewById(R.id.doctorSpecialization);
-            textViewExperience = (TextView) itemView.findViewById(R.id.doctorExperience);
-            textViewBookAppointment = (TextView) itemView.findViewById(R.id.doctorBookAppointment);
-           // iv_delete = (ImageView) itemView.findViewById(R.id.imageViewcategory);
+            textViewid = (TextView) itemView.findViewById(R.id.textViewDoctorid);
+            textViewDoctorlikes = (TextView) itemView.findViewById(R.id.textViewDoctorLikes);
+            textViewHospitalName = (TextView) itemView.findViewById(R.id.textViewHospitalName);
+            tv_name = (TextView) itemView.findViewById(R.id.textViewDoctorName);
+            textViewDegree = (TextView) itemView.findViewById(R.id.textViewDoctorDegree);
+          //  textViewSpecicalizton = (TextView) itemView.findViewById(R.id.doctorSpecialization);
+            textViewNearbylocation = (TextView) itemView.findViewById(R.id.textViewNearbycity);
+            textViewDoctorAvailibility=(TextView) itemView.findViewById(R.id.textViewDoctoAvaliablitydays);
+            textViewDoctorAvailibilitytime=(TextView) itemView.findViewById(R.id.textViewDoctoAvaliabletime);
+            textViewExperience = (TextView) itemView.findViewById(R.id.textViewDoctorexp);
+            textViewDoctorviews = (TextView) itemView.findViewById(R.id.textViewdoctorview);
+            textViewDoctorreviews = (TextView) itemView.findViewById(R.id.textViewdoctorreview);
+            textViewHospitalDistancevalue = (TextView) itemView.findViewById(R.id.textViewdoctorhospitaldistancevalue);
+
+            ButtonBookAppointment = (Button) itemView.findViewById(R.id.doctorBookAppointment);
+            imageViewDoctor = (ImageView) itemView.findViewById(R.id.imageViewDoctorPic);
 
         }
     }

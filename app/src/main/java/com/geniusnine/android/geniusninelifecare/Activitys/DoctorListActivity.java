@@ -55,6 +55,15 @@ Activity activity;
     ArrayList<String> DOCTOR_DEGREE_ArrayList = new ArrayList<String>();
     ArrayList<String> DOCTOR_EXP_ArrayList = new ArrayList<String>();
     ArrayList<String> DOCTOR_SPECILIZATION_ArrayList = new ArrayList<String>();
+    ArrayList<String> DOCTOR_Likes_ArrayList= new ArrayList<String>();
+    ArrayList<String> DOCTOR_Views_ArrayList= new ArrayList<String>();
+    ArrayList<String> DOCTOR_Reviews_ArrayList= new ArrayList<String>();
+    ArrayList<String> DOCTOR_Hospitalname_ArrayList= new ArrayList<String>();
+    ArrayList<String> DOCTOR_Hospitallocation_ArrayList= new ArrayList<String>();
+    ArrayList<String> DOCTOR_Nearbylocation_ArrayList= new ArrayList<String>();
+    ArrayList<String> DOCTOR_nearbylocationdistance_ArrayList= new ArrayList<String>();
+    ArrayList<String> DOCTOR_Availibility_ArrayList= new ArrayList<String>();
+    ArrayList<String> DOCTOR_Availibilitytime_ArrayList= new ArrayList<String>();
     ArrayList<Bitmap> bitmaps = new ArrayList<Bitmap>();
     String catergory;
     Bitmap bitmap = null;
@@ -100,14 +109,21 @@ Activity activity;
 
     private void loadHistoryData() {
         cursor = dbHelper.getDoctorList(catergory);
-
-
         ID_ArrayList.clear();
         NAME_ArrayList.clear();
         DOCTOR_DEGREE_ArrayList.clear();
         DOCTOR_EXP_ArrayList.clear();
         DOCTOR_SPECILIZATION_ArrayList.clear();
-       // bitmaps.clear();
+        DOCTOR_Hospitalname_ArrayList.clear();
+        DOCTOR_Hospitallocation_ArrayList.clear();
+        DOCTOR_Likes_ArrayList.clear();
+        DOCTOR_Views_ArrayList.clear();
+        DOCTOR_Reviews_ArrayList.clear();
+        DOCTOR_Nearbylocation_ArrayList.clear();
+        DOCTOR_nearbylocationdistance_ArrayList.clear();
+        DOCTOR_Availibility_ArrayList.clear();
+        DOCTOR_Availibilitytime_ArrayList.clear();
+        bitmaps.clear();
 
 
         if (cursor.moveToFirst()) {
@@ -116,22 +132,41 @@ Activity activity;
                 NAME_ArrayList.add(cursor.getString(cursor.getColumnIndex(dbHelper.COLUMN_DOCTOR_NAME)));
                 DOCTOR_DEGREE_ArrayList.add(cursor.getString(cursor.getColumnIndex(dbHelper.COLUMN_DOCTOR_DEGREE)));
                 DOCTOR_EXP_ArrayList.add(cursor.getString(cursor.getColumnIndex(dbHelper.COLUMN_DOCTOR_EXPERIENCE)));
-                DOCTOR_SPECILIZATION_ArrayList.add(cursor.getString(cursor.getColumnIndex(dbHelper.COLUMN_DOCTOR_SPECILIZATION)));
+                //DOCTOR_SPECILIZATION_ArrayList.add(cursor.getString(cursor.getColumnIndex(dbHelper.COLUMN_DOCTOR_SPECILIZATION)));
+                DOCTOR_Hospitalname_ArrayList.add(cursor.getString(cursor.getColumnIndex(dbHelper.COLUMN_DOCTOR_HOSPITAL_NAME)));
+                DOCTOR_Hospitallocation_ArrayList.add(cursor.getString(cursor.getColumnIndex(dbHelper.COLUMN_DOCTOR_HOSPITAL_LOCATION)));
+                DOCTOR_Likes_ArrayList.add(cursor.getString(cursor.getColumnIndex(dbHelper.COLUMN_DOCTOR_LIKE)));
+                DOCTOR_Views_ArrayList.add(cursor.getString(cursor.getColumnIndex(dbHelper.COLUMN_DOCTOR_VIEWS)));
+                DOCTOR_Reviews_ArrayList.add(cursor.getString(cursor.getColumnIndex(dbHelper.COLUMN_DOCTOR_REVIEWS)));
+                DOCTOR_Nearbylocation_ArrayList.add(cursor.getString(cursor.getColumnIndex(dbHelper.COLUMN_DOCTOR_SOURCE_FOR_HOSPITAL)));
+                DOCTOR_nearbylocationdistance_ArrayList.add(cursor.getString(cursor.getColumnIndex(dbHelper.COLUMN_DOCTOR_HOSPITAL_LOCATION_IN_KM_FOR_SOURCE)));
+                DOCTOR_Availibility_ArrayList.add(cursor.getString(cursor.getColumnIndex(dbHelper.COLUMN_DOCTOR_AVAILABILITY_IN_DAYS)));
+                DOCTOR_Availibilitytime_ArrayList.add(cursor.getString(cursor.getColumnIndex(dbHelper.COLUMN_DOCTOR_AVAILABILITY)));
 
-               /* byte[] blob = cursor.getBlob(cursor.getColumnIndex(dbHelper.COLUMN_DOCTOR_PROFILE_PICTURE));
+
+                byte[] blob = cursor.getBlob(cursor.getColumnIndex(dbHelper.COLUMN_DOCTOR_PROFILE_PICTURE));
                 bitmap = BitmapFactory.decodeByteArray(blob, 0, blob.length);
-                bitmaps.add(bitmap);*/
+                bitmaps.add(bitmap);
 
             } while (cursor.moveToNext());
         }
 
         doctorListAdapter = new DoctorListAdapter(this,
+
+                DOCTOR_Hospitalname_ArrayList,
                 ID_ArrayList,
                 NAME_ArrayList,
                 DOCTOR_DEGREE_ArrayList,
-                DOCTOR_SPECILIZATION_ArrayList,
-                DOCTOR_EXP_ArrayList
-             // bitmaps
+                DOCTOR_Nearbylocation_ArrayList,
+                DOCTOR_Availibility_ArrayList,
+                DOCTOR_Availibilitytime_ArrayList,
+                DOCTOR_EXP_ArrayList,
+                DOCTOR_Likes_ArrayList,
+                DOCTOR_Views_ArrayList,
+                DOCTOR_Reviews_ArrayList,
+                DOCTOR_Hospitallocation_ArrayList,
+                DOCTOR_nearbylocationdistance_ArrayList,
+                bitmaps
 
         );
         recyclerView.setAdapter(doctorListAdapter);

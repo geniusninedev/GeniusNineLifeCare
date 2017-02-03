@@ -62,7 +62,7 @@ public class DBHelper extends SQLiteOpenHelper {
     public static final String COLUMN_DOCTOR_PINCODE = "doctor_pincode";
     public static final String COLUMN_DOCTOR_SOURCE_FOR_HOSPITAL = "hospital_nearest_city";
     public static final String COLUMN_DOCTOR_MEDICAL_CONCIL_ID = "medical_council_id";
-    public static final String COLUMN_DOCTOR_HOSPITAL_LOCATION= "doctor_hospital_location";//days
+    public static final String COLUMN_DOCTOR_HOSPITAL_LOCATION= "doctor_hospital_location";
     public static final String COLUMN_DOCTOR_HOSPITAL_LOCATION_IN_KM_FOR_SOURCE= "distance_from_nearest_city";//timeing
     public static final String COLUMN_DOCTOR_LIKE = "doctor_like";//Lunchtime
     public static final String COLUMN_DOCTOR_RATING = "doctor_rating";
@@ -335,19 +335,7 @@ public class DBHelper extends SQLiteOpenHelper {
         db.close();
         return true;
     }
-    //insertion of doctor information
-    public boolean UpdateDoctorinfo(String doctorname,String medicalcouncil_id,String doctor_hospital_name,String hospital_location,String hospital_nearest_location,String hospital_km,String doctor_like,String doctor_rating,String doctor_review,String doctor_views) {
-        SQLiteDatabase db = this.getWritableDatabase();
-        ContentValues contentValues = new ContentValues();
-        contentValues.put(COLUMN_DOCTOR_NAME, doctorname);
 
-
-
-
-        db.insert(TABLE_DOCTOR_INFORMATION, null, contentValues);
-        db.close();
-        return true;
-    }
 
     //insertion of book appointment information
     public boolean addBookAppointment(String bookappointmentpatientid,String bookregistrationappointmentdate,String appointmentdoctorid,String appointmentdoctorname,String bookappointmentdate,String bookappointmenttime,String bookappointmentcauses,String bookappointmentreasons,String bookappointmentfromdays,String bookpatientappoinmentstatus,String bookpatientappoinmentstatuspercent) {
@@ -402,6 +390,30 @@ public class DBHelper extends SQLiteOpenHelper {
         if (cursor.moveToFirst()) {
             do {
                 list.add(cursor.getString(cursor.getColumnIndex(COLUMN_CATEGORY_NAME)));//adding 2nd column data
+            } while (cursor.moveToNext());
+        }
+        // closing connection
+        cursor.close();
+        db.close();
+
+        // returning lables
+        return list;
+    }
+
+    //get the doctor name list
+    public List<String> getAllDoctor(){
+        List<String> list = new ArrayList<String>();
+
+        // Select All Query
+        String selectQuery = "SELECT * FROM " + TABLE_DOCTOR_INFORMATION;
+
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = db.rawQuery(selectQuery, null);//selectQuery,selectedArguments
+
+        // looping through all rows and adding to list
+        if (cursor.moveToFirst()) {
+            do {
+                list.add(cursor.getString(cursor.getColumnIndex(COLUMN_DOCTOR_NAME)));//adding 2nd column data
             } while (cursor.moveToNext());
         }
         // closing connection
@@ -474,9 +486,15 @@ public Cursor getCategory() {
     return c;
 }
 
-    // showcategories
+
+   /* public Cursor getDoctorList(String doctorcategory) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        String sql = "SELECT * FROM doctor_information WHERE doctor_category ='" + doctorcategory + "'";
+        Cursor c = db.rawQuery(sql, null);
+        return c;
+    }*/
     public Cursor getDoctorList(String doctorcategory) {
-        String[] cols = { COLUMN_DOCTOR_ID, COLUMN_DOCTOR_NAME,COLUMN_DOCTOR_PROFILE_PICTURE,COLUMN_DOCTOR_DEGREE,COLUMN_DOCTOR_EXPERIENCE,COLUMN_DOCTOR_SPECILIZATION};
+        String[] cols = { COLUMN_DOCTOR_ID, COLUMN_DOCTOR_NAME,COLUMN_DOCTOR_PROFILE_PICTURE,COLUMN_DOCTOR_DEGREE,COLUMN_DOCTOR_HOSPITAL_NAME,COLUMN_DOCTOR_HOSPITAL_LOCATION,COLUMN_DOCTOR_SOURCE_FOR_HOSPITAL,COLUMN_DOCTOR_AVAILABILITY_IN_DAYS,COLUMN_DOCTOR_AVAILABILITY,COLUMN_DOCTOR_EXPERIENCE,COLUMN_DOCTOR_LIKE,COLUMN_DOCTOR_VIEWS,COLUMN_DOCTOR_REVIEWS,COLUMN_DOCTOR_HOSPITAL_LOCATION_IN_KM_FOR_SOURCE};
         SQLiteDatabase db = this.getWritableDatabase();
         Cursor c = db.query(TABLE_DOCTOR_INFORMATION, cols,COLUMN_DOCTOR_CATEGORY +"="+"'"+doctorcategory+"'",null,null, null, null);
         return c;
@@ -528,6 +546,36 @@ public Cursor getCategory() {
         contentValues.put(COLUMN_PATIENT_PROFILE_PICTURE, imageBytes);
         db.update(TABLE_PATIENT_INFORMATION,contentValues,COLUMN_PATIENT_ID+"="+"'"+patient_id+"'",null);
         db.close();
+
+    }
+
+    // Adding new UpdateProfile
+    public void UpdateDoctorProfilePicture(String doctorname,byte[] imageBytes) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues contentValues = new ContentValues();
+        contentValues.put(COLUMN_DOCTOR_PROFILE_PICTURE, imageBytes);
+        db.update(TABLE_DOCTOR_INFORMATION,contentValues,COLUMN_DOCTOR_NAME+"="+"'"+doctorname+"'",null);
+        db.close();
+
+    }
+    //insertion of doctor extra information
+    public boolean UpdateDoctorinfo(String doctorname,String medicalcouncil_id,String doctor_hospital_name,String hospital_location,String hospital_nearest_location,String hospital_km,String doctor_like,String doctor_rating,String doctor_review,String doctor_views) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues contentValues = new ContentValues();
+
+        contentValues.put(COLUMN_DOCTOR_MEDICAL_CONCIL_ID, medicalcouncil_id);
+        contentValues.put(COLUMN_DOCTOR_HOSPITAL_NAME, doctor_hospital_name);
+        contentValues.put(COLUMN_DOCTOR_HOSPITAL_LOCATION, hospital_location);
+        contentValues.put(COLUMN_DOCTOR_SOURCE_FOR_HOSPITAL, hospital_nearest_location);
+        contentValues.put(COLUMN_DOCTOR_HOSPITAL_LOCATION_IN_KM_FOR_SOURCE, hospital_km);
+        contentValues.put(COLUMN_DOCTOR_LIKE, doctor_like);
+        contentValues.put(COLUMN_DOCTOR_RATING, doctor_rating);
+        contentValues.put(COLUMN_DOCTOR_VIEWS, doctor_views);
+        contentValues.put(COLUMN_DOCTOR_REVIEWS, doctor_review);
+
+        db.update(TABLE_DOCTOR_INFORMATION,contentValues,COLUMN_DOCTOR_NAME+"="+"'"+doctorname+"'",null);
+        db.close();
+        return true;
 
     }
 

@@ -72,116 +72,11 @@ public class Patient_Book_Appointment extends Fragment {
         View v = inflater.inflate(R.layout.patient_book_appointment, null);
         dbHelper=new DBHelper(getActivity());
 
-
-
-     /*   textViewcurrentdate=(TextView)v.findViewById(R.id.textViewcurrentdate);
-        textViewAppointmentDate=(TextView)v.findViewById(R.id.textViewAppointmentDate);
-        spinnerPatienttimings = (Spinner)v. findViewById(R.id.spinnerpatienttimings);
-        buttonsubmituser = (Button)v. findViewById(R.id.buttonsubmitpatient);
-        buttonAppointmentDate = (Button)v. findViewById(R.id.buttonCalenderAppointmentdate);
-        edittestpatientcauses = (EditText)v. findViewById(R.id.edittextpatientcauses);
-        edittestpatientfrom = (EditText)v. findViewById(R.id.edittextpatientFrom);
-        edittestpatientreason = (EditText)v. findViewById(R.id.edittextpatientReason);*/
         //Initializing Views
         recyclerView = (RecyclerView)v.findViewById(R.id.recyclerView);
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new GridLayoutManager(getContext(),2));
         loadCategoryData();
-
-     /*   final DatePickerDialog.OnDateSetListener date = new DatePickerDialog.OnDateSetListener() {
-
-            @Override
-            public void onDateSet(DatePicker view, int year, int monthOfYear,
-                                  int dayOfMonth) {
-                // TODO Auto-generated method stub
-                cal.set(Calendar.YEAR, year);
-                cal.set(Calendar.MONTH, monthOfYear);
-                cal.set(Calendar.DAY_OF_MONTH, dayOfMonth);
-            }
-
-        };
-        textViewcurrentdate.setText(sdf.format(cal.getTime()));
-        //fetching value from sharedpreference
-        SharedPreferences sharedPreferences =getActivity().getSharedPreferences(Config.SHARED_PREF_NAME, Context.MODE_PRIVATE);
-        //Fetching thepatient_mobile_Number value form sharedpreferences
-        patient_mobile_Number = sharedPreferences.getString(Config.PATIENT_MOBILE_NO_SHARED_PREF,null);
-        dbHelper.getPatientData(patient_mobile_Number);
-        cursor = dbHelper.getPatientData(patient_mobile_Number);
-        cursor.moveToFirst();
-        if (cursor != null) {
-            patient_id = cursor.getString(cursor.getColumnIndex(dbHelper.COLUMN_PATIENT_ID));
-        }
-
-        List<String> timings = new ArrayList<String>();
-        timings.add("11.00 am- 1.00 pm");
-        timings.add("2.00 pm - 4.00 pm");
-        timings.add("6.30 pm - 8.00 pm");
-
-        buttonAppointmentDate.setOnClickListener(new View.OnClickListener() {
-
-            @Override
-            public void onClick(View v) {
-                // Process to get Current Date
-                calender = Calendar.getInstance();
-                day = cal.get(Calendar.DAY_OF_MONTH);
-                month = cal.get(Calendar.MONTH);
-                year = cal.get(Calendar.YEAR);
-                // Launch Date Picker Dialog
-                DatePickerDialog dpd = new DatePickerDialog(getActivity(),
-                        new DatePickerDialog.OnDateSetListener() {
-
-                            @Override
-                            public void onDateSet(DatePicker view, int year,
-                                                  int monthOfYear, int dayOfMonth) {
-                                // Display Selected date in textbox
-                                textViewAppointmentDate.setText(year + "-" + (monthOfYear + 1) + "-" + dayOfMonth);
-
-                            }
-                        }, year, month, day);
-                dpd.show();
-            }
-
-
-        });
-
-        // Creating adapter for spinner
-        ArrayAdapter<String> Adapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_spinner_item, timings);
-
-        // Drop down layout style - list view with radio button
-        Adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-
-        // attaching data adapter to spinner
-        spinnerPatienttimings.setAdapter(Adapter);
-        buttonsubmituser.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                String appointment_status="Request sent",appointment_status_percent="10";
-
-                String patientcauses, appointment_from_days, patientreasons, appointmenttimings,currentdate;
-                patientcauses = edittestpatientcauses.getText().toString();
-                String appointmentdate=textViewAppointmentDate.getText().toString().trim();
-                appointment_from_days = edittestpatientfrom.getText().toString();
-                patientreasons = edittestpatientreason.getText().toString();
-                appointmenttimings = spinnerPatienttimings.getSelectedItem().toString().trim();
-                currentdate=textViewcurrentdate.getText().toString().trim();
-                if (patientcauses.equals("")) {
-                    edittestpatientcauses.setError("Causes is Required");
-                } else if (appointment_from_days.equals("")) {
-                    edittestpatientfrom.setError("Duration is Required");
-                } else if (patientreasons.equals("")) {
-                    edittestpatientreason.setError("Reason is Required");
-                } else if (spinnerPatienttimings.getSelectedItem().toString().trim().equals("")) {
-                    Toast.makeText(getActivity(), "Timings Required", Toast.LENGTH_LONG).show();
-
-                } else {
-                    dbHelper.addBookAppointment(patient_id,currentdate,appointmentdate,appointmenttimings,patientcauses,patientreasons,appointment_from_days,appointment_status,appointment_status_percent);
-                    Toast.makeText(getActivity(), "Appointment Booked Successfully", Toast.LENGTH_LONG).show();
-                    Intent intent=new Intent(getActivity(), MainActivityDrawer.class);
-                    getActivity().finish();
-                    getActivity().startActivity(intent);
-                }
-            }
-        });*/
 
         return v;
     }
