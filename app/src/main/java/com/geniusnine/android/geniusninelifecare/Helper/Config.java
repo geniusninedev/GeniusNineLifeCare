@@ -46,7 +46,8 @@ public class Config {
     public static final String PATIENT_PROFILE_URL = BASE_URL + "patientprofile.php?patient_mobile=";
     public static final String JSON_ARRAY = "result";
 
-
+    //URL to our login.php file
+    public static final String PATIENT_PROFILE_UPDATE_URL = BASE_URL + "updatepatientprofile.php?patient_id=";
     //url to inset feedback
     public static final String FEEDBACK_URL = BASE_URL + "feedbackinsert.php";
     public static final String COLUMN_FEEDBACK_ID = "feedback_id";

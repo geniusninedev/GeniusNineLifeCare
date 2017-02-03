@@ -196,7 +196,8 @@ public class Patient_Profile extends Fragment {
                     edittextpatientpincode.setError("Picode is Required");
                 }
                 else{
-                    StringRequest stringRequest = new StringRequest(Request.Method.POST, Config.PATINET_REGISTER_URL,
+                    String UPDATE_PROFILE_URL=Config.PATIENT_PROFILE_UPDATE_URL+patient_id;
+                    StringRequest stringRequest = new StringRequest(Request.Method.POST, UPDATE_PROFILE_URL,
                             new Response.Listener<String>() {
                                 @Override
                                 public void onResponse(String response) {
