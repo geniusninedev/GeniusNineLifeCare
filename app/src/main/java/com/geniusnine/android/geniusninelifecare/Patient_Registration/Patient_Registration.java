@@ -15,6 +15,14 @@ import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
+import com.geniusnine.android.geniusninelifecare.Helper.Config;
 import com.geniusnine.android.geniusninelifecare.Helper.DBHelper;
 import com.geniusnine.android.geniusninelifecare.Login_Patient.Patient_Login;
 import com.geniusnine.android.geniusninelifecare.R;
@@ -22,8 +30,10 @@ import com.geniusnine.android.geniusninelifecare.R;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
+import java.util.Map;
 
 /**
  * Created by Dev on 12-01-2017.
@@ -34,9 +44,9 @@ public class Patient_Registration extends AppCompatActivity {
     EditText edittextPatientname,edittextPatientmobilenumber,edittextpatientpassword,edittextPatientemail,edittextPatientage,edittextpatientheight,edittextpatientweight,edittextpatientbloodgroup,edittextpatientaddress,edittextpatientpincode;
     Spinner spinnerPatientgender;
     TextView textViewcurrentdate;
-    final Calendar cal = Calendar.getInstance();
-    String myFormat = "yyyy-MM-DD"; //In which you need put here
-    SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.US);
+    Calendar calander;
+    SimpleDateFormat simpledateformat;
+    String Date;
     Button buttonregisteruser;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,6 +57,9 @@ public class Patient_Registration extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setHomeButtonEnabled(true);
         dbHelper = new DBHelper(Patient_Registration.this);
+        calander = Calendar.getInstance();
+        simpledateformat = new SimpleDateFormat("yyyy-MM-dd");
+        Date = simpledateformat.format(calander.getTime());
          textViewcurrentdate=(TextView)findViewById(R.id.textViewcurrentDate);
          edittextPatientname = (EditText) findViewById(R.id.edittextpatientname);
          edittextPatientmobilenumber = (EditText)findViewById(R.id.edittextpatientmobilenumber);
@@ -75,23 +88,11 @@ public class Patient_Registration extends AppCompatActivity {
 
         // attaching data adapter to spinner
         spinnerPatientgender.setAdapter(dataAdapter);
-        final DatePickerDialog.OnDateSetListener date = new DatePickerDialog.OnDateSetListener() {
-
-            @Override
-            public void onDateSet(DatePicker view, int year, int monthOfYear,
-                                  int dayOfMonth) {
-                // TODO Auto-generated method stub
-                cal.set(Calendar.YEAR, year);
-                cal.set(Calendar.MONTH, monthOfYear);
-                cal.set(Calendar.DAY_OF_MONTH, dayOfMonth);
-            }
-
-        };
-        textViewcurrentdate.setText(sdf.format(cal.getTime()));
+        textViewcurrentdate.setText(Date);
         buttonregisteruser.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String patientname,patientmobilenumber,patientpassword,patientemail,patientgender,patientage,patientheight,patientweight,patientbloodgroup,patientaddress,patientpincode,patientregistrationdate;
+              final  String patientname,patientmobilenumber,patientpassword,patientemail,patientgender,patientage,patientheight,patientweight,patientbloodgroup,patientaddress,patientpincode,patientregistrationdate;
                 patientname=edittextPatientname.getText().toString().trim();
                 patientmobilenumber=edittextPatientmobilenumber.getText().toString().trim();
                 patientpassword=edittextpatientpassword.getText().toString().trim();
@@ -140,6 +141,43 @@ public class Patient_Registration extends AppCompatActivity {
                     edittextpatientpincode.setError("Picode is Required");
                 }
                 else{
+                    StringRequest stringRequest = new StringRequest(Request.Method.POST, Config.PATINET_REGISTER_URL,
+                            new Response.Listener<String>() {
+                                @Override
+                                public void onResponse(String response) {
+                                    Toast.makeText(Patient_Registration.this,response,Toast.LENGTH_LONG).show();
+                                }
+                            },
+                            new Response.ErrorListener() {
+                                @Override
+                                public void onErrorResponse(VolleyError error) {
+                                    Toast.makeText(Patient_Registration.this,error.toString(),Toast.LENGTH_LONG).show();
+                                }
+                            }){
+                        @Override
+                        protected Map<String,String> getParams(){
+                            Map<String,String> params = new HashMap<String, String>();
+                            params.put(Config.COLUMN_PATIENT_NAME,patientname);
+                            params.put(Config.COLUMN_PATIENT_MOBILE,patientmobilenumber);
+                            params.put(Config.COLUMN_PATIENT_PASSWORD,patientpassword);
+                            params.put(Config.COLUMN_PATIENT_EMAIL,patientemail);
+                            params.put(Config.COLUMN_PATIENT_GENDER,patientgender);
+                            params.put(Config.COLUMN_PATIENT_AGE,patientage);
+                            params.put(Config.COLUMN_PATIENT_HEIGHT ,patientheight);
+                            params.put(Config.COLUMN_PATIENT_WEIGHT,patientweight);
+                            params.put(Config.COLUMN_PATIENT_BLOOD_GROUP,patientbloodgroup);
+                            params.put(Config.COLUMN_PATIENT_ADDRESS,patientaddress);
+                            params.put(Config.COLUMN_PATIENT_PINCODE ,patientpincode);
+                            params.put(Config.COLUMN_PATIENT_REGISRTION_DATE,patientregistrationdate);
+
+
+                            return params;
+                        }
+
+                    };
+
+                    RequestQueue requestQueue = Volley.newRequestQueue(Patient_Registration.this);
+                    requestQueue.add(stringRequest);
                     dbHelper.addUser(patientname,patientmobilenumber,patientpassword,patientemail,patientgender,patientage,patientheight,patientweight,patientbloodgroup,patientaddress,patientpincode,patientregistrationdate);
                     Toast.makeText(Patient_Registration.this,"Patient Registred Successfully",Toast.LENGTH_LONG).show();
                     Intent i=new Intent(Patient_Registration.this, Patient_Login.class);

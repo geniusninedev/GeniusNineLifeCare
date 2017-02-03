@@ -16,12 +16,22 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.android.volley.AuthFailureError;
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
 import com.geniusnine.android.geniusninelifecare.Helper.Config;
 import com.geniusnine.android.geniusninelifecare.Helper.DBHelper;
 import com.geniusnine.android.geniusninelifecare.MainActivityDrawer;
 import com.geniusnine.android.geniusninelifecare.Patient_Registration.Patient_Registration;
 import com.geniusnine.android.geniusninelifecare.R;
 import com.geniusnine.android.geniusninelifecare.Splash_Screen.Splash_Screen;
+
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Created by Dev on 12-01-2017.
@@ -78,8 +88,8 @@ public class Patient_Login extends Activity {
                 }*/
                 else
                 {
-
-                    boolean validLogin = validateLogin(username, password, Patient_Login.this);
+                    login(username,password);
+                  /*  boolean validLogin = validateLogin(username, password, Patient_Login.this);
                     if(validLogin)
                     {
                         //System.out.println("In Valid");
@@ -101,7 +111,7 @@ public class Patient_Login extends Activity {
                       //  in.putExtra("UserName", username.getText().toString());
                         startActivity(in);
 
-                    }
+                    }*/
                 }
 
             }
@@ -132,6 +142,59 @@ public class Patient_Login extends Activity {
                 return true;
         }
         return super.onKeyDown(keyCode, event);
+    }
+    private void login(final String username, final String password){
+        //Creating a string request
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, Config.LOGIN_URL,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        //If we are getting success from server
+                        if(response.equalsIgnoreCase(Config.LOGIN_SUCCESS)){
+                            //Creating a shared preference
+                            SharedPreferences sharedPreferences = Patient_Login.this.getSharedPreferences(Config.SHARED_PREF_NAME, Context.MODE_PRIVATE);
+
+                            //Creating editor to store values to shared preferences
+                            SharedPreferences.Editor editor = sharedPreferences.edit();
+
+                            //Adding values to editor
+                            editor.putBoolean(Config.PATIENT_LOGGEDIN_SHARED_PREF, true);
+                            editor.putString(Config.PATIENT_MOBILE_NO_SHARED_PREF, username);
+
+                            //Saving values to editor
+                            editor.commit();
+
+                            //Starting profile activity
+                            Intent intent = new Intent(Patient_Login.this,  MainActivityDrawer.class);
+                            startActivity(intent);
+                        }else{
+                            //If the server response is not success
+                            //Displaying an error message on toast
+                            Toast.makeText(Patient_Login.this, "Invalid username or password", Toast.LENGTH_LONG).show();
+                        }
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        //You can handle error here if you want
+                    }
+                }){
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                Map<String,String> params = new HashMap<>();
+                //Adding parameters to request
+                params.put(Config.COLUMN_PATIENT_MOBILE, username);
+                params.put(Config.COLUMN_PATIENT_PASSWORD, password);
+
+                //returning parameter
+                return params;
+            }
+        };
+
+        //Adding the string request to the queue
+        RequestQueue requestQueue = Volley.newRequestQueue(this);
+        requestQueue.add(stringRequest);
     }
     private boolean validateLogin(String username, String password, Context baseContext)
     {
