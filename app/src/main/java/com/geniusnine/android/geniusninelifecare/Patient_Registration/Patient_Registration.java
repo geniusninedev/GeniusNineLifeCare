@@ -65,6 +65,7 @@ public class Patient_Registration extends AppCompatActivity {
         List<String> categories = new ArrayList<String>();
         categories.add("Male");
         categories.add("Female");
+        categories.add("Other");
 
         // Creating adapter for spinner
         ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(Patient_Registration.this, android.R.layout.simple_spinner_item, categories);
