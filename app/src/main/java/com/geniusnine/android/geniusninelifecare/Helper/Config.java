@@ -40,4 +40,21 @@ public class Config {
     public static final String COLUMN_PATIENT_ADDRESS = "patient_address";
     public static final String COLUMN_PATIENT_PINCODE = "patient_pincode";
     public static final String COLUMN_PATIENT_REGISRTION_DATE = "date";
+
+
+    //URL to our login.php file
+    public static final String PATIENT_PROFILE_URL = BASE_URL + "patientprofile.php?patient_mobile=";
+    public static final String JSON_ARRAY = "result";
+
+
+    //url to inset feedback
+    public static final String FEEDBACK_URL = BASE_URL + "feedbackinsert.php";
+    public static final String COLUMN_FEEDBACK_ID = "feedback_id";
+    public static final String COLUMN_FEEDBACK_PATIENT_ID = "patient_id";
+    public static final String COLUMN_FEEDBACK_MESSAGE = "feedback_message";
+    public static final String COLUMN_FEEDBACK_CHECKING = "feedback_checking";
+    public static final String COLUMN_FEEDBACK_APP_RATING = "feedback_app_rating";
+    public static final String COLUMN_FEEDBACK_SUGGESTION = "feedback_suggestion";
+    public static final String COLUMN_FEEDBACK_SUBMITED_DATE = "date";
+
 }

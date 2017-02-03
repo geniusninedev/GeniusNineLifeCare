@@ -2,6 +2,7 @@ package com.geniusnine.android.geniusninelifecare.Fragments;
 
 import android.Manifest;
 import android.app.Activity;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -27,6 +28,12 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
 import com.geniusnine.android.geniusninelifecare.Helper.Config;
 import com.geniusnine.android.geniusninelifecare.Helper.DBHelper;
 import com.geniusnine.android.geniusninelifecare.Helper.Utils;
@@ -35,9 +42,15 @@ import com.geniusnine.android.geniusninelifecare.MainActivityDrawer;
 import com.geniusnine.android.geniusninelifecare.Patient_Registration.Patient_Registration;
 import com.geniusnine.android.geniusninelifecare.R;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.HashMap;
+import java.util.Map;
 
 import static android.app.Activity.RESULT_OK;
 
@@ -64,7 +77,7 @@ public class Patient_Profile extends Fragment {
             Manifest.permission.READ_EXTERNAL_STORAGE,
             Manifest.permission.WRITE_EXTERNAL_STORAGE
     };
-
+    private ProgressDialog loading;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.patient_profile, null);
@@ -89,7 +102,8 @@ public class Patient_Profile extends Fragment {
         SharedPreferences sharedPreferences =getActivity().getSharedPreferences(Config.SHARED_PREF_NAME, Context.MODE_PRIVATE);
         //Fetching thepatient_mobile_Number value form sharedpreferences
         patient_mobile_Number = sharedPreferences.getString(Config.PATIENT_MOBILE_NO_SHARED_PREF,null);
-        dbHelper.getPatientData(patient_mobile_Number);
+        getData(patient_mobile_Number);
+       /* dbHelper.getPatientData(patient_mobile_Number);
         cursor = dbHelper.getPatientData(patient_mobile_Number);
         cursor.moveToFirst();
         if (cursor != null) {
@@ -121,7 +135,7 @@ public class Patient_Profile extends Fragment {
 
 
 
-        }
+        }*/
         uploadPatientProfilepicture.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -132,7 +146,7 @@ public class Patient_Profile extends Fragment {
         buttonupdatePatientDetails.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String patientname,patientmobilenumber,patientpassword,patientemail,patientgender,patientage,patientheight,patientweight,patientbloodgroup,patientaddress,patientpincode,patientregistrationdate;
+               final String patientname,patientmobilenumber,patientpassword,patientemail,patientgender,patientage,patientheight,patientweight,patientbloodgroup,patientaddress,patientpincode,patientregistrationdate;
                 patientname=edittextPatientname.getText().toString().trim();
                 patientmobilenumber=edittextPatientmobilenumber.getText().toString().trim();
                 patientpassword=edittextpatientpassword.getText().toString().trim();
@@ -182,6 +196,40 @@ public class Patient_Profile extends Fragment {
                     edittextpatientpincode.setError("Picode is Required");
                 }
                 else{
+                    StringRequest stringRequest = new StringRequest(Request.Method.POST, Config.PATINET_REGISTER_URL,
+                            new Response.Listener<String>() {
+                                @Override
+                                public void onResponse(String response) {
+                                    Toast.makeText(getActivity(),response,Toast.LENGTH_LONG).show();
+                                }
+                            },
+                            new Response.ErrorListener() {
+                                @Override
+                                public void onErrorResponse(VolleyError error) {
+                                    Toast.makeText(getActivity(),error.toString(),Toast.LENGTH_LONG).show();
+                                }
+                            }){
+                        @Override
+                        protected Map<String,String> getParams(){
+                            Map<String,String> params = new HashMap<String, String>();
+                            params.put(Config.COLUMN_PATIENT_NAME,patientname);
+                            params.put(Config.COLUMN_PATIENT_MOBILE,patientmobilenumber);
+                            params.put(Config.COLUMN_PATIENT_PASSWORD,patientpassword);
+                            params.put(Config.COLUMN_PATIENT_EMAIL,patientemail);
+                            params.put(Config.COLUMN_PATIENT_GENDER,patientgender);
+                            params.put(Config.COLUMN_PATIENT_AGE,patientage);
+                            params.put(Config.COLUMN_PATIENT_HEIGHT ,patientheight);
+                            params.put(Config.COLUMN_PATIENT_WEIGHT,patientweight);
+                            params.put(Config.COLUMN_PATIENT_BLOOD_GROUP,patientbloodgroup);
+                            params.put(Config.COLUMN_PATIENT_ADDRESS,patientaddress);
+                            params.put(Config.COLUMN_PATIENT_PINCODE ,patientpincode);
+                            return params;
+                        }
+
+                    };
+
+                    RequestQueue requestQueue = Volley.newRequestQueue(getActivity());
+                    requestQueue.add(stringRequest);
                     dbHelper.UpdateProfileDetails(patient_id,patientname,patientmobilenumber,patientpassword,patientemail,patientgender,patientage,patientheight,patientweight,patientbloodgroup,patientaddress,patientpincode);
                     Toast.makeText(getActivity(),"Patient Updated Successfully",Toast.LENGTH_LONG).show();
                     Intent i=new Intent(getActivity(), MainActivityDrawer.class);
@@ -195,6 +243,70 @@ public class Patient_Profile extends Fragment {
         });
 
         return v;
+    }
+    private void getData(String patient_mobile_Number) {
+
+        loading = ProgressDialog.show(getActivity(),"Please wait...","Fetching...",false,false);
+
+        String url = Config.PATIENT_PROFILE_URL+patient_mobile_Number;
+
+        StringRequest stringRequest = new StringRequest(url, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                loading.dismiss();
+               // Toast.makeText(getActivity(), "response"+response ,Toast.LENGTH_LONG).show();
+                showJSON(response);
+            }
+        },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        Toast.makeText(getActivity(),error.getMessage().toString(),Toast.LENGTH_LONG).show();
+                    }
+                });
+
+        RequestQueue requestQueue = Volley.newRequestQueue(getActivity());
+        requestQueue.add(stringRequest);
+    }
+
+
+    private void showJSON(String response){
+
+        try {
+            JSONObject jsonObject = new JSONObject(response);
+            JSONArray result = jsonObject.getJSONArray(Config.JSON_ARRAY);
+            JSONObject collegeData = result.getJSONObject(0);
+            patient_id = collegeData.getString(Config.COLUMN_PATIENT_ID);
+            patientname = collegeData.getString(Config.COLUMN_PATIENT_NAME);
+            patientmobilenumber = collegeData.getString(Config.COLUMN_PATIENT_MOBILE);
+            patientpassword = collegeData.getString(Config.COLUMN_PATIENT_PASSWORD);
+            patientemail = collegeData.getString(Config.COLUMN_PATIENT_EMAIL);
+            patientgender= collegeData.getString(Config.COLUMN_PATIENT_GENDER);
+            patientage = collegeData.getString(Config.COLUMN_PATIENT_AGE);
+            patientheight = collegeData.getString(Config.COLUMN_PATIENT_HEIGHT);
+            patientweight = collegeData.getString(Config.COLUMN_PATIENT_WEIGHT);
+            patientbloodgroup = collegeData.getString(Config.COLUMN_PATIENT_BLOOD_GROUP);
+            patientaddress = collegeData.getString(Config.COLUMN_PATIENT_ADDRESS);
+            patientpincode = collegeData.getString(Config.COLUMN_PATIENT_PINCODE);
+            patientregistrationdate = collegeData.getString(Config.COLUMN_PATIENT_REGISRTION_DATE);
+
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        textViewPatientName.setText("Welcome "+patientname);
+        edittextPatientname.setText(patientname);
+        edittextPatientmobilenumber.setText(patientmobilenumber);
+        edittextpatientpassword.setText(patientpassword);
+        edittextPatientemail.setText(patientemail);
+        edittextGender.setText(patientgender);
+        edittextPatientage.setText(patientage);
+        edittextpatientheight.setText(patientheight);
+        edittextpatientweight.setText(patientweight);
+        edittextpatientbloodgroup.setText(patientbloodgroup);
+        edittextpatientaddress.setText(patientaddress);
+        edittextpatientpincode.setText(patientpincode);
+
     }
     // Choose an image from Gallery
     void openImageChooser() {
