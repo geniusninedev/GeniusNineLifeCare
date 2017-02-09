@@ -9,8 +9,10 @@
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:supportsRtl="true"
+        android:configChanges="orientation|screenSize|keyboardHidden"
         android:theme="@style/AppTheme">
-        <activity android:name=".Splash_Screen.Splash_Screen">
+        <activity android:name=".Splash_Screen.Splash_Screen"
+            android:configChanges="orientation|screenSize|keyboardHidden">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -23,9 +25,11 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".Login_Patient.Patient_Login" />
         </activity>
-        <activity android:name=".Login_Patient.Patient_Login">
+        <activity android:name=".Login_Patient.Patient_Login"
+            android:configChanges="orientation|screenSize|keyboardHidden">
         </activity>
-        <activity android:name=".MainActivityDrawer">
+        <activity android:name=".MainActivityDrawer"
+            android:configChanges="orientation|screenSize|keyboardHidden">
         </activity>
         <activity android:name=".Activitys.DoctorListActivity"
             android:screenOrientation="portrait">

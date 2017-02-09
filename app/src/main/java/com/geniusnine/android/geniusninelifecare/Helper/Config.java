@@ -46,8 +46,18 @@ public class Config {
     public static final String PATIENT_PROFILE_URL = BASE_URL + "patientprofile.php?patient_mobile=";
     public static final String JSON_ARRAY = "result";
 
-    //URL to our login.php file
+
+    //upload profile picture
+    public static final String UPLOAD_URL =  BASE_URL + "updateprofilepicture.php?patient_id=";
+    public static final String UPLOAD_KEY = "patient_profile_picture";
+
+
+    //URL to our profile info file
     public static final String PATIENT_PROFILE_UPDATE_URL = BASE_URL + "updatepatientprofile.php?patient_id=";
+
+    //fetch profile picture
+
+    public static final String PATIENT_PROFILE_FETCH_URL = BASE_URL + "getprofilepiture.php?patient_id=";
     //url to inset feedback
     public static final String FEEDBACK_URL = BASE_URL + "feedbackinsert.php";
     public static final String COLUMN_FEEDBACK_ID = "feedback_id";

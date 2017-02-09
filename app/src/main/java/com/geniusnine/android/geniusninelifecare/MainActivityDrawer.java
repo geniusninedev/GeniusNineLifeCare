@@ -1,11 +1,16 @@
 package com.geniusnine.android.geniusninelifecare;
 
 import android.app.AlertDialog;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.database.Cursor;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.drawable.Drawable;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.FragmentManager;
@@ -21,6 +26,11 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
 import com.geniusnine.android.geniusninelifecare.Fragments.About_Us;
 import com.geniusnine.android.geniusninelifecare.Fragments.Add_Health_and_Tips;
 import com.geniusnine.android.geniusninelifecare.Fragments.Add_Labs;
@@ -41,6 +51,14 @@ import com.geniusnine.android.geniusninelifecare.Helper.DBHelper;
 import com.geniusnine.android.geniusninelifecare.Helper.Utils;
 import com.geniusnine.android.geniusninelifecare.Login_Patient.Patient_Login;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.IOException;
+import java.net.MalformedURLException;
+import java.net.URL;
+
 
 public class MainActivityDrawer extends AppCompatActivity {
     DrawerLayout mDrawerLayout;
@@ -53,6 +71,9 @@ public class MainActivityDrawer extends AppCompatActivity {
     Cursor cursor;
     private String patient_mobile_Number;
     String patient_id,patientname,patientmobilenumber,patientemail;
+    Bitmap image = null;
+    private ProgressDialog loading;
+    TextView Name,email;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -71,23 +92,24 @@ public class MainActivityDrawer extends AppCompatActivity {
 
         mDrawerLayout = (DrawerLayout) findViewById(R.id.drawerLayout);
         mNavigationView = (NavigationView) findViewById(R.id.shitstuff);
-        TextView Name = (TextView) mNavigationView.getHeaderView(0).findViewById(R.id.name);
-        TextView email = (TextView) mNavigationView.getHeaderView(0).findViewById(R.id.email);
+        Name = (TextView) mNavigationView.getHeaderView(0).findViewById(R.id.name);
+        email = (TextView) mNavigationView.getHeaderView(0).findViewById(R.id.email);
         profilePictureView = (ImageView) mNavigationView.getHeaderView(0).findViewById(R.id.imageView);
-        dbHelper.getPatientData(patient_mobile_Number);
+      /*  dbHelper.getPatientData(patient_mobile_Number);
         cursor = dbHelper.getPatientData(patient_mobile_Number);
         cursor.moveToFirst();
         if (cursor != null) {
                        patient_id = cursor.getString(cursor.getColumnIndex(dbHelper.COLUMN_PATIENT_ID));
             patientname = cursor.getString(cursor.getColumnIndex(dbHelper.COLUMN_PATIENT_NAME));
             Name.setText(patientname);
-           /* patientmobilenumber = cursor.getString(cursor.getColumnIndex(dbHelper.COLUMN_PATIENT_MOBILE));
-            edittextPatientmobilenumber.setText(patientmobilenumber);*/
+           *//* patientmobilenumber = cursor.getString(cursor.getColumnIndex(dbHelper.COLUMN_PATIENT_MOBILE));
+            edittextPatientmobilenumber.setText(patientmobilenumber);*//*
             patientemail = cursor.getString(cursor.getColumnIndex(dbHelper.COLUMN_PATIENT_EMAIL));
             email.setText(patientemail);
 
-        }
-        loadImageFromDB();
+        }*/
+        getData(patient_mobile_Number);
+        // loadImageFromDB();
         /**
          * Lets inflate the very first fragment
          * Here , we are inflating the TabFragment as the first Fragment
@@ -104,93 +126,106 @@ public class MainActivityDrawer extends AppCompatActivity {
         mNavigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(MenuItem menuItem) {
+                getImage();
                 mDrawerLayout.closeDrawers();
                 if (menuItem.getItemId() == R.id.Home) {
-                    loadImageFromDB();
+                    // loadImageFromDB();
                     FragmentTransaction fragmentTransaction = mFragmentManager.beginTransaction();
                     fragmentTransaction.replace(R.id.containerView, new Patient_Home()).commit();
 
                 }
                 if (menuItem.getItemId() == R.id.Inbox) {
-                    loadImageFromDB();
+
+                    // loadImageFromDB();
                     FragmentTransaction fragmentTransaction = mFragmentManager.beginTransaction();
                     fragmentTransaction.replace(R.id.containerView, new Patient_Profile()).commit();
                 }
                 if (menuItem.getItemId() == R.id.My_Orders) {
-                    loadImageFromDB();
+
+                    // loadImageFromDB();
                     FragmentTransaction fragmentTransaction = mFragmentManager.beginTransaction();
                     fragmentTransaction.replace(R.id.containerView, new Patient_Order()).commit();
 
                 }
                 if (menuItem.getItemId() == R.id.Medicines) {
-                    loadImageFromDB();
+
+                    // loadImageFromDB();
                     FragmentTransaction fragmentTransaction = mFragmentManager.beginTransaction();
                     fragmentTransaction.replace(R.id.containerView, new Medicines()).commit();
 
                 }
                 if (menuItem.getItemId() == R.id.Add_Medicines) {
-                    loadImageFromDB();
+
+                    // loadImageFromDB();
                     FragmentTransaction fragmentTransaction = mFragmentManager.beginTransaction();
                     fragmentTransaction.replace(R.id.containerView, new Add_Medicines()).commit();
 
                 }
                 if (menuItem.getItemId() == R.id.Health_And_Tips) {
-                    loadImageFromDB();
+
+                    // loadImageFromDB();
                     FragmentTransaction fragmentTransaction = mFragmentManager.beginTransaction();
                     fragmentTransaction.replace(R.id.containerView, new Health_and_Tips()).commit();
 
                 }
                 if (menuItem.getItemId() == R.id.Add_Health_And_Tips){
-                    loadImageFromDB();
+
+                    // loadImageFromDB();
                     FragmentTransaction fragmentTransaction = mFragmentManager.beginTransaction();
                     fragmentTransaction.replace(R.id.containerView, new Add_Health_and_Tips()).commit();
 
                 }if (menuItem.getItemId() == R.id.Add_Labs) {
-                    loadImageFromDB();
+
+                    // loadImageFromDB();
                     FragmentTransaction fragmentTransaction = mFragmentManager.beginTransaction();
                     fragmentTransaction.replace(R.id.containerView, new Add_Labs()).commit();
 
                 }
                 if (menuItem.getItemId() == R.id.Book_Appointment) {
-                    loadImageFromDB();
+
+                    // loadImageFromDB();
                     FragmentTransaction fragmentTransaction = mFragmentManager.beginTransaction();
                     fragmentTransaction.replace(R.id.containerView, new Patient_Book_Appointment()).commit();
 
                 }
                 if (menuItem.getItemId() == R.id.Add_Categories) {
-                    loadImageFromDB();
+
+                    // loadImageFromDB();
                     FragmentTransaction fragmentTransaction = mFragmentManager.beginTransaction();
                     fragmentTransaction.replace(R.id.containerView, new Doctor_Categories()).commit();
 
                 }
 
                 if (menuItem.getItemId() == R.id.Add_Doctor) {
-                    loadImageFromDB();
+
+                    // loadImageFromDB();
                     FragmentTransaction fragmentTransaction = mFragmentManager.beginTransaction();
                     fragmentTransaction.replace(R.id.containerView, new Doctor_Registraion()).commit();
 
                 }
                 if (menuItem.getItemId() == R.id.Doctor_info) {
-                    loadImageFromDB();
+                    // loadImageFromDB();
                     FragmentTransaction fragmentTransaction = mFragmentManager.beginTransaction();
                     fragmentTransaction.replace(R.id.containerView, new Doctor_info()).commit();
 
                 }
                 if (menuItem.getItemId() == R.id.Feedback) {
-                    loadImageFromDB();
+
+                    // loadImageFromDB();
                     FragmentTransaction fragmentTransaction = mFragmentManager.beginTransaction();
                     fragmentTransaction.replace(R.id.containerView, new Feedback()).commit();
 
                 }
 
                 if (menuItem.getItemId() == R.id.About_Us) {
-                    loadImageFromDB();
+
+                    // loadImageFromDB();
                     FragmentTransaction fragmentTransaction = mFragmentManager.beginTransaction();
                     fragmentTransaction.replace(R.id.containerView, new About_Us()).commit();
 
                 }
                 if (menuItem.getItemId() == R.id.Contact_Us) {
-                    loadImageFromDB();
+                   // loadImageFromDB();
                     FragmentTransaction fragmentTransaction = mFragmentManager.beginTransaction();
                     fragmentTransaction.replace(R.id.containerView, new Contact_US()).commit();
 
@@ -217,7 +252,99 @@ public class MainActivityDrawer extends AppCompatActivity {
 
 
     }
-    Boolean loadImageFromDB() {
+    private void getData(String patient_mobile_Number) {
+
+        //loading = ProgressDialog.show(getActivity(),"Please wait...","Fetching...",false,false);
+
+        String url = Config.PATIENT_PROFILE_URL+patient_mobile_Number;
+
+        StringRequest stringRequest = new StringRequest(url, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                //   loading.dismiss();
+                // Toast.makeText(getActivity(), "response"+response ,Toast.LENGTH_LONG).show();
+                showJSON(response);
+            }
+        },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        Toast.makeText(MainActivityDrawer.this,error.getMessage().toString(),Toast.LENGTH_LONG).show();
+                    }
+                });
+
+        RequestQueue requestQueue = Volley.newRequestQueue(MainActivityDrawer.this);
+        requestQueue.add(stringRequest);
+    }
+
+
+    private void showJSON(String response){
+
+        try {
+            JSONObject jsonObject = new JSONObject(response);
+            JSONArray result = jsonObject.getJSONArray(Config.JSON_ARRAY);
+            JSONObject collegeData = result.getJSONObject(0);
+            patient_id = collegeData.getString(Config.COLUMN_PATIENT_ID);
+            getImage();
+            patientname = collegeData.getString(Config.COLUMN_PATIENT_NAME);
+            patientemail = collegeData.getString(Config.COLUMN_PATIENT_EMAIL);
+
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        Name.setText(patientname);
+        email.setText(patientemail);
+
+    }
+    private void getImage() {
+        class GetImage extends AsyncTask<String,Void,Bitmap> {
+
+            @Override
+            protected void onPreExecute() {
+                super.onPreExecute();
+                loading = ProgressDialog.show(MainActivityDrawer.this, "Loading Data...", null,true,true);
+            }
+
+            @Override
+            protected void onPostExecute(Bitmap b) {
+                super.onPostExecute(b);
+                loading.dismiss();
+                String uri = "@drawable/ic_account_circle_white_24dp";
+                int imageResource = getResources().getIdentifier(uri, null,"com.geniusnine.android.geniusninelifecare");
+                Drawable res = getResources().getDrawable(imageResource);
+                if(image==null) {
+                    profilePictureView.setImageDrawable(res);
+                }
+                else {
+                    profilePictureView.setImageBitmap(image);
+                }
+            }
+
+            @Override
+            protected Bitmap doInBackground(String... params) {
+                //String id = params[0];
+                String add = Config.PATIENT_PROFILE_FETCH_URL+patient_id;
+                URL url = null;
+
+                try {
+                    url = new URL(add);
+                    image = BitmapFactory.decodeStream(url.openConnection().getInputStream());
+
+                } catch (MalformedURLException e) {
+                    e.printStackTrace();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+
+                return image;
+            }
+        }
+
+        GetImage gi = new GetImage();
+        gi.execute(patient_id);
+    }
+   /* Boolean loadImageFromDB() {
         try {
             dbHelper.open();
             byte[] bytes = dbHelper.retreiveImageFromDB(patient_id);
@@ -230,7 +357,7 @@ public class MainActivityDrawer extends AppCompatActivity {
             dbHelper.close();
             return false;
         }
-    }
+    }*/
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
