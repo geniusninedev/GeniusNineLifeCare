@@ -5,7 +5,7 @@ package com.geniusnine.android.geniusninelifecare.Helper;
  */
 
 public class Config {
-    public static final String BASE_URL = "http://192.168.0.185/GeniusNineLifeCareServices/";
+    public static final String BASE_URL = "http://192.168.0.187/GeniusNineLifeCareServices/";
     //URL to our login.php file
     public static final String LOGIN_URL = BASE_URL + "patientlogin.php";
 
